@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { CourierContext } from "../../context/CourierContext";
+import { useCourierStore } from "../../store/useCourierStore";
 
 export default function EditCourier() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { couriers, fetchCouriers } = useContext(CourierContext);
+  const { couriers, updateCourier } = useCourierStore();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -22,18 +22,6 @@ export default function EditCourier() {
     homeAddress: "",
     status: "",
   });
-
-  useEffect(() => {
-    const courierToEdit = couriers.find((c) => String(c.id) === String(id));
-    if (courierToEdit) {
-      setFormData({
-        ...courierToEdit,
-        profilePicture: null,
-        existingImage: courierToEdit.profilePicture || "",
-      });
-    }
-  }, [id, couriers]);
-
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData({
@@ -42,31 +30,22 @@ export default function EditCourier() {
     });
   };
 
+  useEffect(() => {
+    const courierToEdit = couriers.find((c) => String(c.id) === String(id));
+    if (courierToEdit) {
+      setFormData({
+        ...courierToEdit,
+        existingImage: courierToEdit.profilePicture || "",
+        profilePicture: null, // Reset file input
+      });
+    }
+  }, [id, couriers]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Prepare data (keep existing image if no new file is uploaded)
-    const updatedData = {
-      ...formData,
-      profilePicture: formData.profilePicture
-        ? URL.createObjectURL(formData.profilePicture)
-        : formData.existingImage,
-    };
-
-    // Remove the temporary 'existingImage' field before sending to DB
-    delete updatedData.existingImage;
-
     try {
-      const response = await fetch(`http://localhost:3500/couriers/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (response.ok) {
-        await fetchCouriers(); // Refresh global list
-        navigate("/couriers"); // Redirect back
-      }
+      await updateCourier(id, formData);
+      navigate("/couriers");
     } catch (err) {
       console.error("Update failed:", err);
     }
@@ -294,10 +273,12 @@ function Select({ label, name, value, onChange, options }) {
         name={name}
         value={value}
         onChange={onChange}
-        className="mt-2 w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
+        className="mt-2 w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none bg-white"
       >
-        {options.map((option) => (
-          <option key={option}>{option}</option>
+        {options.map((opt) => (
+          <option key={opt} value={opt}>
+            {opt}
+          </option>
         ))}
       </select>
     </div>

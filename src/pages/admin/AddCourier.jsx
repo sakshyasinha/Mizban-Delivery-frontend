@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { CourierContext } from "../../context/CourierContext";
+import { useCourierStore } from "../../store/useCourierStore";
 
 export default function AddCourier() {
   const navigate = useNavigate();
-  const { fetchCouriers } = useContext(CourierContext);
+  const addCourier = useCourierStore((state) => state.addCourier);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -38,22 +38,13 @@ export default function AddCourier() {
       profilePicture: formData.profilePicture
         ? URL.createObjectURL(formData.profilePicture)
         : "https://via.placeholder.com",
-      id: Date.now().toString(),
     };
 
     try {
-      const response = await fetch("http://localhost:3500/couriers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataToSubmit),
-      });
-
-      if (response.ok) {
-        await fetchCouriers();
-        navigate("/couriers");
-      }
+      await addCourier(dataToSubmit);
+      navigate("/couriers");
     } catch (err) {
-      console.error("Failed to add courier:", err);
+      console.error("Add failed:", err);
     }
   };
 

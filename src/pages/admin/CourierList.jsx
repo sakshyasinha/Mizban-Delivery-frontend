@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { MoreVertical } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { CourierContext } from "../../context/CourierContext";
+import { useCourierStore } from "../../store/useCourierStore";
 
 export default function CourierList() {
   const navigate = useNavigate();
   const [openMenuId, setOpenMenuId] = useState(null);
 
-  const { couriers, deleteCourier } = useContext(CourierContext);
+  const { couriers, fetchCouriers, deleteCourier } = useCourierStore();
+
+  useEffect(() => {
+    fetchCouriers();
+  }, [fetchCouriers]);
 
   const getStatusStyle = (status) => {
     switch (status) {

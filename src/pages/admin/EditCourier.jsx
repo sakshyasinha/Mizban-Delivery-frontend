@@ -66,89 +66,61 @@ export default function EditCourier() {
           className="bg-white rounded-2xl shadow-md p-8 space-y-8"
         >
           {/* -------- Profile Picture Section -------- */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600">
-              Profile Picture
-            </label>
-
-            <div className="mt-4 flex flex-col items-start">
-              {/* Circle Preview */}
-              <div className="w-28 h-28 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+          {/* Replace your current Edit Profile Section with this to match Add */}
+          <div className="flex items-center gap-15">
+            <div className="shrink-0">
+              <div className="mt-4 flex justify-center items-center w-36 h-36 bg-gray-200 rounded-full relative overflow-hidden">
+                {/* Existing logic for previewing images */}
                 {formData.profilePicture ? (
                   <img
                     src={URL.createObjectURL(formData.profilePicture)}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                  />
-                ) : formData.existingImage ? (
-                  <img
-                    src={formData.existingImage}
-                    alt="Existing"
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-10 w-10 text-gray-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 7h4l2-2h6l2 2h4v12H3V7z"
-                    />
-                  </svg>
+                  <img
+                    src={formData.existingImage}
+                    className="w-full h-full object-cover"
+                  />
                 )}
               </div>
-
-              {/* Update Button */}
               <button
                 type="button"
                 onClick={() =>
                   document.getElementById("editProfilePicInput").click()
                 }
-                className="mt-4 text-sm text-orange-500 hover:underline"
+                className="mt-4 py-1 px-5 bg-orange-500 text-white hover:bg-orange-600 transition shadow-md rounded-full"
               >
                 Update Picture
               </button>
+            </div>
 
-              <input
-                id="editProfilePicInput"
-                type="file"
-                name="profilePicture"
-                accept="image/*"
+            {/* Wrap your first 3 inputs (Name, Number, Email) in this flex-1 div */}
+            <div className="flex-1 space-y-6">
+              <Input
+                label="Full Name *"
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
-                className="hidden"
+              />
+              <Input
+                label="Contact Number *"
+                name="contactNumber"
+                value={formData.contactNumber}
+                onChange={handleChange}
+              />
+              <Input
+                label="Email (Optional)"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
           </div>
 
-          {/* -------- Basic Info -------- */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Input
-              label="Full Name *"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-            />
-            <Input
-              label="Contact Number *"
-              name="contactNumber"
-              value={formData.contactNumber}
-              onChange={handleChange}
-            />
-            <Input
-              label="Email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-
           {/* -------- Vehicle -------- */}
+          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+            Vehicle Information
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Select
               label="Vehicle Type"

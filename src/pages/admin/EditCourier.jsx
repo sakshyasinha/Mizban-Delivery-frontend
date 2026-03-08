@@ -22,11 +22,28 @@ export default function EditCourier() {
     homeAddress: "",
     status: "",
   });
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
+    if (files && files.length > 0) {
+      setFormData({ ...formData, [name]: files[0] });
+      return;
+    }
+
+    let finalValue = value;
+
+    if (["contactNumber", "maxWeightKg", "maxPackages"].includes(name)) {
+      finalValue = value.replace(/\D/g, "");
+    }
+
+    if (name === "vehicleRegistration") {
+      finalValue = value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
     setFormData({
       ...formData,
-      [name]: files ? files[0] : value,
+      [name]: finalValue,
     });
   };
 
@@ -150,6 +167,7 @@ export default function EditCourier() {
               label="Max Weight (kg)"
               name="maxWeightKg"
               type="number"
+              min="0"
               value={formData.maxWeightKg}
               onChange={handleChange}
             />
@@ -157,6 +175,7 @@ export default function EditCourier() {
               label="Max Packages"
               name="maxPackages"
               type="number"
+              min="0"
               value={formData.maxPackages}
               onChange={handleChange}
             />
@@ -229,7 +248,7 @@ export default function EditCourier() {
 
 /* -------- Reusable Components -------- */
 
-function Input({ label, name, value, onChange, type = "text" }) {
+function Input({ label, name, value, onChange, type = "text", ...props }) {
   return (
     <div>
       <label className="block text-sm font-medium text-gray-600">{label}</label>
@@ -238,6 +257,7 @@ function Input({ label, name, value, onChange, type = "text" }) {
         name={name}
         value={value}
         onChange={onChange}
+        {...props}
         className="mt-2 w-full rounded-xl border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-orange-400 outline-none"
       />
     </div>

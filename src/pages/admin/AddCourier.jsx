@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCourierStore } from "../../store/useCourierStore";
 
@@ -23,11 +23,26 @@ export default function AddCourier() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files && files[0]) {
+
+    if (files && files.length > 10) {
       setFormData({ ...formData, [name]: files[0] });
-    } else {
-      setFormData({ ...formData, [name]: value });
+      return;
     }
+
+    let finalValue = value;
+
+    if (["contactNumber", "maxWeightKg", "maxPackages"].includes(name)) {
+      finalValue = value.replace(/\D/g, "");
+    }
+
+    if (name === "vehicleRegistration") {
+      finalValue = value.replace(/[^a-zA-Z0-9]/g, "");
+    }
+
+    setFormData({
+      ...formData,
+      [name]: finalValue,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -228,6 +243,7 @@ export default function AddCourier() {
               <div className="space-y-4">
                 <input
                   type="number"
+                  min="0"
                   name="maxWeightKg"
                   value={formData.maxWeightKg}
                   onChange={handleChange}
@@ -240,6 +256,7 @@ export default function AddCourier() {
                 </label>
                 <input
                   type="number"
+                  min="0"
                   name="maxPackages"
                   value={formData.maxPackages}
                   onChange={handleChange}

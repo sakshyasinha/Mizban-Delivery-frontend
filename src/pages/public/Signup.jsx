@@ -173,18 +173,9 @@ const Signup=()=>{
 
             {/* Password */}
             <div>
-            <div className="flex justify-between items-center mb-1">
-              <label className="text-gray-700 text-sm font-bold">
+              <label className="block text-gray-700 mb-1 text-sm font-bold">
                 Password
               </label>
-
-              <a
-                href="/forgot-password"
-                className="text-xs font-semibold text-orange-500  border-b border-orange-400"
-              >
-                Forgot password?
-              </a>
-            </div>
              <div className="relative">
               <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} strokeWidth={1.5}/>
               <input

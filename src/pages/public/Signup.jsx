@@ -23,6 +23,14 @@ const Signup=()=>{
     const [showPassword,setShowPassword]=useState(false);
 
     const navigate=useNavigate();
+
+    const passwordRules = {
+      length: form.password.length >= 8,
+      uppercase: /[A-Z]/.test(form.password),
+      lowercase: /[a-z]/.test(form.password),
+      number: /\d/.test(form.password),
+    };
+
     // validation
     const validate=()=>{
       const newErrors={};
@@ -202,6 +210,31 @@ const Signup=()=>{
              {form.password && ( showPassword ? <FiEyeOff size={16} strokeWidth={1.5}/> : <FiEye size={16} strokeWidth={1.5}/>)}
 
             </button>
+             {/* Tooltip */}
+            {form.password && !Object.values(passwordRules).every(Boolean) && (
+             <div className="absolute left-0 top-full mt-2 w-64 bg-white text-gray-800 text-xs rounded-md p-3 shadow-md border border-gray-300 z-10">
+                <p className="mb-1 font-bold">Password must contain:</p>
+
+                <ul className="space-y-1">
+                  <li className={`${passwordRules.length ? "text-green-600 font-medium" : "text-gray-400"}`}>
+                    {passwordRules.length ? "✓" : "•"} Minimum 8 characters
+                  </li>
+
+                  <li className={`${passwordRules.uppercase ? "text-green-600 font-medium" : "text-gray-400"}`}>
+                    {passwordRules.uppercase ? "✓" : "•"} One uppercase letter
+                  </li>
+
+                  <li className={`${passwordRules.lowercase ? "text-green-600 font-medium" : "text-gray-400"}`}>
+                    {passwordRules.lowercase ? "✓" : "•"} One lowercase letter
+                  </li>
+
+                  <li className={`${passwordRules.number ? "text-green-600 font-medium" : "text-gray-400"}`}>
+                    {passwordRules.number ? "✓" : "•"} One number
+                  </li>
+                </ul>
+              </div>
+            )}
+            
           </div>
              <p className={`${errors.password ? "text-red-500" : ""}  text-xs pt-1 `}>{errors.password || "\u00A0"}</p>
             </div>

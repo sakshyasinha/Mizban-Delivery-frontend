@@ -228,11 +228,30 @@ const useOrderStore = create((set, get) => ({
       selectedCourier: courier,
       orders: state.orders.map((order) =>
         order.id === orderId 
-          ? { ...order, status: "ASSIGNED", courier: courier } 
+          ? { ...order, status: "assigned", courier: courier } 
           : order
       ),
     }));
   },
+markOrderDelivered: (orderId) => {
+  set((state) => ({
+    orders: state.orders.map((order) =>
+      order.id === orderId
+        ? {
+            ...order,
+            status: "delivered",
+            deliveredAt: new Date().toISOString(),
+            payment: {
+              ...order.payment,
+              paymentStatus: order.payment.paymentMethod === "COD" 
+                ? "Paid" 
+                : order.payment.paymentStatus,
+            },
+          }
+        : order
+    ),
+  }));
+},
 
   clearCourier: () => {
     set({ selectedCourier: null });

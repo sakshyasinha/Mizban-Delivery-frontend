@@ -14,6 +14,7 @@ const OrderActions = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAssignCourierModalOPen, setAssignCourierModalOpen] = useState(false)
   const editOrder = useOrderStore((state)=> state.editOrder)
+  const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -64,6 +65,7 @@ const OrderActions = ({ order }) => {
 
           <button 
             onClick={() => {
+              markOrderDelivered(order.id)
               setIsOpen(false);
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-emerald-600 hover:bg-emerald-50 transition-colors"

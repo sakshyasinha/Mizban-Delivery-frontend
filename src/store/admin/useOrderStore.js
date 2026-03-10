@@ -69,6 +69,38 @@ const useOrderStore = create((set, get) => ({
       })),
       toast.success("Item deleted successfully!")
     },
+    isEditingOrder: false,
+    isViewingOrder: false,
+    createNewOrder: ()=>{
+        set({
+            isEditingOrder:false,
+          orderData: {
+            customer: {},
+            item: [],
+            payment: {
+                paymentMethod: "",
+                paymentStatus: "Pending",
+            },
+        },
+        })
+    },
+
+    editOrder: (order)=>{
+       set({
+        isEditingOrder: true,
+        isViewingOrder:false,
+          orderData: {
+            id: order.id,
+            customer: {...order.customer},
+            item: [...order.item],
+            payment: {
+                paymentMethod: order.payment.paymentMethod,
+                paymentStatus: order.payment.paymentStatus,
+            },
+        },
+        })
+        console.log(get().isEditingOrder)
+    },
     itemsTotalFee: 0,
     resetOrderData: () => set({
         orderData: {

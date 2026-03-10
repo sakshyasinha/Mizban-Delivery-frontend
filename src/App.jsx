@@ -9,7 +9,7 @@ import AddCourier from "./pages/admin/AddCourier";
 import EditCourier from "./pages/admin/EditCourier";
 
 import Orders from "./pages/admin/Orders";
-import CreateOrder from "./components/admin/CreateOrder";
+import OrderForm from "./components/admin/OrderForm";
 
 function App() {
   return (
@@ -28,8 +28,13 @@ function App() {
           <Route path="/couriers/add" element={<AddCourier />} />
           <Route path="/couriers/edit/:id" element={<EditCourier />} />
 
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/create-order" element={<CreateOrder />} />
+          <Route path="/orders" element={<Orders />}></Route>
+          <Route path="/order/create-order" element={<OrderForm />}></Route>
+          <Route path="/orders/edit-order/:id" element={<OrderForm />}></Route>
+          <Route
+            path="/orders/view-order/:id"
+            element={<OrderForm readOnly={true} />}
+          ></Route>
 
           <Route
             path="/"

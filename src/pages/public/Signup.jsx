@@ -210,7 +210,7 @@ const Signup=()=>{
              {form.password && ( showPassword ? <FiEyeOff size={16} strokeWidth={1.5}/> : <FiEye size={16} strokeWidth={1.5}/>)}
 
             </button>
-             {/* Tooltip */}
+             {/* Tooltip*/}
             {form.password && !Object.values(passwordRules).every(Boolean) && (
              <div className="absolute left-0 top-full mt-2 w-64 bg-white text-gray-800 text-xs rounded-md p-3 shadow-md border border-gray-300 z-10">
                 <p className="mb-1 font-bold">Password must contain:</p>
@@ -244,15 +244,17 @@ const Signup=()=>{
               <label className="block text-gray-700 mb-1 text-sm font-bold">
                 Phone
               </label>
-             <div className="relative">
+             <div className="relative flex items-center">
             <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} strokeWidth={1.5} />
+            {/* Prefix */}
+             <span className="absolute left-10 top-1/2 -translate-y-1/2 text-gray-700">+93</span>
             <input
               type="tel"
               name="phone"
               value={form.phone}
               onChange={handleChange}
               placeholder="Enter your phone number"
-              className={ `w-full pl-10 pr-4 py-1.5 md:py-2 border border-gray-300 rounded-md focus:border-white focus:outline-none focus:ring-2 focus:ring-orange-400 
+              className={ `w-full pl-20 pr-4 py-1.5 md:py-2 border border-gray-300 rounded-md focus:border-white focus:outline-none focus:ring-2 focus:ring-orange-400
               ${
               errors.phone ? "border-red-500 focus:ring-red-400" : "border-gray-300 focus:ring-orange-400"
                 }

@@ -233,6 +233,10 @@ const useOrderStore = create((set, get) => ({
       ),
     }));
   },
+  
+  clearCourier: () => {
+    set({ selectedCourier: null });
+  },
 markOrderDelivered: (orderId) => {
   set((state) => ({
     orders: state.orders.map((order) =>
@@ -252,10 +256,23 @@ markOrderDelivered: (orderId) => {
     ),
   }));
 },
+cancelationReason: null,
 
-  clearCourier: () => {
-    set({ selectedCourier: null });
-  },
+cancelOrder: (orderId, reason) => {
+  set((state) => ({
+    orders: state.orders.map((order) => {
+      if (order.id === orderId && order.status !== "delivered") {
+        return {
+          ...order,
+          status: "cancelled",
+          cancellationReason: reason, 
+        };
+      }
+      return order; 
+    }),
+  }));
+},
+
 
 }))
 export default useOrderStore

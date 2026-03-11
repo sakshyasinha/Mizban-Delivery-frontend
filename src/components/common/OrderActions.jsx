@@ -9,10 +9,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 import useOrderStore from '../../store/admin/useOrderStore';
 import AssignCourier from './AssignCourier';
+import CancelOrder from './CancelOrder';
+import toast from 'react-hot-toast';
 
 const OrderActions = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAssignCourierModalOPen, setAssignCourierModalOpen] = useState(false)
+  const [isCancelOrderModalOpen, setCancelOrderModalOpen] = useState(false)
   const editOrder = useOrderStore((state)=> state.editOrder)
   const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
   const menuRef = useRef(null);
@@ -25,6 +28,16 @@ const OrderActions = ({ order }) => {
     document.addEventListener('mousedown', closeMenu);
     return () => document.removeEventListener('mousedown', closeMenu);
   }, []);
+  const validateCancelClick = ()=>{
+    if(order.status === "cancelled"){
+     toast.error("The order is already cancelled!")
+      throw new Error("Order is delivered!")
+    }
+    if(order.status === "delivered"){
+      toast.error("You cannot cancel a delivered order!")
+      throw new Error("Order is delivered!")
+    }
+  }
 
   return (
     <div className="relative inline-block" ref={menuRef}>
@@ -75,6 +88,8 @@ const OrderActions = ({ order }) => {
 
           <button 
             onClick={() => {
+              validateCancelClick()
+              setCancelOrderModalOpen(true)
               setIsOpen(false);
             }}
             className="flex items-center gap-3 w-full px-4 cursor-pointer py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"
@@ -86,6 +101,11 @@ const OrderActions = ({ order }) => {
        {isAssignCourierModalOPen &&(
           <AssignCourier isOpen={isAssignCourierModalOPen} orderId={order.id} onClose={()=>setAssignCourierModalOpen(false)} />
        )} 
+       {
+        isCancelOrderModalOpen &&(
+          <CancelOrder  isOpen={isCancelOrderModalOpen} orderId={order.id} onClose={()=> setCancelOrderModalOpen(false)} />
+        )
+       }
     </div>
   );
 };

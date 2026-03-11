@@ -282,7 +282,9 @@ export default function OrderForm() {
                   </label>
                   <textarea
                     rows="3"
-                    placeholder="Enter full street address, apartment, or suite"
+                    placeholder={t(
+                      "Enter full street address, apartment, or suite",
+                    )}
                     value={orderData.customer.deliveryAddress || ""}
                     className="p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all"
                     onChange={(e) => {
@@ -494,7 +496,7 @@ export default function OrderForm() {
                     </label>
                     <select
                       className="p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 transition-all"
-                      value={orderData.payment.paymentStatus || "Pending"}
+                      value={orderData.payment.paymentStatus || t("Pending")}
                       onChange={(e) =>
                         setCustomerAndPaymentData(
                           "payment",

@@ -11,6 +11,7 @@ import useOrderStore from '../../store/admin/useOrderStore';
 import AssignCourier from './AssignCourier';
 import CancelOrder from './CancelOrder';
 import toast from 'react-hot-toast';
+import { useClickOutside } from '../../hooks/useOutsideClick';
 
 const OrderActions = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,14 +21,7 @@ const OrderActions = ({ order }) => {
   const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
   const menuRef = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const closeMenu = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) setIsOpen(false);
-    };
-    document.addEventListener('mousedown', closeMenu);
-    return () => document.removeEventListener('mousedown', closeMenu);
-  }, []);
+   useClickOutside(menuRef,()=> setIsOpen(false))
   const validateCancelClick = ()=>{
     if(order.status === "cancelled"){
      toast.error("The order is already cancelled!")

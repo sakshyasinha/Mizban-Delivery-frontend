@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useClickOutside } from "../../hooks/useOutsideClick";
 
 export default function SearchableDropdown({ onSelect, placeholder = "Search..." }) {
   const items = [
@@ -9,6 +10,7 @@ export default function SearchableDropdown({ onSelect, placeholder = "Search..."
     { id: 4, name: "Hassan", value: "hassan" },
     { id: 5, name: "Hussain", value: "hussain" },
   ];
+  const dropdownRef = useRef(null)
 
   const [isDropdownOpen, setDrowdownOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +23,7 @@ export default function SearchableDropdown({ onSelect, placeholder = "Search..."
     );
     setFilteredList(filtered);
   };
-
+  useClickOutside(dropdownRef, ()=> setDrowdownOpen(false))
   const handleSelect = (item) => {
     setSearchTerm(item.name); 
     setDrowdownOpen(false);
@@ -35,7 +37,7 @@ export default function SearchableDropdown({ onSelect, placeholder = "Search..."
   };
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full" ref={dropdownRef}>
       <div className="relative">
         <div className="relative">
           <input
@@ -57,7 +59,7 @@ export default function SearchableDropdown({ onSelect, placeholder = "Search..."
         </div>
 
         {isDropdownOpen && (
-          <ul className="absolute z-10 w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-xl overflow-y-auto max-h-60 py-1">
+          <ul className="absolute z-10 w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-xl overflow-y-auto max-h-60 py-1" >
             {filteredList.length > 0 ? (
               filteredList.map((item) => (
                 <li

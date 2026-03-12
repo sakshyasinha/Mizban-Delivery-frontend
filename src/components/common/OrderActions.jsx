@@ -4,7 +4,8 @@ import {
   Pencil, 
   Ban, 
   CheckCircle, 
-  UserPlus, 
+  UserPlus,
+  Trash, 
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useOrderStore from '../../store/admin/useOrderStore';
@@ -19,6 +20,7 @@ const OrderActions = ({ order }) => {
   const [isCancelOrderModalOpen, setCancelOrderModalOpen] = useState(false)
   const editOrder = useOrderStore((state)=> state.editOrder)
   const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
+  const deleteOrder = useOrderStore((state)=> state.deleteOrder)
   const menuRef = useRef(null);
   const navigate = useNavigate();
    useClickOutside(menuRef,()=> setIsOpen(false))
@@ -90,6 +92,17 @@ const OrderActions = ({ order }) => {
           >
             <Ban size={16} /> Cancel Order
           </button>
+          <button 
+            onClick={() => {
+              deleteOrder(order.id)
+              setIsOpen(false);
+            }}
+            className="flex items-center gap-3 w-full px-4 cursor-pointer py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"
+          >
+            <Trash size={16} /> Delete Order
+          </button>
+
+
         </div>
       )}
        {isAssignCourierModalOPen &&(

@@ -275,7 +275,13 @@ cancelOrder: (orderId, reason) => {
     }),
   }));
 },
-
+deleteOrder: (orderId)=>{
+    window.confirm("Are you sure that you want to delete this order?")
+    set((state)=> ({
+        orders: state.orders.filter((order)=> order.id !== orderId)
+    }))
+    toast.success("Order deleted successfully!")
+}
 
 }))
 export default useOrderStore

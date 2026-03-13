@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
+import OrderActions from "../../components/common/OrderActions";
 
 const useOrderStore = create((set, get) => ({
     orderData: {
@@ -276,11 +277,15 @@ cancelOrder: (orderId, reason) => {
   }));
 },
 deleteOrder: (orderId)=>{
-    window.confirm("Are you sure that you want to delete this order?")
-    set((state)=> ({
-        orders: state.orders.filter((order)=> order.id !== orderId)
-    }))
-    toast.success("Order deleted successfully!")
+   if (!window.confirm("Are you sure that you want to delete this order?")) return
+   set((state) => ({
+    orders: state.orders.filter((order)=>{
+        if(order.id !== orderId) return true 
+        const isDeleivered = order.status === "delivered"
+        const isPaid = order.payment.paymentStatus === "Paid"
+        return isDeleivered || isPaid
+    })
+   }))   
 }
 
 }))

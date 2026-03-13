@@ -24,15 +24,26 @@ const OrderActions = ({ order }) => {
   const menuRef = useRef(null);
   const navigate = useNavigate();
    useClickOutside(menuRef,()=> setIsOpen(false))
-  const validateCancelClick = ()=>{
+  const handleCancelOrder = ()=>{
     if(order.status === "cancelled"){
      toast.error("The order is already cancelled!")
-      throw new Error("Order is delivered!")
+     return
     }
     if(order.status === "delivered"){
       toast.error("You cannot cancel a delivered order!")
-      throw new Error("Order is delivered!")
+      return
     }
+    setCancelOrderModalOpen(true)
+  }
+  const handleDeleteOrder = ()=> {
+   const isPaid = order.payment.paymentStatus === "Paid"
+   const isDelivered = order.status === "delivered"
+   if(isPaid || isDelivered){
+      toast.error("Cannot delete paid or delivered order!")
+      return
+   }
+   deleteOrder(order.id)
+   toast.success("Order deleted successfully!")
   }
 
   return (
@@ -84,8 +95,7 @@ const OrderActions = ({ order }) => {
 
           <button 
             onClick={() => {
-              validateCancelClick()
-              setCancelOrderModalOpen(true)
+              handleCancelOrder()
               setIsOpen(false);
             }}
             className="flex items-center gap-3 w-full px-4 cursor-pointer py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"
@@ -94,7 +104,7 @@ const OrderActions = ({ order }) => {
           </button>
           <button 
             onClick={() => {
-              deleteOrder(order.id)
+              handleDeleteOrder()
               setIsOpen(false);
             }}
             className="flex items-center gap-3 w-full px-4 cursor-pointer py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"

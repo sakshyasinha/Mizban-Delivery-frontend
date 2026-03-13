@@ -3,12 +3,34 @@ import { Link } from "react-router-dom";
 import OrdersTable from "../../components/common/order/OrdersTable";
 import useOrderStore from "../../store/admin/useOrderStore";
 import { Plus, ShoppingBag } from "lucide-react";
+import SearchBar from "../../components/common/SearchBar";
+import Dropdown from "../../components/common/Dropdown"
+import { useState } from "react";
 
 export default function Orders() {
   const orders = useOrderStore((state) => state.orders);
   const createNewOrder = useOrderStore((state)=> state.createNewOrder)
-
-  
+  const [selectedCurier, setSelectedCourier] = useState("")
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("")
+  const [selectedStatus, setSelectedStatus] = useState("")
+  const couriers = [
+    { id: 1, name: "Ali", value: "ali" },
+    { id: 2, name: "Ahmad", value: "ahmad" },
+    { id: 3, name: "Hamed", value: "hamed" },
+    { id: 4, name: "Hassan", value: "hassan" },
+    { id: 5, name: "Hussain", value: "hussain" },
+  ];
+  const paymentStatus = [
+    {id: 1, name: "Paid", value: "paid"},
+    {id: 2, name: "Unpaid", value: "unpaid"},
+    {id: 3, name: "Failed", value: "failed"},
+  ]
+  const orderStatus = [
+    {id: 1, name: "Delivered", value: "delivered"},
+    {id: 2, name: "Assigned", value: "assigned"},
+    {id: 3, name: "Cancelled", value: "cancelled"},
+    {id: 4, name: "Pending", value: "pending"},
+  ]
   return (
     <div className="min-h-screen bg-gray-100 p-8 md:p-12">
       <div className="max-w-7xl mx-auto">
@@ -39,7 +61,16 @@ export default function Orders() {
             />
           </Link>
         </div>
-
+        {/*  Search && filter   */}
+        <div className="flex justify-center">
+         <SearchBar placeholder="Search by order id, customer name, phone number"/>
+         </div>
+         <div className="flex gap-3 mt-4 mb-4 flex-wrap justify-center">
+         <Dropdown options={couriers} onSelect={(val)=> setSelectedCourier(val)} placeholder="Courier"/>
+         <Dropdown options={paymentStatus} onSelect={(val)=> setSelectedPaymentMethod(val)} placeholder="Payment Method"/>
+         <Dropdown options={orderStatus} onSelect={(val)=> setSelectedStatus(val)} placeholder="Order Status"/>
+         <Button text="Filter" variant="primary"/>
+          </div>
         {/* Orders Table*/}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <OrdersTable orders={orders} />

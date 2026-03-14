@@ -27,8 +27,8 @@ export default function Orders() {
     startDate: "",
     endDate: ""
   })
-  const isFiltered = searchTerm.trim() !== "" || endDate || startDate || selectedCurier !== "" || selectedPaymentStatus !== "" || selectedStatus !== "";
-  const displayData = isFiltered ? filteredList : orders
+  const isFiltered = endDate || startDate || selectedCurier !== "" || selectedPaymentStatus !== "" || selectedStatus !== "";
+  const displayData = (searchTerm.trim() !== "" || isFiltered) ? filteredList : orders
   const handleFilterReset = () => {
     setSelectedCourier("")
     setSelectedPaymentStatus("")

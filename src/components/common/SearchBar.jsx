@@ -1,6 +1,6 @@
-import { Search } from "lucide-react"; 
+import { Search, Target } from "lucide-react"; 
 
-export default function SearchBar({ placeholder, onChange }) {
+export default function SearchBar({ placeholder, onChange}) {
   return (
     <div className="relative w-full max-w-md group">
       <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

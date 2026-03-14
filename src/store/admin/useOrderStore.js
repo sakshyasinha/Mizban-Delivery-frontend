@@ -206,13 +206,14 @@ const useOrderStore = create((set, get) => ({
                 createdAt: "2026-03-06T12:00:00Z",
             }
         ],
-    addNewOrder: (newOrder)=>{
-        set((state)=>({
-            orders: [
-                newOrder,
-                ...state.orders
-            ]
-        }))
+    addNewOrder: (newOrder) => {
+        set((state) => {
+            const updatedOrders = [newOrder, ...state.orders];
+            return {
+                orders: updatedOrders,
+                filteredList: updatedOrders
+            };
+        });
     },
     editExitingOrder: (updatedOrder)=>{
        set((state)=>({
@@ -224,23 +225,26 @@ const useOrderStore = create((set, get) => ({
 
     selectedCourier: null,
   
-  setCourier: (courier, orderId) => {
-    set((state) => ({
+setCourier: (courier, orderId) => {
+  set((state) => {
+    const updatedOrders = state.orders.map((order) =>
+      order.id === orderId 
+        ? { ...order, status: "assigned", courier: courier } 
+        : order
+    );
+    return {
       selectedCourier: courier,
-      orders: state.orders.map((order) =>
-        order.id === orderId 
-          ? { ...order, status: "assigned", courier: courier } 
-          : order
-      ),
-    }));
-  },
-  
+      orders: updatedOrders,
+      filteredList: updatedOrders
+    };
+  });
+},
   clearCourier: () => {
     set({ selectedCourier: null });
   },
 markOrderDelivered: (orderId) => {
-  set((state) => ({
-    orders: state.orders.map((order) =>
+  set((state) => {
+    const updatedOrders = state.orders.map((order) =>
       order.id === orderId
         ? {
             ...order,
@@ -248,43 +252,87 @@ markOrderDelivered: (orderId) => {
             deliveredAt: new Date().toLocaleString(),
             payment: {
               ...order.payment,
-              paymentStatus: order.payment.paymentMethod === "COD" 
-                ? "Paid" 
-                : order.payment.paymentStatus,
+              paymentStatus: order.payment.paymentMethod === "COD" ? "Paid" : order.payment.paymentStatus,
             },
           }
-          
         : order
-    ),
-  }));
+    );
+    return {
+      orders: updatedOrders,
+      filteredList: updatedOrders 
+    };
+  });
 },
 cancelationReason: null,
 
 cancelOrder: (orderId, reason) => {
-  set((state) => ({
-    orders: state.orders.map((order) => {
+  set((state) => {
+    const updatedOrders = state.orders.map((order) => {
       if (order.id === orderId && order.status !== "delivered") {
-        return {
-          ...order,
-          status: "cancelled",
-          cancellationReason: reason, 
-        };
+        return { ...order, status: "cancelled", cancellationReason: reason };
       }
-      return order; 
-    }),
-  }));
+      return order;
+    });
+    return {
+      orders: updatedOrders,
+      filteredList: updatedOrders 
+    };
+  });
 },
-deleteOrder: (orderId)=>{
-   if (!window.confirm("Are you sure that you want to delete this order?")) return
-   set((state) => ({
-    orders: state.orders.filter((order)=>{
-        if(order.id !== orderId) return true 
-        const isDeleivered = order.status === "delivered"
-        const isPaid = order.payment.paymentStatus === "Paid"
-        return isDeleivered || isPaid
-    })
-   }))   
-}
+deleteOrder: (orderId) => {
+  if (!window.confirm("Are you sure that you want to delete this order?")) return;
+  set((state) => {
+    const updatedOrders = state.orders.filter((order) => {
+      if (order.id !== orderId) return true;
+      const isDelivered = order.status === "delivered";
+      const isPaid = order.payment.paymentStatus === "Paid";
+      return isDelivered || isPaid;
+    });
 
+    return {
+      orders: updatedOrders,
+      filteredList: updatedOrders 
+    };
+  });
+},
+filteredList : [],
+applyFilters: (filters, searchTerm)=>{
+  let lowerCaseSearchTerm = searchTerm.toLowerCase().trim()
+  const {courier, paymentStatus, orderStatus, startDate, endDate} = filters
+  set((state)=> ({
+    filteredList: state.orders.filter((order)=>{
+      if(lowerCaseSearchTerm){
+        const matchSearchTerm = 
+        order.id.toLowerCase().includes(lowerCaseSearchTerm)||
+        order.customer.customerName.toLowerCase().includes(lowerCaseSearchTerm)||
+        order.customer.phoneNumber.includes(lowerCaseSearchTerm);
+        if(!matchSearchTerm) return false
+      }
+     if(courier && courier !== order.courier?.toLowerCase()) return false
+     if(paymentStatus && paymentStatus !== order.payment.paymentStatus?.toLowerCase()) return false
+     if(orderStatus && orderStatus !== order.status?.toLowerCase()) return false
+     
+        if (startDate || endDate) {
+            const orderDate = new Date(order.createdAt).getTime();
+
+            if (startDate) {
+                const start = new Date(startDate).setHours(0, 0, 0, 0);
+                if (orderDate < start) return false;
+            }
+
+            if (endDate) {
+                const end = new Date(endDate).setHours(23, 59, 59, 999);
+                if (orderDate > end) return false;
+            }
+        }
+     return true
+    })
+  }))
+},
+resetFilters: ()=>{
+    set((state)=> ({
+        filteredList:state.orders
+    }))
+}
 }))
 export default useOrderStore

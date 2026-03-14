@@ -5,14 +5,62 @@ import useOrderStore from "../../store/admin/useOrderStore";
 import { Plus, ShoppingBag } from "lucide-react";
 import SearchBar from "../../components/common/SearchBar";
 import Dropdown from "../../components/common/Dropdown"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Orders() {
-  const orders = useOrderStore((state) => state.orders);
   const createNewOrder = useOrderStore((state)=> state.createNewOrder)
+  const orders = useOrderStore((state)=> state.orders)
+  const filteredList = useOrderStore((state)=> state.filteredList)
+  const applyFilters = useOrderStore((state)=> state.applyFilters)
+  const resetFilters = useOrderStore((state)=> state.resetFilters)
+  const [searchTerm, setSearchTerm] = useState("")
   const [selectedCurier, setSelectedCourier] = useState("")
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("")
+  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState("")
   const [selectedStatus, setSelectedStatus] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate,setEndDate] = useState("")
+  let [filters, setFilters] = useState({
+    courier: "",
+    paymentStatus: "",
+    orderStatus: "",
+    startDate: "",
+    endDate: ""
+  })
+  const isFiltered = searchTerm.trim() !== "" || endDate || startDate || selectedCurier !== "" || selectedPaymentStatus !== "" || selectedStatus !== "" ;
+  const displayData = isFiltered ? filteredList : orders
+  const handleFilterReset = ()=>{
+    setSelectedCourier("")
+    setSelectedPaymentStatus("")
+    setSelectedStatus("")
+    setEndDate("")
+    setStartDate("")
+    setFilters({
+    courier: "",
+    paymentStatus: "",
+    orderStatus: "",
+    startDate: "",
+    endDate: ""
+  });
+    resetFilters()
+
+  }
+useEffect(()=>{
+    applyFilters(filters, searchTerm)
+},[searchTerm])
+
+const handleFilter = () => {
+  const newFilters = {
+    courier: selectedCurier,
+    paymentStatus: selectedPaymentStatus,
+    orderStatus: selectedStatus,
+    startDate: startDate,
+    endDate: endDate
+  };
+  setFilters(newFilters);
+  applyFilters(newFilters, searchTerm); 
+};
+
+
   const couriers = [
     { id: 1, name: "Ali", value: "ali" },
     { id: 2, name: "Ahmad", value: "ahmad" },
@@ -63,20 +111,68 @@ export default function Orders() {
         </div>
         {/*  Search && filter   */}
         <div className="flex justify-center">
-         <SearchBar placeholder="Search by order id, customer name, phone number"/>
+         <SearchBar placeholder="Search by order id, customer name, phone number" onChange={(e)=> setSearchTerm(e.target.value)}/>
          </div>
-         <div className="flex gap-3 mt-4 mb-4 flex-wrap justify-center">
-         <Dropdown options={couriers} onSelect={(val)=> setSelectedCourier(val)} placeholder="Courier"/>
-         <Dropdown options={paymentStatus} onSelect={(val)=> setSelectedPaymentMethod(val)} placeholder="Payment Method"/>
-         <Dropdown options={orderStatus} onSelect={(val)=> setSelectedStatus(val)} placeholder="Order Status"/>
-         <Button text="Filter" variant="primary"/>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap items-center justify-center gap-4 mt-4 mb-8">
+          <div className="flex-1">
+            <Dropdown options={couriers} onSelect={(val) => setSelectedCourier(val)}  value={selectedCurier}placeholder="Couriers"/>
           </div>
+          <div className="flex-1">
+            <Dropdown options={paymentStatus} onSelect={(val) => setSelectedPaymentStatus(val)}  value={selectedPaymentStatus}placeholder="Payment Status"/>
+          </div>
+          <div className="flex-1">
+            <Dropdown options={orderStatus} onSelect={(val) => setSelectedStatus(val)} value={selectedStatus} placeholder="Status"/>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="relative flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2 hover:border-orange-300 focus-within:ring-2 focus-within:ring-orange-100 focus-within:border-orange-500 transition-all shadow-sm">
+              <div className="flex flex-col">
+                <span className="text-[10px] uppercase font-bold text-gray-400 leading-none mb-1">Start Date</span>
+                <input
+                  type="date"
+                  value={startDate}
+                  className="text-sm font-semibold text-gray-700 bg-transparent outline-none cursor-pointer"
+                  onChange={(e)=> setStartDate(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="h-px w-3 bg-gray-300 rounded-full" />
+
+            <div className="relative flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2 hover:border-orange-300 focus-within:ring-2 focus-within:ring-orange-100 focus-within:border-orange-500 transition-all shadow-sm">
+              <div className="flex flex-col">
+                <span className="text-[10px] uppercase font-bold text-gray-400 leading-none mb-1">End Date</span>
+                <input
+                  type="date"
+                  value={endDate}
+                  className="text-sm font-semibold text-gray-700 bg-transparent outline-none cursor-pointer"
+                  onChange={(e)=> setEndDate(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <Button
+            text="Filter"
+            variant="primary"
+            onClick={handleFilter}
+          />
+          {isFiltered &&(
+             <Button text="reset" variant="secondary" onClick={handleFilterReset}/>
+
+          )}
+        </div>
         {/* Orders Table*/}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-          <OrdersTable orders={orders} />
+          <OrdersTable orders={displayData} />
         {orders.length === 0 && (
             <div className="py-20 text-center">
               <p className="text-gray-400 font-medium">No orders found. Start by creating one!</p>
+            </div>
+          )}
+          {filteredList.length === 0 &&(
+              <div className="py-20 text-center">
+              <p className="text-gray-400 font-medium">No orders found!</p>
             </div>
           )}
         </div>

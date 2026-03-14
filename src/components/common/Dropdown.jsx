@@ -2,18 +2,16 @@ import { useState, useRef } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { useClickOutside } from "../../hooks/useOutsideClick";
 
-const Dropdown = ({ options, onSelect, placeholder = "Select option" }) => {
+const Dropdown = ({ options, onSelect,value, placeholder}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
   const dropdownRef = useRef(null);
   useClickOutside(dropdownRef, ()=> setIsOpen(false))
   const handleSelect = (option) => {
-    setSelected(option);
-    onSelect(option);
+    onSelect(option.value);
     setIsOpen(false);
   };
   return (
-    <div className="relative w-full max-w-[260px]" ref={dropdownRef}>
+    <div className="relative " ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={`
@@ -23,8 +21,8 @@ const Dropdown = ({ options, onSelect, placeholder = "Select option" }) => {
             : "border-gray-200 bg-gray-50 hover:bg-white hover:border-gray-300 shadow-sm"}
         `}
       >
-        <span className={selected ? "text-gray-900" : "text-gray-400"}>
-          {selected?.value || placeholder}
+        <span className={value ? "text-gray-900" : "text-gray-400"}>
+          {value || placeholder}
         </span>
         <ChevronDown 
           className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} 
@@ -39,13 +37,13 @@ const Dropdown = ({ options, onSelect, placeholder = "Select option" }) => {
               onClick={() => handleSelect(option)}
               className={`
                 flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors
-                ${selected?.id === option.id 
+                ${value.id === option.id 
                   ? "bg-orange-50 text-orange-600 font-semibold" 
                   : "text-gray-700 hover:bg-gray-100"}
               `}
             >
               {option.name}
-              {selected?.id === option.id && <Check className="h-4 w-4" />}
+              {value.id === option.id && <Check className="h-4 w-4" />}
             </li>
           ))}
         </ul>

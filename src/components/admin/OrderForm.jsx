@@ -111,6 +111,7 @@ export default function OrderForm() {
         paymentStatus: orderData.payment.paymentStatus,
       },
       status: "Pending",
+      createdAt: Date.now(),
       itemsTotalFee: itemsTotalFee,
       deliveryFee: 100,
       total: itemsTotalFee + 100,

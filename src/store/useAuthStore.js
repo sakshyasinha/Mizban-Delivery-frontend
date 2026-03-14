@@ -66,6 +66,9 @@ const  useAuthStore=create((set,get) => ({
 
             if (!form.phone) newErrors.phone = "Phone is required";
 
+            else if (form.phone.length !== 9) newErrors.phone = "Phone number must be 9 digits";
+            else if (form.phone[0] !== "7") newErrors.phone = "The phone number must start with 7.";
+
             return newErrors;
         },
 

@@ -45,6 +45,24 @@ const Signup=()=>{
     };
 
 
+    // handle Numeric Phone Input
+   const handleNumericPhoneInput = (e) => {
+  const onlyNumbers = e.target.value.replace(/\D/g, "");
+
+  let errorMsg = "";
+  if (onlyNumbers.length > 9) {
+    errorMsg = "Phone number cannot exceed 9 digits";
+  } else if (onlyNumbers && onlyNumbers[0] !== "7") {
+    errorMsg = "The phone number must start with 7";
+  }
+
+  const slicedNumber = onlyNumbers.slice(0, 9);
+  setField("phone", slicedNumber);
+
+ 
+  setErrors({ ...errors, phone: errorMsg });
+};
+
     // submit
    const handleSubmit = (e) => {
     e.preventDefault();
@@ -251,7 +269,7 @@ const Signup=()=>{
               type="tel"
               name="phone"
               value={form.phone}
-              onChange={handleChange}
+              onChange={handleNumericPhoneInput}
               placeholder="Enter your phone number"
               className={ `w-full pl-20 pr-4 py-1.5 md:py-2 border border-gray-300 rounded-md focus:border-white focus:outline-none focus:ring-2 focus:ring-orange-400
               ${

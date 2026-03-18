@@ -1,5 +1,8 @@
 import Orders from '../pages/admin/Orders';
 import OrderForm from "../components/admin/OrderForm";
+import CourierList from '../pages/admin/CourierList';
+import AddCourier from '../pages/admin/AddCourier';
+import EditCourier from '../pages/admin/EditCourier';
 
 const protectedRoutes=[
     {
@@ -7,7 +10,7 @@ const protectedRoutes=[
         element: <Orders/>
     },
     {
-    path: "/orders/create-order",
+    path: "/order/create-order",
     element: <OrderForm />,
   },
    {
@@ -18,6 +21,18 @@ const protectedRoutes=[
     path: "/orders/view-order/:id",
     element: <OrderForm readOnly={true} />,
   },
+  {
+    path:"/couriers",
+    element:<CourierList/>
+  },
+  {
+    path:"/couriers/add",
+    element:<AddCourier/>
+  }, 
+  {
+    path:"/couriers/edit/:id",
+    element:<EditCourier/>
+  }
 ]
 
 

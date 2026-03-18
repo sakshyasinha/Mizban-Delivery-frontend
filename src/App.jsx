@@ -1,9 +1,11 @@
+
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 
 
 import AppRouter from './routes/appRouter';
 import {Toaster} from 'react-hot-toast';
+
 
 
 function App() {

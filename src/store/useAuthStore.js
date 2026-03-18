@@ -100,7 +100,7 @@ const  useAuthStore=create((set,get) => ({
             toast.dismiss();
 
             if (err.message) {
-                toast.error(err.message);
+               toast.error(err.field === 'phone' ? err.code : err.message );
             } else {
                 toast.error("Signup failed. Please try again.");
             }

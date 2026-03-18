@@ -12,7 +12,7 @@ function AppRouter(){
     return (
         <>
         <Header hideContent={hideHeaderContent}/>
-        <main className="flex-grow flex items-center justify-center bg-gray-50">
+        <main className="grow bg-gray-50 p-6">
            <Routes>
                {
                    allRoutes.map((route,index) => (

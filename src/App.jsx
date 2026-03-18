@@ -14,7 +14,6 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <Toaster position="top-center" reverseOrder={false} containerStyle={{zIndex:9999}}/>
         <AppRouter/> 
-
     </div>
   );
 }

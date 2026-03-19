@@ -118,7 +118,7 @@ const AddItemModal = ({ isOpen, onClose }) => {
                 <div className="relative">
                   {/* Currency label */}
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-bold text-[10px] select-none pointer-events-none">
-                    AFN
+                    {t("AFN")}
                   </div>
 
                   <input
@@ -130,7 +130,7 @@ const AddItemModal = ({ isOpen, onClose }) => {
                     onChange={(e) => setUnitPrice(e.target.value)}
                     placeholder={toLocaleDigits("0", lng)}
                     className="w-full pl-14 pr-3 py-3 bg-gray-50 border border-gray-100 rounded-2xl outline-none focus:bg-white focus:border-orange-500/50 transition-all text-sm font-mono font-bold text-transparent caret-black"
-                    // pl-14 adds enough padding-left to clear the "AFN" label
+                    // pl-14 adds enough padding-left to clear the "{t("AFN")}" label
                   />
 
                   {/* Localized digits overlay */}
@@ -138,7 +138,7 @@ const AddItemModal = ({ isOpen, onClose }) => {
                     aria-hidden="true"
                     className={`absolute top-1/2 -translate-y-1/2 pointer-events-none text-sm font-mono font-bold text-gray-900 select-none
       ${isRTL ? "right-3 text-right" : "left-14 text-left"}`}
-                    // For LTR: left-14 aligns after AFN label, for RTL: right-3 for correct position
+                    // For LTR: left-14 aligns after {t("AFN")} label, for RTL: right-3 for correct position
                   >
                     {unitPrice
                       ? toLocaleDigits(unitPrice.toString(), lng)
@@ -154,7 +154,7 @@ const AddItemModal = ({ isOpen, onClose }) => {
               </span>
               <div className="text-right">
                 <span className="text-lg font-black text-orange-600">
-                  AFN {toLocalePrice(quantity * unitPrice, lng)}
+                  {t("AFN")} {toLocalePrice(quantity * unitPrice, lng)}
                 </span>
               </div>
             </div>

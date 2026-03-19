@@ -68,7 +68,8 @@ const OrdersTable = ({ orders }) => {
               </td>
 
               <td className="py-4 px-6 text-right text-gray-900">
-                {toLocaleDigits(order.total.toLocaleString(), currentLng)} AFN
+                {toLocaleDigits(order.total.toLocaleString(), currentLng)}{" "}
+                {t("AFN")}
               </td>
 
               <td className="py-4 px-6 text-right">

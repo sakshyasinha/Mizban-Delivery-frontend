@@ -445,10 +445,11 @@ export default function OrderForm() {
                             </div>
                           </td>
                           <td className="py-4 text-gray-600 text-center">
-                            AFN {toLocalePrice(item.unitPrice, currentLng)}
+                            {t("AFN")}{" "}
+                            {toLocalePrice(item.unitPrice, currentLng)}
                           </td>
                           <td className="py-4 font-bold text-gray-900 text-center">
-                            AFN{" "}
+                            {t("AFN")}{" "}
                             {toLocalePrice(
                               Number(item.quantity) * Number(item.unitPrice),
                               currentLng,
@@ -550,13 +551,13 @@ export default function OrderForm() {
                   <div className="flex justify-between">
                     <span>{t("Subtotal")}</span>
                     <span className="font-bold text-gray-900">
-                      AFN {toLocaleDigits(itemsTotalFee, currentLng)}
+                      {t("AFN")} {toLocaleDigits(itemsTotalFee, currentLng)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span>{t("Delivery Fee")}</span>
                     <span className="font-bold text-gray-900">
-                      AFN {toLocaleDigits(100, currentLng)}
+                      {t("AFN")} {toLocaleDigits(100, currentLng)}
                     </span>
                   </div>
                   <div className="border-t border-dashed pt-4 mt-4 flex justify-between items-end">
@@ -564,7 +565,8 @@ export default function OrderForm() {
                       {t("Total Amount")}
                     </span>
                     <span className="font-black text-orange-600 text-3xl">
-                      AFN {toLocaleDigits(itemsTotalFee + 100, currentLng)}
+                      {t("AFN")}{" "}
+                      {toLocaleDigits(itemsTotalFee + 100, currentLng)}
                     </span>
                   </div>
                 </div>

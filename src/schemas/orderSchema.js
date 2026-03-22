@@ -1,14 +1,21 @@
+import z from "zod";
+
 export const orderSchema = z.object({
   type: z.enum(["food", "parcel", "grocery", "other"], {
     errorMap: () => ({ message: "Please select a delivery category" }),
   }),
   serviceType: z.enum(["immediate", "scheduled"]),
   scheduledFor: z.string().nullable(),
+  serviceLevel: z.enum(["standard", "express"]),
+  deliveryDeadline: z.string().optional(),
   priority: z.enum(["normal", "high", "critical"]),
 
   sender: z.object({
-    name: z.string().min(1, "Enter the sender's name"),
-    phone: z.string().min(10, "Enter a valid Afghan phone number"),
+    name: z.string().min(1, "Enter the business's name"),
+    phone: z.string().length(10, "Phone number must be exactly 10 digits")
+    .refine((val)=> val.startsWith("07"), {
+      message: "Phone number must start with 07 (e.g., 077,079,070)"
+    }),
   }),
 
   receiver: z.object({
@@ -21,12 +28,10 @@ export const orderSchema = z.object({
     type: z.literal("Point"),
     coordinates: z.array(z.number()).length(2, "Please pin the pickup location on the map"),
   }),
-
   dropoffLocation: z.object({
     type: z.literal("Point"),
     coordinates: z.array(z.number()).length(2, "Please pin the drop-off location on the map"),
   }),
-
   items: z.array(z.object({
     name: z.string().min(1, "Item name cannot be empty"),
     quantity: z.number().min(1, "Quantity must be at least 1"),
@@ -48,7 +53,8 @@ export const orderSchema = z.object({
   amountToCollect: z.number().min(0, "Amount cannot be negative").optional(),
 
   deliveryPrice: z.object({
-    total: z.number().min(0, "Delivery price missing"),
+    discount: z.number().optional(),
+    total: z.number().min(0, "Delivery price is required"),
   }),
   
   finalPrice: z.number().min(1, "Total price is required"),

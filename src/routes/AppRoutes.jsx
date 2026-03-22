@@ -36,6 +36,8 @@ export default function AppRoutes () {
                         This is the settings page, settings is not accessible right now
                     </div>
                 } />
+
+                <Route path="*" element={<h1>Page not Found</h1>}></Route>
             </Route>
         </Routes>
     )

@@ -1,8 +1,10 @@
-import  { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import useOrderStore from '../../../store/admin/useOrderStore';
 import 'leaflet/dist/leaflet.css';
+import { LayersControl } from 'react-leaflet';
+
 
 const locationIcon = new L.Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
@@ -34,26 +36,41 @@ export default function Map() {
     const [initialPosition, setInitialPosition] = useState(null)
     const defaultCenter = [34.5553, 69.2075]
 
-    useEffect(()=>{
-      navigator.geolocation.getCurrentPosition(
-        (pos)=>{
-            setInitialPosition([pos.coords.latitude, pos.coords.longitude])
-        },
-        ()=>{
-            setInitialPosition(defaultCenter)
-        },
-        {
-            enableHighAccuracy:true
-        }
-      )
-    },[])
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                setInitialPosition([pos.coords.latitude, pos.coords.longitude])
+            },
+            () => {
+                setInitialPosition(defaultCenter)
+            },
+            {
+                enableHighAccuracy: true
+            }
+        )
+    }, [])
     if (!initialPosition) return <div className="h-full flex items-center justify-center">Loading Map...</div>;
-    return (
-        <div className='h-full w-full relative z-0'>
-        <MapContainer center={initialPosition} zoom={13} style={{ height: "100%", width: "100%" }}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" className='z-10'/>
+   return (
+    <div className='h-full w-full relative z-0'>
+        <MapContainer 
+            center={initialPosition} 
+            zoom={13} 
+            style={{ height: "100%", width: "100%" }}
+        >
+            <LayersControl position="topright">
+                <LayersControl.BaseLayer checked name="Street View">
+                    <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
+                </LayersControl.BaseLayer>
+                <LayersControl.BaseLayer name="Satellite View">
+                    <TileLayer
+                        url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+                        attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+                    />
+                </LayersControl.BaseLayer>
+            </LayersControl>
+
             <LocationMarker />
         </MapContainer>
-        </div>
-    );
+    </div>
+);
 }

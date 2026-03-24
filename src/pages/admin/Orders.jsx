@@ -2,7 +2,7 @@ import Button from "../../components/common/order/Button";
 import { Link } from "react-router-dom";
 import OrdersTable from "../../components/common/order/OrdersTable";
 import useOrderStore from "../../store/admin/useOrderStore";
-import { Plus, ShoppingBag } from "lucide-react";
+import { LuPlus, LuShoppingBag } from "react-icons/lu";
 import SearchBar from "../../components/common/SearchBar";
 import Dropdown from "../../components/common/Dropdown"
 import { useEffect, useState } from "react";
@@ -89,7 +89,7 @@ export default function Orders() {
         <div className="flex items-center flex-wrap gap-4 justify-center items-center md:justify-between mb-10">
           <div className="flex items-center gap-3">
             <div className="bg-orange-600 p-2 rounded-lg shadow-orange-100 shadow-lg">
-              <ShoppingBag className="text-white" size={24} />
+              <LuShoppingBag className="text-white" size={24} />
             </div>
             <div>
               <h1 className="text-2xl font-black text-gray-900 leading-none">
@@ -106,7 +106,7 @@ export default function Orders() {
               text="Create Order"
               onClick={() => createNewOrder()}
               variant="primary"
-              icon={<Plus size={18} className="inline" />}
+              icon={<LuPlus size={18} className="inline" />}
               className="px-6 rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
             />
           </Link>

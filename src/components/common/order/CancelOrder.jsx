@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { X, AlertTriangle } from "lucide-react";
+// import { X, AlertTriangle } from "lucide-react";
+import { LuX, LuTriangleAlert } from "react-icons/lu";
 import useOrderStore from "../../../store/admin/useOrderStore";
 import toast from "react-hot-toast";
 
@@ -30,7 +31,7 @@ export default function CancelOrder({orderId, isOpen, onClose }) {
           
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600">
-              <AlertTriangle size={22} />
+              <LuTriangleAlert size={22} />
             </div>
             <h2 className="text-xl font-bold text-gray-900 text-left">Cancel Order</h2>
           </div>
@@ -74,7 +75,7 @@ export default function CancelOrder({orderId, isOpen, onClose }) {
           onClick={onClose} 
           className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
         > 
-          <X size={20} /> 
+          <LuX size={20} /> 
         </button>
       </div>
     </div>

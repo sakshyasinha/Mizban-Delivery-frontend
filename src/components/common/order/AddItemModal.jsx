@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ShoppingBag, Plus, Minus } from 'lucide-react';
+import { LuX, LuShoppingBag, LuPlus, LuMinus } from 'react-icons/lu';
 import Button from './Button';
 import useOrderStore from '../../../store/admin/useOrderStore';
 import toast from 'react-hot-toast';
@@ -47,7 +47,7 @@ const AddItemModal = ({ isOpen, onClose }) => {
                             <p className="text-gray-400 text-xs font-medium">Enter product details</p>
                         </div>
                         <button type="button" onClick={onClose} className="p-2 hover:bg-orange-600 hover:text-white cursor-pointer text-black-900 rounded-[50%] transition-all">
-                            <X size={18} />
+                            <LuX size={18} />
                         </button>
                     </div>
 
@@ -56,7 +56,7 @@ const AddItemModal = ({ isOpen, onClose }) => {
                             <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1">Product Name</label>
                             <div className="relative">
                                 <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-300">
-                                    <ShoppingBag size={16} />
+                                    <LuShoppingBag size={16} />
                                 </div>
                                 <input
                                     type="text"
@@ -73,11 +73,11 @@ const AddItemModal = ({ isOpen, onClose }) => {
                                 <label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider ml-1">Quantity</label>
                                 <div className="flex items-center justify-between p-1 bg-gray-50 rounded-2xl border border-gray-100">
                                     <button type="button" onClick={() => setQuantity(prev => Math.max(1, prev - 1))} className="w-8 h-8 flex items-center justify-center bg-white rounded-lg cursor-pointer text-gray-500 hover:text-orange-600 transition-colors">
-                                        <Minus size={14} />
+                                        <LuMinus size={14} />
                                     </button>
                                     <span className="text-sm font-bold text-gray-800">{String(quantity).padStart(2, "0")}</span>
                                     <button type="button" onClick={() => setQuantity(prev => prev + 1)} className="w-8 h-8 flex items-center justify-center bg-white rounded-lg cursor-pointer text-gray-500 hover:text-orange-600 transition-colors">
-                                        <Plus size={14} />
+                                        <LuPlus size={14} />
                                     </button>
                                 </div>
                             </div>

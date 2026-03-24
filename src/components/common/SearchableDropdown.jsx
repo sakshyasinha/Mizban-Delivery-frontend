@@ -1,7 +1,6 @@
-import { X } from "lucide-react";
 import { useState, useRef } from "react";
 import { useClickOutside } from "../../hooks/useOutsideClick";
-
+import { LuX } from "react-icons/lu";
 export default function SearchableDropdown({ onSelect, items, placeholder = "Search..." }) {
 
   const dropdownRef = useRef(null)
@@ -47,7 +46,7 @@ export default function SearchableDropdown({ onSelect, items, placeholder = "Sea
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-600 transition-colors cursor-pointer"
               onClick={handleClear}
             >
-              <X size={18} />
+              <LuX size={18} />
             </button>
           )}
         </div>

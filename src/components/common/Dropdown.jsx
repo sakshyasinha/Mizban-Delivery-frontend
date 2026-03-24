@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { ChevronDown, Check } from "lucide-react";
+import { LuChevronDown, LuCheck } from "react-icons/lu";
 import { useClickOutside } from "../../hooks/useOutsideClick";
 
 const Dropdown = ({ options, onSelect,value, placeholder}) => {
@@ -24,7 +24,7 @@ const Dropdown = ({ options, onSelect,value, placeholder}) => {
         <span className={value ? "text-gray-900" : "text-gray-400"}>
           {value || placeholder}
         </span>
-        <ChevronDown 
+        <LuChevronDown 
           className={`h-4 w-4 text-gray-500 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} 
         />
       </button>
@@ -43,7 +43,7 @@ const Dropdown = ({ options, onSelect,value, placeholder}) => {
               `}
             >
               {option.name}
-              {value.id === option.id && <Check className="h-4 w-4" />}
+              {value.id === option.id && <LuCheck className="h-4 w-4" />}
             </li>
           ))}
         </ul>

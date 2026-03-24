@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react';
 import { 
-  MoreVertical, 
-  Pencil, 
-  Ban, 
-  CheckCircle, 
-  UserPlus,
-  Trash, 
-} from 'lucide-react';
+  LuPencil, 
+  LuBan, 
+  LuCheck,   
+  LuUserPlus,
+  LuTrash 
+} from "react-icons/lu";
+import { MdMoreVert , MdCheckCircle} from 'react-icons/md';
+
 import { useNavigate } from 'react-router-dom';
 import useOrderStore from '../../../store/admin/useOrderStore';
 import AssignCourier from './AssignCourier';
@@ -55,7 +56,7 @@ const OrderActions = ({ order }) => {
         }}
         className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 cursor-pointer rounded-full transition-colors"
       >
-        <MoreVertical size={18} />
+        <MdMoreVert size={18} />
       </button>
 
       {isOpen && (
@@ -69,7 +70,7 @@ const OrderActions = ({ order }) => {
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
           >
-            <Pencil size={16} /> Edit Details
+            <LuPencil size={16} /> Edit Details
           </button>
 
           <button 
@@ -80,7 +81,7 @@ const OrderActions = ({ order }) => {
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
           >
-            <UserPlus size={16} /> Assign Courier
+            <LuUserPlus size={16} /> Assign Courier
           </button>
 
           <button 
@@ -90,7 +91,7 @@ const OrderActions = ({ order }) => {
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-emerald-600 hover:bg-emerald-50 transition-colors"
           >
-            <CheckCircle size={16} /> Mark Delivered
+            <MdCheckCircle size={16} /> Mark Delivered
           </button>
 
           <button 
@@ -100,7 +101,7 @@ const OrderActions = ({ order }) => {
             }}
             className="flex items-center gap-3 w-full px-4 cursor-pointer py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"
           >
-            <Ban size={16} /> Cancel Order
+            <LuBan size={16} /> Cancel Order
           </button>
           <button 
             onClick={() => {
@@ -109,7 +110,7 @@ const OrderActions = ({ order }) => {
             }}
             className="flex items-center gap-3 w-full px-4 cursor-pointer py-2.5 text-sm text-red-600 hover:bg-red-50 font-medium transition-colors"
           >
-            <Trash size={16} /> Delete Order
+            <LuTrash size={16} /> Delete Order
           </button>
 
 

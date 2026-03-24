@@ -29,25 +29,25 @@ export default function Sidebar() {
           </div>
         </NavLink>
 
-        <NavLink to="*" className={activeStyle}>
+        <NavLink to="/deliveries" className={activeStyle}>
           <div className="flex items-center gap-3 p-2 rounded-md">
             <FaTruckMoving size={20}/> Deliveries
           </div>
         </NavLink>
 
-        <NavLink to="*" className={activeStyle}>
+        <NavLink to="/couriers" className={activeStyle}>
           <div className="flex items-center gap-3 p-2 rounded-md">
-            <IoPeopleSharp size={20}/> Drivers
+            <IoPeopleSharp size={20}/> Couriers
           </div>
         </NavLink>
 
-        <NavLink to="*" className={activeStyle}>
+        <NavLink to="/analytics" className={activeStyle}>
           <div className="flex items-center gap-3 p-2 rounded-md">
             <GrAnalytics size={20}/> Analytics
           </div>
         </NavLink>
 
-        <NavLink to="*" className={activeStyle}>
+        <NavLink to="/menu-manager" className={activeStyle}>
           <div className="flex items-center gap-3 p-2 rounded-md">
             <GiKnifeFork size={20}/> Menu Manager
           </div>

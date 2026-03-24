@@ -31,13 +31,19 @@ export default function AppRoutes () {
                 <Route path="orders/edit-order/:id" element={<OrderForm />} />
                 <Route path="orders/view-order/:id" element={<OrderForm readOnly={true} />} />
 
+                <Route path="/deliveries" element={<h1>This is deliveries page</h1>} />
+
                 <Route path="settings" element={
                     <div className="my-24 text-center">
                         This is the settings page, settings is not accessible right now
                     </div>
                 } />
 
-                <Route path="*" element={<h1>Page not Found</h1>}></Route>
+                <Route path="/analytics" element={<h1>This is analytics page</h1>} />
+                <Route path="/menu-manager" element={<h1>This is Menu manger's page</h1>} />
+
+                
+                <Route path="*" element={<h1>Page not Found</h1>} />
             </Route>
         </Routes>
     )

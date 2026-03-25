@@ -3,10 +3,8 @@ import { IoSearchSharp } from "react-icons/io5";
 import { AiFillBell } from "react-icons/ai";
 import { IoMdSettings } from "react-icons/io";
 import avatar from "../../assets/avatar.png"
-export default function Header () {
 
-  const activeStyle = ({isActive})=> 
-    isActive ? "text-orange-600 font-bold border-b-2 border-orange-600 pb-1" : "hover:text-orange-600 transition-colors";
+export default function Header ({}) {
 
   return (
     <header className="w-full sticky top-0 z-50 bg-white border-b border-gray-200 py-4 shadow-sm">
@@ -64,22 +62,8 @@ export default function Header () {
                 </div>
               </div>
             </div>
-            
+
           </div>
-          
-
-          
-          
-        
-          {/* <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-            <NavLink to="/" className={activeStyle}>Dashboard</NavLink>
-            <NavLink to="/orders" className={activeStyle}>Orders</NavLink>
-            <NavLink to="/settings"className={activeStyle}>Settings</NavLink>
-          </nav> */}
-
-          {/* <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all">
-            Login
-          </button> */}
       </div>
     </header>
   );

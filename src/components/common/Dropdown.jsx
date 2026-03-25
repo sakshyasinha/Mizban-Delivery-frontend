@@ -14,6 +14,7 @@ const Dropdown = ({ options, onSelect,value, placeholder}) => {
     <div className="relative " ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
+        type="button"
         className={`
           flex w-full items-center justify-between rounded-xl border px-4 py-2.5 text-sm font-medium transition-all duration-200
           ${isOpen 

@@ -1,11 +1,12 @@
-import React from 'react';
+
 import { MdOutlineSettingsSuggest } from "react-icons/md";
 import Dropdown from "../../common/Dropdown"; 
+import { useState } from "react";
 
 export default function ServiceInfo() {
   
   const categories = [
-    { id: 1, name: "All Categories", value: "all categories" },
+    { id: 1, name: "Select category", value: "select category" },
     { id: 2, name: "Food", value: "food" },
     { id: 3, name: "Parcel", value: "parcel" },
     { id: 4, name: "Grocery", value: "grocery" },
@@ -13,20 +14,28 @@ export default function ServiceInfo() {
   ];
 
   const serviceTypes = [
+    { id: 1, name: "Select Type", value: "select type" },
     { id: 1, name: "Immediate", value: "immediate" },
     { id: 2, name: "Scheduled", value: "scheduled" },
   ];
 
   const serviceLevels = [
+    { id: 1, name: "Select Level", value: "select level" },
     { id: 1, name: "Standard", value: "standard" },
     { id: 2, name: "Express", value: "express" },
   ];
 
   const priorities = [
+    { id: 1, name: "Select Priority", value: "select priority" },
     { id: 1, name: "Normal", value: "normal" },
     { id: 2, name: "High", value: "high" },
     { id: 3, name: "Critical", value: "critical" },
   ];
+  const [selectedCategory, setSelectedCategroy] = useState("select category")
+  const [selectedType, setSelectedType] = useState("select type")
+  const [selectedLevel, setSelectedLevel] = useState("select level")
+  const [selectedPriority, setSelectedPriority] = useState("select priority")
+
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
@@ -45,8 +54,8 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={categories} 
-            value="" 
-            onSelect={() => {}} 
+            value={selectedCategory}
+            onSelect={(val) => setSelectedCategroy(val)} 
           />
         </div>
 
@@ -57,8 +66,8 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={serviceTypes} 
-            value="" 
-            onSelect={() => {}} 
+            value={selectedType}
+            onSelect={(val) => setSelectedType(val)} 
           />
         </div>
 
@@ -69,8 +78,8 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={serviceLevels} 
-            value="" 
-            onSelect={() => {}} 
+            value={selectedLevel}
+            onSelect={(val) => setSelectedLevel(val)} 
           />
         </div>
 
@@ -81,8 +90,8 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={priorities} 
-            value="" 
-            onSelect={() => {}} 
+            value={selectedPriority}
+            onSelect={(val) => setSelectedPriority(val)} 
           />
         </div>
 

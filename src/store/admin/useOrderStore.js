@@ -3,30 +3,82 @@ import { create } from "zustand";
 
 const useOrderStore = create((set, get) => ({
     orderData: {
-        customer: {
-            customerName: "",
-            phoneNumber: "",
-            deliveryAddress: "",
-            latitude: "",
-            longitude: ""
-        },
-        item: [],
-        status: "pending",
-        payment: {
-            paymentMethod: "",
-            paymentStatus: "",
-        }
+    type: "select type", 
+    serviceType: "select category", 
+    scheduledFor: null, // OPTIONAL - required only if serviceType = scheduled
+    deliveryDeadline: null, // OPTIONAL
+    priority: "select priority", // OPTIONAL - enum: normal | high | critical
+    sender: {
+        name: "", // REQUIRED
+        phone: "" // REQUIRED
     },
-    setCustomerAndPaymentData: (section, item, value) => {
-        set((state) => ({
-            orderData: {
-                ...state.orderData,
-                [section]: {
-                    ...state.orderData[section],
-                    [item]: value
-                }
+    receiver: {
+        name: "", // REQUIRED
+        phone: "", // REQUIRED
+        address: "" // REQUIRED
+    },
+    pickupLocation: {
+        type: "Point",
+        coordinates: [0.000000, 0.00000
+        ] // REQUIRED
+    },
+    dropoffLocation: {
+        type: "Point",
+        coordinates: [0.000000, 0.000000
+        ] // REQUIRED
+    },
+    items: [
+        {
+            name: "", // REQUIRED if item exists
+            quantity: 1, // OPTIONAL (default 1)
+            unitPrice: 0, // OPTIONAL
+            total: 0 // OPTIONAL (can be calculated)
+        }
+    ], // OPTIONAL (can be empty array)
+    packageDetails: {
+        weight: 0.00, // OPTIONAL
+        size: "", // OPTIONAL - enum: small | medium | large
+        fragile: false, // OPTIONAL
+        note: "" // OPTIONAL
+    },
+    serviceLevel: "selected level", // OPTIONAL - enum: standard | express
+    paymentType: "", // REQUIRED - enum: online | COD
+    amountToCollect: 0, // OPTIONAL - money driver collects from customer
+    deliveryPrice: {
+        discount: 0, // OPTIONAL
+        total: 0 // REQUIRED in your schema
+    },
+    finalPrice: 0, // REQUIRED in your schema (amountToCollect + deliveryPrice.total)
+    },
+    updateOrderData : (path, value) =>{
+        let separatedPath = path.split(".");
+         const updateNested = (currentState, separatedPath, value)=>{
+            if(separatedPath.length === 1){
+             if(Array.isArray(currentState)){
+              let copy =  [...currentState]
+              copy[separatedPath[0]] = value
+              return copy
+             }else{
+              return  { ...currentState, [separatedPath[0]] : value}
+             }
+            }else{
+                const [first, ...rest] = separatedPath
+                let newCopy = Array.isArray(currentState) ? [...currentState] : {...currentState}
+                newCopy[first] = updateNested(currentState?.[first] || {}, rest, val);
+                return newCopy
             }
-        }))
+         }
+         set((state)=> ({
+            orderData: updateNested(state.orderData, separatedPath, value)
+         }))
+    },
+    setSingleItem: (item, value)=>{
+       set((state)=> ({
+         orderData: {
+            ...state.orderData,
+            [item]: value
+         }
+       }))
     },
     setItemsdata: (newItem) => {
         set((state) => ({

@@ -1,10 +1,15 @@
 
+import useOrderStore from "../../../store/admin/useOrderStore";
 import Map from "../../common/order/Map";
 import { LuMapPin, LuNavigation } from "react-icons/lu";
 
 export default function Location() {
   const inputStyle = "p-2.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-500 font-mono outline-none w-full";
   const labelStyle = "text-xs font-bold text-gray-600 mb-1 uppercase tracking-wider";
+
+
+  const pickupLocation = useOrderStore((state)=> state.orderData.pickupLocation.coordinates)
+  const dropoffLocation = useOrderStore((state)=> state.orderData.dropoffLocation.coordinates)
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
@@ -25,12 +30,13 @@ export default function Location() {
             
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col">
-                <label htmlFor="pick-lat" className={labelStyle}>Latitude</label>
-                <input type="text" id="pick-lat" value="0.000000" readOnly className={inputStyle} />
+                <label htmlFor="pick-lat"
+                className={labelStyle}>Latitude</label>
+                <input type="text" id="pick-lat" value={pickupLocation[0]} readOnly className={inputStyle} />
               </div>
               <div className="flex flex-col">
                 <label htmlFor="pick-long" className={labelStyle}>Longitude</label>
-                <input type="text" id="pick-long" value="0.000000" readOnly className={inputStyle} />
+                <input type="text" id="pick-long" value={pickupLocation[1]} readOnly className={inputStyle} />
               </div>
             </div>
           </div>
@@ -47,15 +53,19 @@ export default function Location() {
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col">
                 <label htmlFor="drop-lat" className={labelStyle}>Latitude</label>
-                <input type="text" id="drop-lat" value="0.000000" readOnly className={inputStyle} />
+                <input type="text" id="drop-lat" value={dropoffLocation[0]} readOnly className={inputStyle} />
               </div>
               <div className="flex flex-col">
                 <label htmlFor="drop-long" className={labelStyle}>Longitude</label>
-                <input type="text" id="drop-long" value="0.000000" readOnly className={inputStyle} />
+                <input type="text" id="drop-long" value={dropoffLocation[1]} readOnly className={inputStyle} />
               </div>
             </div>
           </div>
+            
 
+          <div>
+           <span className="italic text-gray-500 text-sm">Click on the map to set the coordinates, you can update the coordinates by dragging the markers</span> 
+          </div>
         </div>
       </div>
     </div>

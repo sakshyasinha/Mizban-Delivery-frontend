@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMapEvents, Polyline, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, Polyline, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import useOrderStore from '../../../store/admin/useOrderStore';
 import 'leaflet/dist/leaflet.css';
@@ -59,10 +59,10 @@ function LocationMarker() {
                     draggable={true}
                     eventHandlers={{ dragend: (e) => handleDragging("pickupLocation", e) }}
                 >
-                    <Popup>
+                    <Tooltip permanent={true}>
                         Pickup Location
 
-                    </Popup>
+                    </Tooltip>
                 </Marker>
             )}
             {
@@ -72,9 +72,10 @@ function LocationMarker() {
                         draggable={true}
                         eventHandlers={{ dragend: (e) => handleDragging("dropoffLocation", e) }}
                     >
-                        <Popup>
-                            Dropoff Location
-                        </Popup>
+                    <Tooltip permanent={true}>
+                        Dropoff Location
+
+                    </Tooltip>
 
                     </Marker>
                 )

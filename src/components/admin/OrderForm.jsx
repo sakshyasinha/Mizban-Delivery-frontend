@@ -17,20 +17,10 @@ import { LuArrowLeft } from 'react-icons/lu';
 
 export default function OrderForm() {
   const orderData = useOrderStore((state) => state.orderData);
-  const setCustomerAndPaymentData = useOrderStore((state) => state.setCustomerAndPaymentData);
-  const isItemModalOpen = useOrderStore((state) => state.isItemModalOpen);
-  const setItemModalOpen = useOrderStore((state) => state.setItemModalOpen);
-  const increaseQuantity = useOrderStore((state) => state.increaseQuantity);
-  const decreaseQuantity = useOrderStore((state) => state.decreaseQuantity);
-  const getItemTotalFee = useOrderStore((state) => state.getItemTotalFee);
-  const itemsTotalFee = useOrderStore((state) => state.itemsTotalFee);
-  const deleteItem = useOrderStore((state) => state.deleteItem);
-  const resetOrderData = useOrderStore((state) => state.resetOrderData)
-  const addNewOrder = useOrderStore((state) => state.addNewOrder)
   const isEditingOrder = useOrderStore((state) => state.isEditingOrder)
-  const editExitingOrder = useOrderStore((state) => state.editExitingOrder)
   const isViewingOrder = useOrderStore((state) => state.isViewingOrder)
   const navigate = useNavigate()
+
 
   let title = ""
   if (isEditingOrder) {

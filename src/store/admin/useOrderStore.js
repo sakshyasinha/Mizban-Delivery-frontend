@@ -35,7 +35,7 @@ const useOrderStore = create((set, get) => ({
         note: "" // OPTIONAL
     },
     serviceLevel: "select level", // OPTIONAL - enum: standard | express
-    paymentType: "", // REQUIRED - enum: online | COD
+    paymentType: "select payment type", // REQUIRED - enum: online | COD
     amountToCollect: 0, // OPTIONAL - money driver collects from customer
     deliveryPrice: {
         discount: 0, // OPTIONAL
@@ -92,6 +92,7 @@ const useOrderStore = create((set, get) => ({
             }
         }))
     },
+    
     deleteItem: (id)=>{
       set((state)=> ({
         orderData: {
@@ -103,20 +104,60 @@ const useOrderStore = create((set, get) => ({
     },
     isEditingOrder: false,
     isViewingOrder: false,
-    createNewOrder: ()=>{
-        set({
-            isEditingOrder:false,
-          orderData: {
-            customer: {},
-            item: [],
-            payment: {
-                paymentMethod: "",
-                paymentStatus: "Pending",
-            },
-        },
-        })
-    },
+   initailOrderDataObject : {
+      type: "select type",
+      serviceType: "select category",
+      scheduledFor: null,
+      deliveryDeadline: null,
+      priority: "select priority",
 
+      sender: {
+        name: "",
+        phone: ""
+      },
+
+      receiver: {
+        name: "",
+        phone: "",
+        address: ""
+      },
+
+      pickupLocation: {
+        type: "Point",
+        coordinates: [0.000000, 0.000000]
+      },
+
+      dropoffLocation: {
+        type: "Point",
+        coordinates: [0.000000, 0.000000]
+      },
+
+      items: [],
+
+      packageDetails: {
+        weight: 0,
+        size: "",
+        fragile: false,
+        note: ""
+      },
+
+      serviceLevel: "select level",
+      paymentType: "",
+      amountToCollect: 0,
+
+      deliveryPrice: {
+        discount: 0,
+        total: 0
+      },
+
+      finalPrice: 0,
+  },
+  createNewOrder: () => {
+  set({
+     isEditingOrder: false,
+     orderData: get().initailOrderDataObject
+  })
+},
     editOrder: (order, isViewing)=>{
        set({
         isEditingOrder: true,

@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { LuWallet, LuTag, LuTruck, LuBanknote, LuCalculator, LuCoins } from "react-icons/lu";
 import Dropdown from "../../common/Dropdown";
+import useOrderStore from '../../../store/admin/useOrderStore';
 
 export default function PaymentAndPrice() {
   const paymentMethods = [
-    { id: 1, name: "Cash on Delivery (COD)", value: "COD" },
-    { id: 2, name: "Online Payment", value: "online" },
+    { id: 1, name: "Select Payment Type", value: "select payment type" },
+    { id: 2, name: "Cash on Delivery (COD)", value: "COD" },
+    { id: 3, name: "Online Payment", value: "online" },
   ];
+  const paymentType = useOrderStore((state)=> state.orderData.paymentType)
+  const amountToCollect  = useOrderStore((state)=> state.orderData.amountToCollect)
+  const deliveryPrice = useOrderStore((state)=> state.orderData.deliveryPrice)
+  const finalPrice = useOrderStore((state)=> state.orderData.finalPrice)
+  const items = useOrderStore((state)=> state.orderData.items)
+  const updateOrderData  = useOrderStore((state)=> state.updateOrderData)
+
+  const totalItemsPrice = useMemo(()=>{
+    return items.reduce((sum, item)=> {
+    return sum + item.quantity * item.unitPrice
+   }, 0)
+  }, [items])
+
+   useEffect(()=>{
+    updateOrderData("deliveryPrice.total", totalItemsPrice)
+   }, [totalItemsPrice])  
+    
+   const totalAmountToPay = useMemo(()=>{
+     return Number(amountToCollect) + Number(deliveryPrice.total) - Number(deliveryPrice.discount)
+   }, [amountToCollect, deliveryPrice])
+
+   useEffect(()=>{
+      updateOrderData("finalPrice", totalAmountToPay)
+   }, [totalAmountToPay])
 
   const inputStyle = "p-3.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:bg-white transition-all w-full text-sm font-medium pr-12";
   const readOnlyStyle = "p-3.5 bg-gray-100 border border-gray-200 rounded-xl text-sm font-bold text-gray-500 outline-none w-full pr-12";
@@ -30,7 +56,9 @@ export default function PaymentAndPrice() {
           Items Subtotal
           </label>
           <div className="relative">
-            <input type="number" id="amountToCollect" readOnly className={readOnlyStyle} placeholder="0.00" />
+            <input type="number" id="amountToCollect" 
+            value={deliveryPrice.total}        
+            readOnly className={readOnlyStyle} placeholder="0.00" />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-black">AFN</span>
           </div>
         </div>
@@ -41,7 +69,10 @@ export default function PaymentAndPrice() {
            Applied Discount
           </label>
           <div className="relative">
-            <input type="number" id="discount" className={inputStyle} placeholder="0.00" />
+            <input type="number" id="discount" className={inputStyle} min={0} 
+            value={deliveryPrice.discount}
+            onChange={(e)=> updateOrderData("deliveryPrice.discount", e.target.value)}
+            placeholder="0.00" />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-black">AFN</span>
           </div>
         </div>
@@ -52,7 +83,10 @@ export default function PaymentAndPrice() {
            Shipping Fee
           </label>
           <div className="relative">
-            <input type="number" id="total" className={inputStyle} placeholder="0.00" />
+            <input type="number" id="total" className={inputStyle} min={0} 
+            value={amountToCollect}
+            onChange={(e)=> updateOrderData("amountToCollect", e.target.value)}
+            placeholder="0.00" />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-black">AFN</span>
           </div>
         </div>
@@ -64,10 +98,11 @@ export default function PaymentAndPrice() {
           </label>
           <div className="relative">
             <input 
+            value={finalPrice}
               type="number" 
               id="finalPrice" 
               readOnly 
-              className="p-3.5 bg-orange-50 border border-orange-200 rounded-xl outline-none text-lg font-black text-orange-700 w-full pr-12" 
+              className="p-2.5 bg-orange-50 border border-orange-200 rounded-xl outline-none text-lg font-black text-orange-700 w-full pr-12" 
               placeholder="0.00"
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-orange-400 font-black">AFN</span>
@@ -85,8 +120,8 @@ export default function PaymentAndPrice() {
             <Dropdown 
               options={paymentMethods} 
               placeholder="Choose Method"
-              value="" 
-              onSelect={() => {}} 
+              value={paymentType}
+              onSelect={(val) => updateOrderData("paymentType", val)} 
             />
           </div>
         </div>

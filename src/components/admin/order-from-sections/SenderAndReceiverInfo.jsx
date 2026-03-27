@@ -1,9 +1,15 @@
-import React from 'react';
-import { LuStore, LuUser, LuPhone, LuMapPin } from "react-icons/lu";
+import React, { useEffect } from 'react';
+import { LuStore, LuUser } from "react-icons/lu";
+import useOrderStore from '../../../store/admin/useOrderStore';
 
 export default function SenderAndReceiverInfo() {
   const inputStyle = "p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full text-sm";
   const labelStyle = "text-sm font-bold text-gray-700 mb-1 flex items-center gap-1";
+
+  const updateOrderData = useOrderStore((state)=> state.updateOrderData)
+  const sender = useOrderStore((state)=> state.orderData.sender)
+  const receiver  = useOrderStore((state)=> state.orderData.receiver)
+
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -23,6 +29,8 @@ export default function SenderAndReceiverInfo() {
             <input 
               type="text" 
               id="businessName" 
+              value={sender.name}
+              onChange={(e)=> {updateOrderData("sender.name" , e.target.value)}}
               placeholder="Shahmama Restaurant" 
               className={inputStyle} 
             />
@@ -35,6 +43,8 @@ export default function SenderAndReceiverInfo() {
             <input 
               type="text" 
               id="businessPhoneNumber" 
+              value={sender.phone}
+              onChange={(e)=> updateOrderData("sender.phone", e.target.value)}
               placeholder="070000000" 
               className={inputStyle} 
             />
@@ -58,6 +68,8 @@ export default function SenderAndReceiverInfo() {
               <input 
                 type="text" 
                 id="customerName" 
+                value={receiver.name}
+                onChange={(e)=> updateOrderData("receiver.name", e.target.value)}
                 placeholder="Ali Ahmadi" 
                 className={inputStyle} 
               />
@@ -70,6 +82,8 @@ export default function SenderAndReceiverInfo() {
               <input 
                 type="text" 
                 id="customerPhoneNumber" 
+                value={receiver.phone}
+                onChange={(e)=> updateOrderData("receiver.phone", e.target.value)}
                 placeholder="070000000" 
                 className={inputStyle} 
               />
@@ -83,6 +97,8 @@ export default function SenderAndReceiverInfo() {
             <input 
               type="text" 
               id="customerAddress" 
+              value={receiver.address}
+              onChange={(e)=> updateOrderData("receiver.address", e.target.value)}
               placeholder="Apartment 4, Darulaman Road, District 6, Kabul" 
               className={inputStyle} 
             />

@@ -10,8 +10,8 @@ const AddItemModal = ({ isOpen, onClose }) => {
     const [quantity, setQuantity] = useState(1);
     const [unitPrice, setUnitPrice] = useState();
     const [productName, setProductName] = useState("");
-    const setItemsdata = useOrderStore((state) => state.setItemsdata);
-
+     const updateOrderData = useOrderStore((state)=> state.updateOrderData)
+     const items = useOrderStore((state)=> state.orderData.items)
 
     const handleItemSubmission = (e)=>{
          e.preventDefault()
@@ -25,12 +25,12 @@ const AddItemModal = ({ isOpen, onClose }) => {
          }
          let newItem = {
             id: Date.now(),
-            itemName: productName,
+            name: productName,
             quantity: Number(quantity),
             unitPrice: Number(unitPrice),
          }
-         setItemsdata(newItem)
-
+        let finalItems = [...items, newItem]
+         updateOrderData("items", finalItems)
          toast.success("Item added successfully!")
          onClose()
     }
@@ -103,11 +103,10 @@ const AddItemModal = ({ isOpen, onClose }) => {
                         <div className="bg-orange-50/50 rounded-2xl p-4 border border-orange-100/50 flex justify-between items-center">
                             <span className="text-xs font-bold text-orange-800/60 uppercase tracking-tight">Total Amount</span>
                             <div className="text-right">
-                                <span className="text-lg font-black text-orange-600">AFN {(quantity * unitPrice).toLocaleString()}</span>
+                                <span className="text-lg font-black text-orange-600">AFN {(unitPrice > 0) ? (Number(quantity) * unitPrice): 0}</span>
                             </div>
                         </div>
                     </div>
-
                     <div className="px-6 pb-8 pt-2 flex">
                         <Button 
                             text="Add Item"

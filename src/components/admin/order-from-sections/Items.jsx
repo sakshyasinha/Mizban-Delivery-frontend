@@ -3,13 +3,14 @@ import { useState } from "react";
 import AddItemModal from "../../common/order/AddItemModal";
 import Button from "../../common/order/Button";
 import { LuPackage, LuPlus, LuMinus, LuTrash2, LuShoppingBag } from "react-icons/lu";
+import useOrderStore from "../../../store/admin/useOrderStore";
 
 export default function Items() {
   const [isModalOpen, setModalOPen] = useState(false)
-  const items = [
-    { id: 1, name: "Sample Item", quantity: 1, unitPrice: 100 }
-  ];
-
+  const items = useOrderStore((state)=> state.orderData.items)
+  const increaseQuantity = useOrderStore((state)=> state.increaseQuantity)
+  const decreaseQuantity = useOrderStore((state)=> state.decreaseQuantity)
+  const deleteItem = useOrderStore((state)=> state.deleteItem)
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
       {/* Header Section */}
@@ -51,13 +52,19 @@ export default function Items() {
                   </td>
                   <td className="py-4 px-2">
                     <div className="flex items-center gap-3 bg-gray-100 w-fit rounded-lg p-1">
-                      <button className="p-1  cursor-pointer hover:text-orange-600 bg-white rounded-md transition-all">
+                      <button type="button"
+                       className="p-1  cursor-pointer hover:text-orange-600 bg-white rounded-md transition-all"
+                       onClick={()=> decreaseQuantity(item.id)}
+                       >
                         <LuMinus size={14} />
                       </button>
                       <span className="text-sm font-bold min-w-[20px] text-center">
                         {item.quantity}
                       </span>
-                      <button className="p-1 cursor-pointer  hover:text-orange-600 bg-white rounded-md transition-all">
+                      <button  type="button"
+                      onClick={()=> increaseQuantity(item.id)}
+                      className="p-1 cursor-pointer  hover:text-orange-600 bg-white rounded-md transition-all"
+                      >
                         <LuPlus size={14} />
                       </button>
                     </div>
@@ -69,7 +76,9 @@ export default function Items() {
                     {item.quantity * item.unitPrice} AFN
                   </td>
                   <td className="py-4 px-2 text-right">
-                    <button className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
+                    <button type="button" 
+                    onClick={()=>  deleteItem(item.id)}
+                    className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all">
                       <LuTrash2 size={18} />
                     </button>
                   </td>

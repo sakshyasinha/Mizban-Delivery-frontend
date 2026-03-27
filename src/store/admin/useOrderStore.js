@@ -3,8 +3,8 @@ import { create } from "zustand";
 
 const useOrderStore = create((set, get) => ({
     orderData: {
-    type: "select type", 
-    serviceType: "select category", 
+    type: "select type", // REQUIRED - enum: food | parcel | grocery | other
+    serviceType: "select category", // OPTIONAL - enum: immediate | scheduled
     scheduledFor: null, // OPTIONAL - required only if serviceType = scheduled
     deliveryDeadline: null, // OPTIONAL
     priority: "select priority", // OPTIONAL - enum: normal | high | critical
@@ -27,21 +27,14 @@ const useOrderStore = create((set, get) => ({
         coordinates: [0.000000, 0.000000
         ] // REQUIRED
     },
-    items: [
-        {
-            name: "", // REQUIRED if item exists
-            quantity: 1, // OPTIONAL (default 1)
-            unitPrice: 0, // OPTIONAL
-            total: 0 // OPTIONAL (can be calculated)
-        }
-    ], // OPTIONAL (can be empty array)
+    items: [], // OPTIONAL (can be empty array)
     packageDetails: {
         weight: 0.00, // OPTIONAL
         size: "", // OPTIONAL - enum: small | medium | large
         fragile: false, // OPTIONAL
         note: "" // OPTIONAL
     },
-    serviceLevel: "selected level", // OPTIONAL - enum: standard | express
+    serviceLevel: "select level", // OPTIONAL - enum: standard | express
     paymentType: "", // REQUIRED - enum: online | COD
     amountToCollect: 0, // OPTIONAL - money driver collects from customer
     deliveryPrice: {
@@ -64,7 +57,7 @@ const useOrderStore = create((set, get) => ({
             }else{
                 const [first, ...rest] = separatedPath
                 let newCopy = Array.isArray(currentState) ? [...currentState] : {...currentState}
-                newCopy[first] = updateNested(currentState?.[first] || {}, rest, val);
+                newCopy[first] = updateNested(currentState?.[first] || {}, rest, value);
                 return newCopy
             }
          }
@@ -72,22 +65,7 @@ const useOrderStore = create((set, get) => ({
             orderData: updateNested(state.orderData, separatedPath, value)
          }))
     },
-    setSingleItem: (item, value)=>{
-       set((state)=> ({
-         orderData: {
-            ...state.orderData,
-            [item]: value
-         }
-       }))
-    },
-    setItemsdata: (newItem) => {
-        set((state) => ({
-            orderData: {
-                ...state.orderData,
-                item: [...state.orderData.item, newItem]
-            }
-        }))
-    },
+
     isItemModalOpen: false,
     setItemModalOpen: () => {
         set({ isItemModalOpen: !get().isItemModalOpen })
@@ -97,7 +75,7 @@ const useOrderStore = create((set, get) => ({
         set((state) => ({
             orderData: {
                 ...state.orderData,
-                item: state.orderData.item.map((item) =>
+                items: state.orderData.items.map((item) =>
                     item.id === id ? { ...item, quantity: item.quantity + 1 } : item
                 ),
             },
@@ -106,7 +84,7 @@ const useOrderStore = create((set, get) => ({
         set((state)=> ({
             orderData: {
                 ...state.orderData,
-                item: state.orderData.item.map((item)=>
+                items: state.orderData.items.map((item)=>
                  item.id === id ? {...item, quantity: Math.max(1, item.quantity - 1)}: item
                 )
             }
@@ -116,7 +94,7 @@ const useOrderStore = create((set, get) => ({
       set((state)=> ({
         orderData: {
             ...state.orderData,
-            item: state.orderData.item.filter((item)=> item.id !== id)
+            items: state.orderData.items.filter((item)=> item.id !== id)
         },
       })),
       toast.success("Item deleted successfully!")

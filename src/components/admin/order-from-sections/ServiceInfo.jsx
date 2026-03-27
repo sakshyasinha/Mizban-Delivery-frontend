@@ -1,7 +1,8 @@
 
 import { MdOutlineSettingsSuggest } from "react-icons/md";
 import Dropdown from "../../common/Dropdown"; 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useOrderStore from "../../../store/admin/useOrderStore";
 
 export default function ServiceInfo() {
   
@@ -31,10 +32,23 @@ export default function ServiceInfo() {
     { id: 2, name: "High", value: "high" },
     { id: 3, name: "Critical", value: "critical" },
   ];
-  const [selectedCategory, setSelectedCategroy] = useState("select category")
-  const [selectedType, setSelectedType] = useState("select type")
-  const [selectedLevel, setSelectedLevel] = useState("select level")
-  const [selectedPriority, setSelectedPriority] = useState("select priority")
+  const [showScheduledFor, setShowScheduledFor] = useState(false)
+  const updateOrderData = useOrderStore((state)=> state.updateOrderData)
+  const serviceType = useOrderStore((state)=> state.orderData.serviceType)
+  const type = useOrderStore((state)=> state.orderData.type)
+  const serviceLevel = useOrderStore((state)=> state.orderData.serviceLevel)
+  const priority = useOrderStore((state)=> state.orderData.priority)
+  const scheduledFor = useOrderStore((state)=>state.orderData.scheduledFor)
+  const deliveryDeadline = useOrderStore((state)=> state.orderData.deliveryDeadline)
+
+
+  useEffect(()=>{
+    if(serviceType === "scheduled"){
+      setShowScheduledFor(true)
+    }else{
+      setShowScheduledFor(false)
+    }
+  },[serviceType])
 
 
   return (
@@ -54,8 +68,9 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={categories} 
-            value={selectedCategory}
-            onSelect={(val) => setSelectedCategroy(val)} 
+            value={type}
+            onSelect={(val) => {updateOrderData("type", val);               
+            }} 
           />
         </div>
 
@@ -66,8 +81,8 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={serviceTypes} 
-            value={selectedType}
-            onSelect={(val) => setSelectedType(val)} 
+            value={serviceType}
+            onSelect={(val) => {updateOrderData("serviceType", val) }} 
           />
         </div>
 
@@ -78,10 +93,19 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={serviceLevels} 
-            value={selectedLevel}
-            onSelect={(val) => setSelectedLevel(val)} 
+            value={serviceLevel}
+            onSelect={(val) => updateOrderData("serviceLevel", val)} 
           />
         </div>
+        {showScheduledFor && (
+          <div>
+            <label htmlFor="scheduledFor" className="text-sm font-bold text-gray-700 mb-1">Scheduled For</label>
+            <input type="date" id="scheduledFor" 
+            value={scheduledFor}
+            onChange={(e)=> updateOrderData("scheduledFor", e.target.value)}
+            className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full" />
+          </div>
+          )}
 
         {/* Priority */}
         <div className="flex flex-col">
@@ -90,8 +114,8 @@ export default function ServiceInfo() {
           </label>
           <Dropdown 
             options={priorities} 
-            value={selectedPriority}
-            onSelect={(val) => setSelectedPriority(val)} 
+            value={priority}
+            onSelect={(val) => updateOrderData("priority", val)} 
           />
         </div>
 
@@ -103,7 +127,9 @@ export default function ServiceInfo() {
           <input 
             type="date" 
             id="deadline" 
-            className="p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full" 
+            value={deliveryDeadline}
+            onChange={(e)=> updateOrderData("deliveryDeadline", e.target.value)}
+            className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full" 
           />
         </div>
       </div>

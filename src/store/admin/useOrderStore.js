@@ -19,13 +19,11 @@ const useOrderStore = create((set, get) => ({
     },
     pickupLocation: {
         type: "Point",
-        coordinates: [0.000000, 0.00000
-        ] // REQUIRED
+        coordinates: [0,0] // REQUIRED
     },
     dropoffLocation: {
         type: "Point",
-        coordinates: [0.000000, 0.000000
-        ] // REQUIRED
+        coordinates: [0,0] // REQUIRED
     },
     items: [], // OPTIONAL (can be empty array)
     packageDetails: {

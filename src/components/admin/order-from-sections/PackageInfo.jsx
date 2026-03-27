@@ -1,13 +1,19 @@
-import React from 'react';
-import { LuPackage, LuTriangleAlert, LuFileText, LuWeight } from "react-icons/lu";
-import Dropdown from "../../common/Dropdown"; 
 
+import { LuPackage, LuTriangleAlert } from "react-icons/lu";
+import Dropdown from "../../common/Dropdown"; 
+import useOrderStore from  "../../../store/admin/useOrderStore"
+import { useEffect } from "react";
 export default function PackageInfo() {
   const sizes = [
     { id: 1, name: "Small ", value: "small" },
     { id: 2, name: "Medium ", value: "medium" },
     { id: 3, name: "Large ", value: "large" },
   ];
+const packageDetails = useOrderStore((state)=> state.orderData.packageDetails)
+const updateOrderData = useOrderStore((state)=> state.updateOrderData)
+  useEffect(()=>{
+   console.log(packageDetails)
+  },[packageDetails])
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
@@ -22,12 +28,14 @@ export default function PackageInfo() {
         {/* Package Weight */}
         <div className="flex flex-col">
           <label htmlFor="weight" className="text-sm font-bold text-gray-700 mb-1 flex items-center gap-1">
-            Pacakge Weight
+            Package Weight
           </label>
           <input 
             type="number" 
             min={0} 
             id="weight" 
+            value={packageDetails.weight}
+            onChange={(e)=> updateOrderData("packageDetails.weight", e.target.value)}
             placeholder="0.00"
             className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full font-medium" 
           />
@@ -41,17 +49,18 @@ export default function PackageInfo() {
           <Dropdown 
             options={sizes} 
             placeholder="Select Size"
-            value="" 
-            onSelect={() => {}} 
+            value={packageDetails.size}
+            onSelect={(val) => updateOrderData("packageDetails.size", val)} 
           />
         </div>
-
         {/* Fragile */}
         <div className="md:col-span-2">
           <label className="flex items-center gap-3 p-4 bg-orange-50/50 border border-orange-100 rounded-xl cursor-pointer hover:bg-orange-50 transition-colors w-fit">
             <input 
               type="checkbox" 
               id="isFragile" 
+              value={packageDetails.fragile}
+              onChange={(e)=> updateOrderData("packageDetails.fragile", e.target.checked)}
               className="w-5 h-5 accent-orange-600 cursor-pointer" 
             />
             <div className="flex flex-col">
@@ -71,6 +80,8 @@ export default function PackageInfo() {
           
           <div className="relative">
             <textarea 
+              value={packageDetails.note}
+              onChange={(e)=> updateOrderData("packageDetails.note", e.target.value)}
               id="note" 
               maxLength={200}
               placeholder="Add any specific delivery instructions here..."

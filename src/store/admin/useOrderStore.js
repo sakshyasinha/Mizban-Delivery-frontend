@@ -68,7 +68,9 @@ const useOrderStore = create((set, get) => ({
 
     isItemModalOpen: false,
     setItemModalOpen: () => {
-        set({ isItemModalOpen: !get().isItemModalOpen })
+        set((state)=>({
+            isItemModalOpen: !state.isItemModalOpen
+        }))
     },
 
     increaseQuantity: (id) => {

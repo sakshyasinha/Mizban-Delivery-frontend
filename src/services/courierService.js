@@ -1,13 +1,47 @@
-import axios from "axios";
+import api from './api';
+import {handleApiError} from './handleApiError';
 
-const API_URL = "http://localhost:3500/couriers";
+// Get Courier
+export const getCouriers = async () => {
+    try {
+        const response = await api.get('couriers').json();
+        return response;
+    } catch (error) {
+        await handleApiError(error);
+    }
+};
 
-export const courierService = {
-  getAll: () => axios.get(API_URL),
+// Create Courier
+export const createCourier = async (data) => {
+    try {
+        const response = await api.post('couriers', {
+            json: data,
+        }).json();
+        return response;
+    } catch (error) {
+       await handleApiError(error);
+    }
+};
 
-  create: (data) => axios.post(API_URL, data),
+  // UpdateCourier
+export const updateCourier = async (id, data) => {
+    try {
+        const response = await api.put(`couriers/${id}`, {
+            json: data,
+        }).json();
+        return response;
+    } catch (error) {
+        await handleApiError(error);
+    }
+};
 
-  update: (id, data) => axios.put(`${API_URL}/${id}`, data),
 
-  delete: (id) => axios.delete(`${API_URL}/${id}`),
+  // Delete Courier
+export const deleteCourier = async (id) => {
+    try {
+        const response = await api.delete(`couriers/${id}`).json();
+        return response;
+    } catch (error) {
+       await handleApiError(error);
+    }
 };

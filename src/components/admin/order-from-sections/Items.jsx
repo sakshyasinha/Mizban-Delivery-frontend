@@ -11,6 +11,10 @@ export default function Items() {
   const increaseQuantity = useOrderStore((state)=> state.increaseQuantity)
   const decreaseQuantity = useOrderStore((state)=> state.decreaseQuantity)
   const deleteItem = useOrderStore((state)=> state.deleteItem)
+  const type = useOrderStore((state)=> state.orderData.type)
+  const visited = useOrderStore((state)=>state.visited)
+
+  const itemsError = type !== "parcel" && visited["items"] && items.length === 0
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
       {/* Header Section */}
@@ -28,10 +32,10 @@ export default function Items() {
       </div>
 
       <div className="overflow-x-auto">
-        {items.length === 0 ? (
+        {items.length === 0  || itemsError ? (
           <div className="text-center py-10 bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 text-gray-400">
             <LuPackage className="mx-auto mb-2 opacity-20" size={40} />
-            <p>No items added yet!</p>
+           {itemsError ? (<p className="text-red-500 text-sm">Add at least one item</p>) : (<p>No items added yet!</p>)}
           </div>
         ) : (
           <table className="w-full text-left border-collapse">

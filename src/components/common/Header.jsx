@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const Header = () => {
+const Header = ({ hideContent }) => {
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,18 +85,19 @@ const Header = () => {
           </div>
         </div>
 
-        <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-          <NavLink to="/" className={activeStyle}>
-            {t("Dashboard")}
-          </NavLink>
-          <NavLink to="orders" className={activeStyle}>
-            {t("Orders")}
-          </NavLink>
-          <NavLink to="/settings" className={activeStyle}>
-            {t("Settings")}
-          </NavLink>
-        </nav>
-
+        {!hideContent && (
+          <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+            <NavLink to="/" className={activeStyle}>
+              {t("Dashboard")}
+            </NavLink>
+            <NavLink to="orders" className={activeStyle}>
+              {t("Orders")}
+            </NavLink>
+            <NavLink to="/settings" className={activeStyle}>
+              {t("Settings")}
+            </NavLink>
+          </nav>
+        )}
         <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all">
           {t("Login")}
         </button>

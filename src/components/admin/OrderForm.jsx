@@ -1,7 +1,7 @@
 import React, { isValidElement, useEffect, useState } from "react";
 import useOrderStore from "../../store/admin/useOrderStore";
-import Button from "../common/Button";
-import Map from "../common/Map";
+import Button from "../common/order/Button";
+import Map from "../common/order/Map";
 import {
   User,
   Package,
@@ -12,7 +12,7 @@ import {
   Minus,
   ArrowLeft,
 } from "lucide-react";
-import AddItemModal from "../common/AddItemModal";
+import AddItemModal from "../common/order/AddItemModal";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
@@ -21,6 +21,7 @@ import {
   toLocalePrice,
   toEnglishDigits,
 } from "../../utils/numberConverter";
+import OrderStates from "../common/order/OrderStates";
 
 export default function OrderForm() {
   const orderData = useOrderStore((state) => state.orderData);
@@ -136,6 +137,7 @@ export default function OrderForm() {
         paymentStatus: orderData.payment.paymentStatus,
       },
       status: "Pending",
+      createdAt: Date.now(),
       itemsTotalFee: itemsTotalFee,
       deliveryFee: 100,
       total: itemsTotalFee + 100,
@@ -181,9 +183,13 @@ export default function OrderForm() {
             {/* --- Header --- */}
             <div className="flex md:justify-between justify-center gap-4 flex-wrap items-center mb-8">
               <div>
-                <h1 className="font-bold text-2xl text-gray-900 tracking-tight">
-                  {title}
-                </h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="font-bold text-2xl text-gray-900 tracking-tight">
+                    {title}
+                  </h1>
+                  {isViewingOrder && <OrderStates order={orderData} />}
+                </div>
+
                 <p className="text-gray-500 text-sm">
                   {isViewingOrder
                     ? t("View the order full details")

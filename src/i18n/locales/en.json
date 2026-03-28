@@ -86,5 +86,12 @@
   "Online": "Online",
   "COD": "COD",
   "Enter full street address, apartment, or suite": "Enter full street address, apartment, or suite",
-  "AFN": "AFN"
+  "AFN": "AFN",
+  "The order is already cancelled!": "The order is already cancelled!",
+  "You cannot cancel a delivered order!": "You cannot cancel a delivered order!",
+  "Cannot delete paid or delivered order!": "Cannot delete paid or delivered order!",
+  "Order deleted successfully!": "Order deleted successfully!",
+  "Delete Order": "Delete Order",
+  "No results match your filters.": "No results match your filters.",
+  "Clear all filters": "Clear all filters"
 }

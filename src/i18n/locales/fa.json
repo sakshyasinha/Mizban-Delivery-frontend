@@ -86,5 +86,12 @@
   "Online": "انلاین",
   "COD": "پرداخت در محل",
   "Enter full street address, apartment, or suite": "آدرس کامل خیابان، آپارتمان یا واحد را وارد کنید",
-  "AFN": "افغانی"
+  "AFN": "افغانی",
+  "The order is already cancelled!": "سفارش از قبل لغو شده است!",
+  "You cannot cancel a delivered order!": "شما نمی‌توانید سفارش تحویل داده شده را لغو کنید!",
+  "Cannot delete paid or delivered order!": "امکان حذف سفارش پرداخت شده یا تحویل داده شده وجود ندارد!",
+  "Order deleted successfully!": "سفارش با موفقیت حذف شد!",
+  "Delete Order": "حذف سفارش",
+  "No results match your filters.": "هیچ نتیجه‌ای با فیلترهای شما مطابقت ندارد.",
+  "Clear all filters": "پاک کردن همه فیلترها"
 }

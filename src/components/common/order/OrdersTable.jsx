@@ -2,21 +2,19 @@ import { MoreVertical } from "lucide-react";
 import OrderStatusBadge from "./OrderStatusBadge";
 import OrderActions from "./OrderActions";
 import { useNavigate, useNavigation } from "react-router-dom";
-import useOrderStore from "../../store/admin/useOrderStore";
+import useOrderStore from "../../../store/admin/useOrderStore";
 import { useTranslation } from "react-i18next";
-import { toLocaleDigits } from "../../utils/numberConverter";
+import { toLocaleDigits } from "../../../utils/numberConverter";
 
 const OrdersTable = ({ orders }) => {
   const editOrder = useOrderStore((state) => state.editOrder);
   const openOrderDetails = (order) => {
     navigate(`/orders/view-order/${order.id}`);
-    editOrder(order);
-    useOrderStore.setState({ isViewingOrder: true, isEditingOrder: false });
+    editOrder(order, true);
   };
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const currentLng = i18n.language;
-
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-100 bg-white shadow-sm">
       <table className="w-full text-left border-collapse">
@@ -28,7 +26,9 @@ const OrdersTable = ({ orders }) => {
             <th className="py-4 px-6 font-semibold text-center">
               {t("Status")}
             </th>
-            <th className="py-4 px-6 font-semibold text-right">{t("Total")}</th>
+            <th className="py-4 px-6 font-semibold text-right">
+              {t("Address")}
+            </th>
             <th className="py-4 px-6 font-semibold text-right">
               {t("Actions")}
             </th>
@@ -58,9 +58,14 @@ const OrdersTable = ({ orders }) => {
               </td>
 
               <td className="py-4 px-6">
-                <span className="text-sm text-gray-600">
-                  {order.payment.paymentStatus}
-                </span>
+                <div className="flex flex-col text-sm  text-gray-600">
+                  <span className="font-bold">
+                    {order.payment.paymentStatus}
+                  </span>
+                  <span className="font-small">
+                    Amount: {order.total.toLocaleString()} AFN
+                  </span>
+                </div>
               </td>
 
               <td className="py-4 px-6 text-center">
@@ -68,8 +73,7 @@ const OrdersTable = ({ orders }) => {
               </td>
 
               <td className="py-4 px-6 text-right text-gray-900">
-                {toLocaleDigits(order.total.toLocaleString(), currentLng)}{" "}
-                {t("AFN")}
+                {order.customer.deliveryAddress}
               </td>
 
               <td className="py-4 px-6 text-right">

@@ -86,5 +86,12 @@
   "Online": "انلاین",
   "COD": "په تحویلۍ کې نغدې پیسې",
   "Enter full street address, apartment, or suite": "پوره پته، اپارتمان، یا سویټ داخل کړئ",
-  "AFN": "افغانی"
+  "AFN": "افغانی",
+  "The order is already cancelled!": "امر لا دمخه لغوه شوی دی!",
+  "You cannot cancel a delivered order!": "تاسو نشئ کولی تحویل شوی امر لغوه کړئ!",
+  "Cannot delete paid or delivered order!": "تادیه شوي یا تحویل شوي امر حذف نشي کولی!",
+  "Order deleted successfully!": "امر په بریالیتوب سره ړنګ شو!",
+  "Delete Order": "امر ړنګ کړئ",
+  "No results match your filters.": "هیڅ پایله ستاسو د فلټرونو سره سمون نه خوري.",
+  "Clear all filters": "ټول فلټرونه پاک کړئ"
 }

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { X, ShoppingBag, Plus, Minus } from "lucide-react";
 import Button from "./Button";
-import useOrderStore from "../../store/admin/useOrderStore";
+import useOrderStore from "../../../store/admin/useOrderStore";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { toLocaleDigits, toLocalePrice } from "../../utils/numberConverter";
+import { toLocaleDigits, toLocalePrice } from "../../../utils/numberConverter";
+import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
 
 const AddItemModal = ({ isOpen, onClose }) => {
   const { t, i18n } = useTranslation();
   const lng = i18n.language;
   const isRTL = ["fa", "ps", "ar", "ur"].includes(lng);
+
+  useLockBodyScroll(isOpen);
 
   if (!isOpen) return null;
   const [quantity, setQuantity] = useState(1);

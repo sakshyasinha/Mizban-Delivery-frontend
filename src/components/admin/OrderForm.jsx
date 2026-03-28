@@ -62,7 +62,7 @@ export default function OrderForm() {
     title = "Create Order"
   }
   return (
-    <div className="bg-gray-50 min-h-screen p-8 font-sans">
+    <div className="bg-gray-50 min-h-screen p-8 font-sans" dir="ltr">
       <div className="max-w-5xl mx-auto">
         {isViewingOrder && (
           <div className="mb-6">
@@ -89,7 +89,7 @@ export default function OrderForm() {
               {!isViewingOrder && (
                 <div className="flex gap-3">
                   <Button text="Reset" variant='secondary' onClick={() => resetOrderForm()} />
-                  <Link to="/orders"><Button text="Discard Draft" variant="secondary" onClick={() => resetForm()} type="button" /></Link>
+                  <Link to="/orders"><Button text="Discard Draft" variant="secondary" onClick={() => resetOrderForm()} type="button" /></Link>
                   <Button text={isEditingOrder ? "Update Order" : "Create Order"} type="submit" variant="primary" />
                 </div>
               )}

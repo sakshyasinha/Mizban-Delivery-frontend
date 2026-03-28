@@ -92,11 +92,6 @@ const errorStyle =  "text-red-500 text-sm"
               placeholder="Add any specific delivery instructions here..."
               className="p-4 pb-8 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full min-h-[120px] resize-none text-sm"
             ></textarea>
-            
-
-            <div className="absolute bottom-3 right-3 text-[10px] text-gray-400 uppercase tracking-widest font-bold bg-white/50 px-1 rounded">
-              0/200
-            </div>
           </div>
         </div>
       </div>

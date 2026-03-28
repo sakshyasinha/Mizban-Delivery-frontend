@@ -69,7 +69,7 @@ const OrderActions = ({ order }) => {
           <button
             onClick={() => {
               navigate(`/orders/edit-order/${order.id}`);
-              editOrder(order);
+              editOrder(order, false);
               setIsOpen(false);
               console.log(isEditingOrder)
             }}

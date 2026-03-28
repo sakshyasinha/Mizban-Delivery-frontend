@@ -101,5 +101,7 @@
   "Start Date": "تاریخ شروع",
   "End Date": "تاریخ پایان",
   "Filter": "فیلتر",
-  "Couriers": "پیک‌ها"
+  "Couriers": "پیک‌ها",
+  "Business": "کسب و کار",
+  "Reset filters": "حذف فیلتر"
 }

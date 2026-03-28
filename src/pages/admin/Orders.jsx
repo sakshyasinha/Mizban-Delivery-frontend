@@ -130,7 +130,7 @@ export default function Orders() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap items-center justify-center gap-4 mt-4 mb-8">
             <div className="flex-1">
-            <Dropdown options={businesses} onSelect={(val) => setSelectedBusiness(val)} value={selectedBusiness} placeholder="Business" />
+            <Dropdown options={businesses} onSelect={(val) => setSelectedBusiness(val)} value={selectedBusiness} placeholder={t("Business")} />
           </div>
           <div className="flex-1">
             <Dropdown
@@ -192,7 +192,7 @@ export default function Orders() {
           <Button text={t("Filter")} variant="primary" onClick={handleFilter} />
           {isFiltered && (
             <Button
-              text="reset"
+              text={t("Reset")}
               variant="secondary"
               onClick={handleFilterReset}
             />
@@ -211,7 +211,7 @@ export default function Orders() {
                   <Button
                     onClick={handleFilterReset}
                     variant="primary"
-                    text="Reset filters"
+                    text={t("Reset filters")}
                     className="mt-4"
                   >
                     {t("Clear all filters")}

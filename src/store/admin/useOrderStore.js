@@ -188,8 +188,8 @@ const useOrderStore = create((set, get) => ({
     isViewingOrder: false,
 
    initailOrderDataObject : {
-      type: "select type",
-      serviceType: "select category",
+      type: "select category",
+      serviceType: "select type",
       scheduledFor: null,
       deliveryDeadline: null,
       priority: "select priority",

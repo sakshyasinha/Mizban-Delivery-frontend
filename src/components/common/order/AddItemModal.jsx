@@ -51,7 +51,6 @@ const AddItemModal = ({ isOpen, onClose }) => {
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
             <div className="bg-white w-full max-w-md rounded-[24px] shadow-xl overflow-hidden border border-gray-100">
-                <form onSubmit={handleItemSubmission} className="flex flex-col w-full">
                     {/* Header */}
                     <div className="px-6 pt-6 pb-2 flex justify-between items-center">
                         <div>
@@ -138,11 +137,11 @@ const AddItemModal = ({ isOpen, onClose }) => {
                         <Button 
                             text="Add Item"
                             variant="primary"
-                            type="submit"
+                            type="button"
+                            onClick={()=>handleItemSubmission() }
                             className='w-full'
                         />
                     </div>
-                </form>
             </div>
         </div>
     );

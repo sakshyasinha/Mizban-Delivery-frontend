@@ -23,11 +23,14 @@ export default function OrderForm() {
   const addNewOrder = useOrderStore((state)=> state.addNewOrder)
   const orders  = useOrderStore((state)=> state.orders)
   const editExitingOrder = useOrderStore((state)=> state.editExitingOrder)
+  const isOrderValid = useOrderStore((state)=> state.isOrderValid)
+  const visitAll = useOrderStore((state)=> state.visitAll)
   const navigate = useNavigate()
 
 
  const handleSubmit = (e)=>{
      e.preventDefault()
+     visitAll()
      const newOrder = {
           ...orderData,
       id: Date.now(),
@@ -37,6 +40,9 @@ export default function OrderForm() {
     }
     const updateOrder  = {
       ...orderData
+    }
+    if(!isOrderValid()){
+      return
     }
     if(isEditingOrder){
      editExitingOrder(updateOrder)

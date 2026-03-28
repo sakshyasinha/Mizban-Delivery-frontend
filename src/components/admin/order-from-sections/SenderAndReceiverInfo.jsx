@@ -9,8 +9,21 @@ export default function SenderAndReceiverInfo() {
   const updateOrderData = useOrderStore((state)=> state.updateOrderData)
   const sender = useOrderStore((state)=> state.orderData.sender)
   const receiver  = useOrderStore((state)=> state.orderData.receiver)
+  const visited = useOrderStore((state)=> state.visited)
 
+     const isPhoneValid = (phone) => {
+    const regex = /^07\d{8}$/;
+    return regex.test(phone);
+  };
+  const senderNameError = sender.name.trim() === "" && visited["sender.name"]
+  const senderPhoneError = !isPhoneValid(sender.phone) && visited["sender.phone"]
 
+  const receiverNameError = receiver.name.trim() === "" && visited["receiver.name"]
+  const receiverPhoneError = !isPhoneValid(receiver.phone) && visited["receiver.phone"]
+  const receiverAddressError = receiver.address.trim() === "" && visited["receiver.address"]
+  
+
+  const errorStyle = "text-red-500 text-sm pl-3"
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       
@@ -34,6 +47,7 @@ export default function SenderAndReceiverInfo() {
               placeholder="Shahmama Restaurant" 
               className={inputStyle} 
             />
+            {senderNameError && <span className={errorStyle}>Name is required</span>}
           </div>
 
           <div className="flex flex-col">
@@ -48,6 +62,7 @@ export default function SenderAndReceiverInfo() {
               placeholder="070000000" 
               className={inputStyle} 
             />
+              {senderPhoneError && <span className={errorStyle}>Phone should be 10 digits</span>}
           </div>
         </div>
       </div>
@@ -73,6 +88,8 @@ export default function SenderAndReceiverInfo() {
                 placeholder="Ali Ahmadi" 
                 className={inputStyle} 
               />
+              {receiverNameError && <span className={errorStyle}>Name is required</span>}
+
             </div>
 
             <div className="flex flex-col">
@@ -87,6 +104,7 @@ export default function SenderAndReceiverInfo() {
                 placeholder="070000000" 
                 className={inputStyle} 
               />
+                {receiverPhoneError && <span className={errorStyle}>Phone number should be 10 digits</span>}
             </div>
           </div>
 
@@ -102,6 +120,7 @@ export default function SenderAndReceiverInfo() {
               placeholder="Apartment 4, Darulaman Road, District 6, Kabul" 
               className={inputStyle} 
             />
+            {receiverAddressError && <span className={errorStyle}>Address is required</span>}
           </div>
         </div>
       </div>

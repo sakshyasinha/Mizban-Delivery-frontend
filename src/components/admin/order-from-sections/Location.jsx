@@ -10,6 +10,10 @@ export default function Location() {
 
   const pickupLocation = useOrderStore((state)=> state.orderData.pickupLocation.coordinates)
   const dropoffLocation = useOrderStore((state)=> state.orderData.dropoffLocation.coordinates)
+  const visited = useOrderStore((state)=> state.visited)
+  
+const pickupLocationError = (pickupLocation[0] === 0 || pickupLocation[1] === 0) && visited["pickupLocation.coordinates"];
+  const dropoffLocationError = (dropoffLocation[0] === 0 || dropoffLocation[1] === 0) && visited["dropoffLocation.coordinates"];
 
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
@@ -38,6 +42,7 @@ export default function Location() {
                 <label htmlFor="pick-long" className={labelStyle}>Longitude</label>
                 <input type="text" id="pick-long" value={pickupLocation[1]} readOnly className={inputStyle} />
               </div>
+              {pickupLocationError && <span className="text-red-500 text-sm">Pickup location coordinates are required</span>}
             </div>
           </div>
 
@@ -59,6 +64,7 @@ export default function Location() {
                 <label htmlFor="drop-long" className={labelStyle}>Longitude</label>
                 <input type="text" id="drop-long" value={dropoffLocation[1]} readOnly className={inputStyle} />
               </div>
+                            {dropoffLocationError && <span className="text-red-500 text-sm">Dropoff location coordinates are required</span>}
             </div>
           </div>
             

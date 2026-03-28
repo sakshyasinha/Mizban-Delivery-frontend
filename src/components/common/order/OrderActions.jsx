@@ -38,7 +38,7 @@ const OrderActions = ({ order }) => {
     setCancelOrderModalOpen(true)
   }
   const handleDeleteOrder = ()=> {
-   const isPaid = order.payment.paymentStatus === "Paid"
+   const isPaid = order.paymentStatus === "paid"
    const isDelivered = order.status === "delivered"
    if(isPaid || isDelivered){
       toast.error("Cannot delete paid or delivered order!")

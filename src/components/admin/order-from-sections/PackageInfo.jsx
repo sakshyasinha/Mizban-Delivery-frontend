@@ -5,18 +5,21 @@ import useOrderStore from  "../../../store/admin/useOrderStore"
 import { useEffect } from "react";
 export default function PackageInfo() {
   const sizes = [
-    { id: 1, name: "Small ", value: "small" },
-    { id: 2, name: "Medium ", value: "medium" },
-    { id: 3, name: "Large ", value: "large" },
+    { id: 1, name: "Select size", value: "select size" },
+    { id: 2, name: "Small ", value: "small" },
+    { id: 3, name: "Medium ", value: "medium" },
+    { id: 4, name: "Large ", value: "large" },
   ];
 const packageDetails = useOrderStore((state)=> state.orderData.packageDetails)
+const type = useOrderStore((state)=> state.orderData.type)
 const updateOrderData = useOrderStore((state)=> state.updateOrderData)
-  useEffect(()=>{
-   console.log(packageDetails)
-  },[packageDetails])
+const visited = useOrderStore((state)=> state.visited)
 
+const sizeError = type === "parcel" && packageDetails.size === "select size" && visited["packageDetails.size"]
+const weightError = type === "parcel" && (packageDetails.weight === 0 || packageDetails.weight === "")&& visited["packageDetails.weight"]
+const errorStyle =  "text-red-500 text-sm"
   return (
-    <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
+    <div className="bg-white  p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
       {/* Header */}
       <div className="flex items-center gap-2 mb-6 text-orange-600">
         <LuPackage size={22} />
@@ -39,6 +42,7 @@ const updateOrderData = useOrderStore((state)=> state.updateOrderData)
             placeholder="0.00"
             className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full font-medium" 
           />
+          {weightError && <span className={errorStyle}>Weight must be greater than 0</span>}
         </div>
 
         {/* Package Size */}
@@ -52,6 +56,7 @@ const updateOrderData = useOrderStore((state)=> state.updateOrderData)
             value={packageDetails.size}
             onSelect={(val) => updateOrderData("packageDetails.size", val)} 
           />
+          {sizeError && <span className={errorStyle}>Select the size</span>}
         </div>
         {/* Fragile */}
         <div className="md:col-span-2">

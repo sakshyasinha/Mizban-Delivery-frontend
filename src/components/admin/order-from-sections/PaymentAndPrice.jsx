@@ -15,7 +15,7 @@ export default function PaymentAndPrice() {
   const finalPrice = useOrderStore((state)=> state.orderData.finalPrice)
   const items = useOrderStore((state)=> state.orderData.items)
   const updateOrderData  = useOrderStore((state)=> state.updateOrderData)
-
+  const visited = useOrderStore((state)=> state.visited)
   const totalItemsPrice = useMemo(()=>{
     return items.reduce((sum, item)=> {
     return sum + item.quantity * item.unitPrice
@@ -26,6 +26,7 @@ export default function PaymentAndPrice() {
     updateOrderData("deliveryPrice.total", totalItemsPrice)
    }, [totalItemsPrice])  
     
+   const paymentTypeError = paymentType === "select payment type" && visited["paymentType"]
    const totalAmountToPay = useMemo(()=>{
      return Number(amountToCollect) + Number(deliveryPrice.total) - Number(deliveryPrice.discount)
    }, [amountToCollect, deliveryPrice])
@@ -123,6 +124,7 @@ export default function PaymentAndPrice() {
               value={paymentType}
               onSelect={(val) => updateOrderData("paymentType", val)} 
             />
+            {paymentTypeError && <span className='text-red-500 text-sm'>Select payment type</span>}
           </div>
         </div>
       </div>

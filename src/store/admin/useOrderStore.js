@@ -3,43 +3,43 @@ import { create } from "zustand";
 
 const useOrderStore = create((set, get) => ({
     orderData: {
-    type: "select type", // REQUIRED - enum: food | parcel | grocery | other
-    serviceType: "select category", // OPTIONAL - enum: immediate | scheduled
-    scheduledFor: null, // OPTIONAL - required only if serviceType = scheduled
-    deliveryDeadline: null, // OPTIONAL
-    priority: "select priority", // OPTIONAL - enum: normal | high | critical
+    type: "select category", 
+    serviceType: "select type", 
+    scheduledFor: null, 
+    deliveryDeadline: null, 
+    priority: "select priority", 
     sender: {
-        name: "", // REQUIRED
-        phone: "" // REQUIRED
+        name: "", 
+        phone: "" 
     },
     receiver: {
-        name: "", // REQUIRED
-        phone: "", // REQUIRED
-        address: "" // REQUIRED
+        name: "", 
+        phone: "", 
+        address: "" 
     },
     pickupLocation: {
         type: "Point",
-        coordinates: [0,0] // REQUIRED
+        coordinates: [0,0] 
     },
     dropoffLocation: {
         type: "Point",
-        coordinates: [0,0] // REQUIRED
+        coordinates: [0,0] 
     },
-    items: [], // OPTIONAL (can be empty array)
+    items: [], 
     packageDetails: {
-        weight: 0.00, // OPTIONAL
-        size: "", // OPTIONAL - enum: small | medium | large
-        fragile: false, // OPTIONAL
-        note: "" // OPTIONAL
+        weight: 0.00,
+        size: "select size",
+        fragile: false, 
+        note: "" 
     },
-    serviceLevel: "select level", // OPTIONAL - enum: standard | express
-    paymentType: "select payment type", // REQUIRED - enum: online | COD
-    amountToCollect: 0, // OPTIONAL - money driver collects from customer
+    serviceLevel: "select level", 
+    paymentType: "select payment type", 
+    amountToCollect: 0, 
     deliveryPrice: {
-        discount: 0, // OPTIONAL
-        total: 0 // REQUIRED in your schema
+        discount: 0,
+        total: 0 
     },
-    finalPrice: 0, // REQUIRED in your schema (amountToCollect + deliveryPrice.total)
+    finalPrice: 0, 
     },
   visited: {},
   setAllVisitedFields: () => {
@@ -87,7 +87,8 @@ const useOrderStore = create((set, get) => ({
     return regex.test(phone);
   };
       const isBaseInfoValid =
-      data.type !== "select type" &&
+      data.type !== "select category" &&
+      data.serviceType !== "select type" &&
       data.sender.name.trim() !== "" &&
       isPhoneValid(data.sender.phone) &&
       data.receiver.name.trim() !== "" &&
@@ -97,10 +98,32 @@ const useOrderStore = create((set, get) => ({
 
     const areItemsValid = data.type === "parcel" ? true : data.items.length > 0;
     const isScheduleValid = data.serviceType === "scheduled" ? !!data.scheduledFor : true;
-    const isPackageValid = data.type === "parcel" ? data.packageDetails.size !== "" : true;
+    const isPackageValid = data.type === "parcel" ? data.packageDetails.weight !== 0 : true &&  data.type === "parcel" ? data.packageDetails.size !== "select size" : true;
 
     return isBaseInfoValid && areItemsValid && isScheduleValid && isPackageValid;
   },
+ visitAll: () => {
+  set({
+    visited: {
+      "type": true,
+      "sender.name": true,     
+      "sender.phone": true,    
+      "receiver.name": true,   
+      "receiver.phone": true,  
+      "receiver.address": true, 
+      "paymentType": true,
+      "items": true,
+      "packageDetails.weight": true,
+      "packageDetails.size": true,
+      "scheduledFor": true,
+      "serviceLevel": true,
+      "serviceType": true,
+      "priority": true,
+      "pickupLocation.coordinates": true,
+      "dropoffLocation.coordinates": true,
+      }
+  });
+},
     updateOrderData : (path, value) =>{
         let separatedPath = path.split(".");
          const updateNested = (currentState, separatedPath, value)=>{
@@ -414,7 +437,7 @@ markOrderDelivered: (orderId) => {
             deliveredAt: new Date().toLocaleString(),
             payment: {
               ...order.payment,
-              paymentStatus: order.payment.paymentMethod === "COD" ? "Paid" : order.payment.paymentStatus,
+              paymentStatus: order.paymentType === "COD" ? "paid" : order.paymentType,
             },
           }
         : order
@@ -447,7 +470,7 @@ deleteOrder: (orderId) => {
     const updatedOrders = state.orders.filter((order) => {
       if (order.id !== orderId) return true;
       const isDelivered = order.status === "delivered";
-      const isPaid = order.paymentStatus === "Paid";
+      const isPaid = order.paymentStatus === "paid";
       return isDelivered || isPaid;
     });
 

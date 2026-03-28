@@ -102,6 +102,7 @@ const useOrderStore = create((set, get) => ({
     },
     isEditingOrder: false,
     isViewingOrder: false,
+
    initailOrderDataObject : {
       type: "select type",
       serviceType: "select category",
@@ -150,13 +151,18 @@ const useOrderStore = create((set, get) => ({
 
       finalPrice: 0,
   },
+   resetOrderForm : ()=>{
+    set((state)=> ({
+        orderData: state.initailOrderDataObject
+    }))
+  },
   createNewOrder: () => {
   set({
      isEditingOrder: false,
      orderData: get().initailOrderDataObject
   })
 },
-    editOrder: (order, isViewing)=>{
+ editOrder: (order, isViewing)=>{
        set({
         isEditingOrder: true,
         isViewingOrder:isViewing,
@@ -172,138 +178,119 @@ const useOrderStore = create((set, get) => ({
         },
         })
     },
-    itemsTotalFee: 0,
-    resetOrderData: () => set({
-        orderData: {
-            customer: {},
-            item: [],
-            payment: {
-                paymentMethod: "",
-                paymentStatus: "Pending",
-            },
-        },
-    }),
-    getItemTotalFee: () => {
-        const items = get().orderData.item;
-        if (items.length === 0) {
-            set({ itemsTotalFee: 0 })
-        }
-
-        const total = items.reduce(
-            (sum, item) => sum + item.quantity * item.unitPrice,
-            0
-        );
-
-        set({ itemsTotalFee: total });
+ orders :[
+  {
+    id: "ORD-001",
+    type: "food",
+    serviceType: "immediate",
+    priority: "normal",
+    sender: { name: "Kabul Kitchen", phone: "020123456" },
+    receiver: {
+      name: "Ahmad Rahmani",
+      phone: "0799123456",
+      address: "Apartment 4B, Silo Street, District 5, Kabul"
     },
-    orders: [
-    {
-        id: "ORD-2026-001",
-        customer: {
-            customerName: "Ahmad Rahmani",
-            phoneNumber: "0799123456",
-            deliveryAddress: "Apartment 4B, Silo Street, District 5, Kabul",
-            latitude: "34.5353",
-            longitude: "69.1324"
-        },
-        item: [
-            { id: 101, itemName: "Qabuli Palaw", quantity: 2, unitPrice: 450 },
-            { id: 102, itemName: "Mantu", quantity: 1, unitPrice: 300 }
-        ],
-        status: "pending",
-        payment: {
-            paymentMethod: "COD",
-            paymentStatus: "Unpaid",
-        },
-        total: 1200,
-        createdAt: "2026-03-14T08:30:00Z", 
+    pickupLocation: { type: "Point", coordinates: [34.5320, 69.1300] },
+    dropoffLocation: { type: "Point", coordinates: [34.5353, 69.1324] },
+    items: [
+      { id: 101, itemName: "Qabuli Palaw", quantity: 2, unitPrice: 450 },
+      { id: 102, itemName: "Mantu", quantity: 1, unitPrice: 300 }
+    ],
+    packageDetails: { weight: 1.5, size: "medium", fragile: false, note: "" },
+    serviceLevel: "standard",
+    paymentType: "COD",
+    paymentStatus: "paid",
+    amountToCollect: 1200,
+    deliveryPrice: { discount: 0, total: 100 },
+    finalPrice: 1300,
+    status: "pending",
+    createdAt: "2026-03-14T08:30:00Z"
+  },
+  {
+    id: "ORD-002",
+    type: "food",
+    serviceType: "immediate",
+    priority: "high",
+    sender: { name: "Bolani Hotspot", phone: "020654321" },
+    receiver: {
+      name: "Zohra Sadat",
+      phone: "0788112233",
+      address: "House 12, Darulaman Road, District 6, Kabul"
     },
-    {
-        id: "ORD-2026-002",
-        customer: {
-            customerName: "Zohra Sadat",
-            phoneNumber: "0788112233",
-            deliveryAddress: "House 12, Darulaman Road, District 6, Kabul",
-            latitude: "34.5120",
-            longitude: "69.1500"
-        },
-        item: [
-            { id: 103, itemName: "Bolani Gandana", quantity: 5, unitPrice: 100 },
-            { id: 104, itemName: "Sheer Yakh", quantity: 2, unitPrice: 150 }
-        ],
-        status: "assigned",
-        courier: "Ahmad",
-        payment: {
-            paymentMethod: "Online",
-            paymentStatus: "Paid",
-        },
-        total: 800,
-        createdAt: "2026-03-13T14:00:00Z", 
+    pickupLocation: { type: "Point", coordinates: [34.5100, 69.1450] },
+    dropoffLocation: { type: "Point", coordinates: [34.5120, 69.1500] },
+    items: [
+      { id: 103, itemName: "Bolani Gandana", quantity: 5, unitPrice: 100 },
+      { id: 104, itemName: "Sheer Yakh", quantity: 2, unitPrice: 150 }
+    ],
+    packageDetails: { weight: 0.8, size: "small", fragile: false, note: "Keep ice cream cold" },
+    serviceLevel: "express",
+    paymentType: "online",
+    paymentStatus: "unpaid",
+    amountToCollect: 0,
+    deliveryPrice: { discount: 10, total: 80 },
+    finalPrice: 80,
+    status: "assigned",
+    courier: "Ahmad",
+    createdAt: "2026-03-13T14:00:00Z"
+  },
+  {
+    id: "ORD-003",
+    type: "food",
+    serviceType: "scheduled",
+    scheduledFor: "2026-03-07T20:00:00Z",
+    priority: "normal",
+    sender: { name: "Chopan Grill", phone: "020998877" },
+    receiver: {
+      name: "Mustafa Nazari",
+      phone: "0700445566",
+      address: "Green Valley Road, Kart-e-Char, Kabul"
     },
-    {
-        id: "ORD-2026-003",
-        customer: {
-            customerName: "Mustafa Nazari",
-            phoneNumber: "0700445566",
-            deliveryAddress: "Green Valley Road, Kart-e-Char, Kabul",
-            latitude: "34.5000",
-            longitude: "69.1200"
-        },
-        item: [
-            { id: 105, itemName: "Chopan Kabab", quantity: 1, unitPrice: 800 },
-            { id: 106, itemName: "Afghan Naan", quantity: 3, unitPrice: 20 }
-        ],
-        status: "delivered",
-        deliveredAt: "2026-03-10 18:45:00",
-        payment: {
-            paymentMethod: "COD",
-            paymentStatus: "Paid",
-        },
-        total: 860,
-        createdAt: "2026-03-07T19:20:00Z", 
+    pickupLocation: { type: "Point", coordinates: [34.4980, 69.1150] },
+    dropoffLocation: { type: "Point", coordinates: [34.5000, 69.1200] },
+    items: [
+      { id: 105, itemName: "Chopan Kabab", quantity: 1, unitPrice: 800 },
+      { id: 106, itemName: "Afghan Naan", quantity: 3, unitPrice: 20 }
+    ],
+    packageDetails: { weight: 1.2, size: "medium", fragile: false, note: "" },
+    serviceLevel: "standard",
+    paymentType: "COD",
+    paymentStatus: "paid",
+    amountToCollect: 860,
+    deliveryPrice: { discount: 0, total: 120 },
+    finalPrice: 980,
+    status: "delivered",
+    deliveredAt: "2026-03-10 18:45:00",
+    createdAt: "2026-03-07T19:20:00Z"
+  },
+  {
+    id: "ORD-004",
+    type: "other",
+    serviceType: "immediate",
+    priority: "critical",
+    sender: { name: "Shahr-e-Naw Mall", phone: "020554433" },
+    receiver: {
+      name: "Mariam Kohistani",
+      phone: "0777998877",
+      address: "Business Square, Shahr-e-Naw, Kabul"
     },
-    {
-        id: "ORD-2026-004",
-        customer: {
-            customerName: "Mariam Kohistani",
-            phoneNumber: "0777998877",
-            deliveryAddress: "Business Square, Shahr-e-Naw, Kabul",
-            latitude: "34.5200",
-            longitude: "69.1700"
-        },
-        item: [
-            { id: 107, itemName: "Ashak", quantity: 2, unitPrice: 300 },
-            { id: 108, itemName: "Dogh", quantity: 2, unitPrice: 100 }
-        ],
-        status: "cancelled",
-        cancellationReason: "Address was unreachable",
-        payment: {
-            paymentMethod: "Online",
-            paymentStatus: "Unpaid",
-        },
-        total: 800,
-        createdAt: "2026-02-15T11:00:00Z", 
-    },
-    {
-        id: "ORD-2025-005",
-        customer: {
-            customerName: "Omar Halimi",
-            phoneNumber: "0744001122",
-            deliveryAddress: "Red Bridge Area, Kabul",
-            latitude: "34.5100",
-            longitude: "69.1100"
-        },
-        item: [
-            { id: 109, itemName: "Kofta Chalaw", quantity: 2, unitPrice: 350 }
-        ],
-        status: "delivered",
-        payment: {
-            paymentMethod: "COD",
-            paymentStatus: "Paid",
-        },
-        total: 700,
-        createdAt: "2025-12-25T22:15:00Z", 
-    }
+    pickupLocation: { type: "Point", coordinates: [34.5150, 69.1650] },
+    dropoffLocation: { type: "Point", coordinates: [34.5200, 69.1700] },
+    items: [
+      { id: 107, itemName: "Ashak", quantity: 2, unitPrice: 300 },
+      { id: 108, itemName: "Dogh", quantity: 2, unitPrice: 100 }
+    ],
+    packageDetails: { weight: 2.0, size: "medium", fragile: true, note: "Fragile items inside" },
+    serviceLevel: "express",
+    paymentType: "online",
+    paymentStatus: "unpaid",
+    amountToCollect: 0,
+    deliveryPrice: { discount: 0, total: 150 },
+    finalPrice: 150,
+    status: "cancelled",
+    cancellationReason: "Address was unreachable",
+    createdAt: "2026-02-15T11:00:00Z"
+  }
 ],
     addNewOrder: (newOrder) => {
         set((state) => {
@@ -384,7 +371,7 @@ deleteOrder: (orderId) => {
     const updatedOrders = state.orders.filter((order) => {
       if (order.id !== orderId) return true;
       const isDelivered = order.status === "delivered";
-      const isPaid = order.payment.paymentStatus === "Paid";
+      const isPaid = order.paymentStatus === "Paid";
       return isDelivered || isPaid;
     });
 
@@ -403,12 +390,12 @@ applyFilters: (filters, searchTerm)=>{
       if(lowerCaseSearchTerm){
         const matchSearchTerm = 
         order.id.toLowerCase().includes(lowerCaseSearchTerm)||
-        order.customer.customerName.toLowerCase().includes(lowerCaseSearchTerm)||
-        order.customer.phoneNumber.includes(lowerCaseSearchTerm);
+        order.receiver.name.toLowerCase().includes(lowerCaseSearchTerm)||
+        order.receiver.phone.includes(lowerCaseSearchTerm);
         if(!matchSearchTerm) return false
       }
      if(courier && courier !== order.courier?.toLowerCase()) return false
-     if(paymentStatus && paymentStatus !== order.payment.paymentStatus?.toLowerCase()) return false
+     if(paymentStatus && paymentStatus !== order.paymentStatus?.toLowerCase()) return false
      if(orderStatus && orderStatus !== order.status?.toLowerCase()) return false
      
         if (startDate || endDate) {

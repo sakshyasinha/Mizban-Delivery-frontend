@@ -64,7 +64,7 @@ export default function Location() {
             
 
           <div>
-           <span className="italic text-gray-500 text-sm">Click on the map to set the coordinates, you can update the coordinates by dragging the markers</span> 
+           <span className="italic text-gray-500 text-sm">Click on the map to set the coordinates, you can update the coordinates by dragging the markers.</span> 
           </div>
         </div>
       </div>

@@ -34,16 +34,16 @@ const OrdersTable = ({ orders }) => {
 
               <td className="py-4 px-6">
                 <div className="flex flex-col">
-                  <span className=" text-gray-900">{order.customer.customerName}</span>
-                  <span className="text-[11px] text-gray-400">{order.customer.phoneNumber}</span>
+                  <span className=" text-gray-900">{order.receiver.name}</span>
+                  <span className="text-[11px] text-gray-400">{order.receiver.phone}</span>
                 </div>
               </td>
 
               <td className="py-4 px-6">
                 <div className="flex flex-col text-sm  text-gray-600">
-                  <span className='font-bold'>{order.payment.paymentStatus}</span>
+                  <span className='font-bold'>{order.paymentStatus}</span>
                   <span className="font-small">
-                    Amount: {order.total.toLocaleString()} AFN
+                    Amount: {order.finalPrice.toLocaleString()} AFN
                   </span>
                 </div>
 
@@ -54,7 +54,7 @@ const OrdersTable = ({ orders }) => {
               </td>
 
               <td className="py-4 px-6 text-center text-gray-900">
-                {order.customer.deliveryAddress}
+                {order.receiver.address}
               </td>
 
               <td className="py-4 px-6 text-right">

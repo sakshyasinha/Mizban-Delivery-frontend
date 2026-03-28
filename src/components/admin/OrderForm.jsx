@@ -19,9 +19,26 @@ export default function OrderForm() {
   const orderData = useOrderStore((state) => state.orderData);
   const isEditingOrder = useOrderStore((state) => state.isEditingOrder)
   const isViewingOrder = useOrderStore((state) => state.isViewingOrder)
+  const resetOrderForm = useOrderStore((state)=> state.resetOrderForm)
+  const addNewOrder = useOrderStore((state)=> state.addNewOrder)
+  const orders  = useOrderStore((state)=> state.orders)
   const navigate = useNavigate()
 
 
+ const handleSubmit = (e)=>{
+     e.preventDefault()
+     const newOrder = {
+          ...orderData,
+      id: Date.now(),
+      status: "pending",
+      paymentStatus: orderData.paymentType === "COD" ? "paid" : "unpaid",
+      createdAt: new Date().toISOString()
+    }
+     addNewOrder(newOrder)
+     toast.success("Order Added Successfullly!")
+     navigate("/orders")
+     console.log(orders)
+ }
   let title = ""
   if (isEditingOrder) {
     title = "Edit Order"
@@ -47,7 +64,7 @@ export default function OrderForm() {
           </div>
         )}
         <fieldset disabled={isViewingOrder}>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
 
             {/* --- Header --- */}
             <div className="flex md:justify-between justify-center gap-4 flex-wrap items-center mb-8">
@@ -57,7 +74,7 @@ export default function OrderForm() {
               </div>
               {!isViewingOrder && (
                 <div className="flex gap-3">
-                  <Button text="Reset" variant='secondary' onClick={() => resetForm()} />
+                  <Button text="Reset" variant='secondary' onClick={() => resetOrderForm()} />
                   <Link to="/orders"><Button text="Discard Draft" variant="secondary" onClick={() => resetForm()} type="button" /></Link>
                   <Button text={isEditingOrder ? "Update Order" : "Create Order"} type="submit" variant="primary" />
                 </div>

@@ -41,6 +41,66 @@ const useOrderStore = create((set, get) => ({
     },
     finalPrice: 0, // REQUIRED in your schema (amountToCollect + deliveryPrice.total)
     },
+  visited: {},
+  setAllVisitedFields: () => {
+    const currentOrderData = get().orderData;
+    const visitedFields = {};
+
+    const baseRequiredFields = [
+      "type",
+      "serviceLevel",
+      "serviceType",
+      "priority",
+      "paymentType",
+      "sender.name",
+      "sender.phone",
+      "receiver.name",
+      "receiver.phone",
+      "receiver.address",
+      "pickupLocation.coordinates",
+      "dropoffLocation.coordinates"
+    ];
+
+    baseRequiredFields.forEach(field => {
+      visitedFields[field] = true;
+    });
+
+    if (currentOrderData.serviceType === "scheduled") {
+      visitedFields["scheduledFor"] = true;
+    }
+
+    if (currentOrderData.type !== "parcel") {
+      visitedFields["items"] = true;
+    }
+
+    if (currentOrderData.type === "parcel") {
+      visitedFields["packageDetails.size"] = true;
+      visitedFields["packageDetails.weight"] = true;
+    }
+
+    set({ visited: visitedFields });
+  },
+  isOrderValid: () => {
+    const data = get().orderData;
+   const isPhoneValid = (phone) => {
+    const regex = /^07\d{8}$/;
+    return regex.test(phone);
+  };
+      const isBaseInfoValid =
+      data.type !== "select type" &&
+      data.sender.name.trim() !== "" &&
+      isPhoneValid(data.sender.phone) &&
+      data.receiver.name.trim() !== "" &&
+      isPhoneValid(data.receiver.phone) &&
+      data.receiver.address.trim() !== "" &&
+      data.paymentType !== "select payment type";
+
+    const areItemsValid = data.type === "parcel" ? true : data.items.length > 0;
+    const isScheduleValid = data.serviceType === "scheduled" ? !!data.scheduledFor : true;
+    const isPackageValid = data.type === "parcel" ? data.packageDetails.size !== "" : true;
+
+    return isBaseInfoValid && areItemsValid && isScheduleValid && isPackageValid;
+  },
     updateOrderData : (path, value) =>{
         let separatedPath = path.split(".");
          const updateNested = (currentState, separatedPath, value)=>{
@@ -60,7 +120,8 @@ const useOrderStore = create((set, get) => ({
             }
          }
          set((state)=> ({
-            orderData: updateNested(state.orderData, separatedPath, value)
+            orderData: updateNested(state.orderData, separatedPath, value),
+            visited: {...state.visited, [path]:true}
          }))
     },
 

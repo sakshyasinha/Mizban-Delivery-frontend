@@ -40,7 +40,13 @@ export default function ServiceInfo() {
   const priority = useOrderStore((state)=> state.orderData.priority)
   const scheduledFor = useOrderStore((state)=>state.orderData.scheduledFor)
   const deliveryDeadline = useOrderStore((state)=> state.orderData.deliveryDeadline)
+  const visited = useOrderStore((state)=> state.visited)
 
+  const typeError = type === "select category" && visited["type"]
+  const serviceTypeError = serviceType === "select type" && visited["serviceType"]
+  const serviceLevelError = serviceLevel === "select level" && visited["serviceLevel"]
+  const priorityError = priority === "select priority" && visited["priority"]
+  const scheduledForError = serviceType === "scheduled" && scheduledFor === "" && visited["scheduledFor"]
 
   useEffect(()=>{
     if(serviceType === "scheduled"){
@@ -50,7 +56,7 @@ export default function ServiceInfo() {
     }
   },[serviceType])
 
-
+ const errorStyle = "text-sm text-red-500 pl-2"
   return (
     <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm mb-6">
       {/* Header*/}
@@ -69,9 +75,10 @@ export default function ServiceInfo() {
           <Dropdown 
             options={categories} 
             value={type}
-            onSelect={(val) => {updateOrderData("type", val);               
+            onSelect={(val) => {updateOrderData("type", val);  
             }} 
           />
+          {typeError && <span className={errorStyle}>Please select a category</span>}
         </div>
 
         {/* Service Type */}
@@ -82,8 +89,10 @@ export default function ServiceInfo() {
           <Dropdown 
             options={serviceTypes} 
             value={serviceType}
-            onSelect={(val) => {updateOrderData("serviceType", val) }} 
+            onSelect={(val) => {updateOrderData("serviceType", val);
+             }} 
           />
+          {serviceTypeError && <span className={errorStyle}>Please select service type</span>}
         </div>
 
         {/* Service Level */}
@@ -96,6 +105,7 @@ export default function ServiceInfo() {
             value={serviceLevel}
             onSelect={(val) => updateOrderData("serviceLevel", val)} 
           />
+          {serviceLevelError && <span className={errorStyle}>Please select service level</span>}
         </div>
         {showScheduledFor && (
           <div>
@@ -104,6 +114,7 @@ export default function ServiceInfo() {
             value={scheduledFor}
             onChange={(e)=> updateOrderData("scheduledFor", e.target.value)}
             className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full" />
+           {scheduledForError && <span className={errorStyle}>Please select the date</span>}
           </div>
           )}
 
@@ -117,6 +128,7 @@ export default function ServiceInfo() {
             value={priority}
             onSelect={(val) => updateOrderData("priority", val)} 
           />
+          {priorityError && <span className={errorStyle}>Please select priority</span>}
         </div>
 
         {/* Delivery Deadline */}

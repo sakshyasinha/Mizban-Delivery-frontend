@@ -22,6 +22,7 @@ export default function OrderForm() {
   const resetOrderForm = useOrderStore((state)=> state.resetOrderForm)
   const addNewOrder = useOrderStore((state)=> state.addNewOrder)
   const orders  = useOrderStore((state)=> state.orders)
+  const editExitingOrder = useOrderStore((state)=> state.editExitingOrder)
   const navigate = useNavigate()
 
 
@@ -34,16 +35,25 @@ export default function OrderForm() {
       paymentStatus: orderData.paymentType === "COD" ? "paid" : "unpaid",
       createdAt: new Date().toISOString()
     }
-     addNewOrder(newOrder)
+    const updateOrder  = {
+      ...orderData
+    }
+    if(isEditingOrder){
+     editExitingOrder(updateOrder)
+     toast.success("Order Updated")
+    }else{
+    addNewOrder(newOrder)
      toast.success("Order Added Successfullly!")
+    }
+
      navigate("/orders")
      console.log(orders)
  }
   let title = ""
-  if (isEditingOrder) {
-    title = "Edit Order"
-  } else if (isViewingOrder) {
+  if (isViewingOrder) {
     title = "Order Details"
+  } else if (isEditingOrder) {
+    title = "Edit Order"
   } else {
     title = "Create Order"
   }

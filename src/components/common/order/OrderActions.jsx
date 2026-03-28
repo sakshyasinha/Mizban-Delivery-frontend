@@ -22,6 +22,7 @@ const OrderActions = ({ order }) => {
   const editOrder = useOrderStore((state)=> state.editOrder)
   const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
   const deleteOrder = useOrderStore((state)=> state.deleteOrder)
+  const isEditingOrder = useOrderStore((state)=> state.isEditingOrder)
   const menuRef = useRef(null);
   const navigate = useNavigate();
    useClickOutside(menuRef,()=> setIsOpen(false))
@@ -67,6 +68,7 @@ const OrderActions = ({ order }) => {
               navigate(`/orders/edit-order/${order.id}`)
               editOrder(order)
               setIsOpen(false);
+              console.log(isEditingOrder)
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
           >

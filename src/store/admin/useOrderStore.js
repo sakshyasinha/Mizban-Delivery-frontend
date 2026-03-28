@@ -153,7 +153,7 @@ const useOrderStore = create((set, get) => ({
   },
    resetOrderForm : ()=>{
     set((state)=> ({
-        orderData: state.initailOrderDataObject
+        orderData: state.isEditingOrder === true ? {...state.originalData} : {...state.initailOrderDataObject}
     }))
   },
   createNewOrder: () => {
@@ -162,22 +162,37 @@ const useOrderStore = create((set, get) => ({
      orderData: get().initailOrderDataObject
   })
 },
- editOrder: (order, isViewing)=>{
-       set({
-        isEditingOrder: true,
-        isViewingOrder:isViewing,
-          orderData: {
-            ...order,
-            id: order.id,
-            customer: {...order.customer},
-            item: [...order.item],
-            payment: {
-                paymentMethod: order.payment.paymentMethod,
-                paymentStatus: order.payment.paymentStatus,
-            },
-        },
-        })
-    },
+  editOrder: (order, isViewing) => {
+    const orderDetails = {
+          ...order,
+        sender: {...order.sender},
+        receiver: {...order.receiver},
+        pickupLocation: {...order.pickupLocation},
+        dropoffLocation: {...order.dropoffLocation },
+        items: [...order.items], 
+        packageDetails: {...order.packageDetails} ,
+        serviceLevel: order.serviceLevel, 
+        paymentType: order.paymentType, 
+        amountToCollect: order.amountToCollect,
+        deliveryPrice: {...order.deliveryPrice},
+        id: order.id,
+        type: order.type,
+        serviceType: order.serviceType, 
+        scheduledFor: order.scheduledFor,
+        deliveryDeadline: order.deliveryDeadline, 
+        priority: order.priority, 
+        finalPrice: order.finalPrice,
+        status: order.status,
+        createdAt: order.createdAt,
+        paymentStatus: order.paymentStatus
+    }
+    set({
+      isEditingOrder: true,
+      isViewingOrder: isViewing,
+      orderData: orderDetails,
+      originalData: orderDetails
+    })
+  },
  orders :[
   {
     id: "ORD-001",
@@ -193,8 +208,8 @@ const useOrderStore = create((set, get) => ({
     pickupLocation: { type: "Point", coordinates: [34.5320, 69.1300] },
     dropoffLocation: { type: "Point", coordinates: [34.5353, 69.1324] },
     items: [
-      { id: 101, itemName: "Qabuli Palaw", quantity: 2, unitPrice: 450 },
-      { id: 102, itemName: "Mantu", quantity: 1, unitPrice: 300 }
+      { id: 101, name: "Qabuli Palaw", quantity: 2, unitPrice: 450 },
+      { id: 102, name: "Mantu", quantity: 1, unitPrice: 300 }
     ],
     packageDetails: { weight: 1.5, size: "medium", fragile: false, note: "" },
     serviceLevel: "standard",
@@ -220,8 +235,8 @@ const useOrderStore = create((set, get) => ({
     pickupLocation: { type: "Point", coordinates: [34.5100, 69.1450] },
     dropoffLocation: { type: "Point", coordinates: [34.5120, 69.1500] },
     items: [
-      { id: 103, itemName: "Bolani Gandana", quantity: 5, unitPrice: 100 },
-      { id: 104, itemName: "Sheer Yakh", quantity: 2, unitPrice: 150 }
+      { id: 103, name: "Bolani Gandana", quantity: 5, unitPrice: 100 },
+      { id: 104, name: "Sheer Yakh", quantity: 2, unitPrice: 150 }
     ],
     packageDetails: { weight: 0.8, size: "small", fragile: false, note: "Keep ice cream cold" },
     serviceLevel: "express",
@@ -249,8 +264,8 @@ const useOrderStore = create((set, get) => ({
     pickupLocation: { type: "Point", coordinates: [34.4980, 69.1150] },
     dropoffLocation: { type: "Point", coordinates: [34.5000, 69.1200] },
     items: [
-      { id: 105, itemName: "Chopan Kabab", quantity: 1, unitPrice: 800 },
-      { id: 106, itemName: "Afghan Naan", quantity: 3, unitPrice: 20 }
+      { id: 105, name: "Chopan Kabab", quantity: 1, unitPrice: 800 },
+      { id: 106, name: "Afghan Naan", quantity: 3, unitPrice: 20 }
     ],
     packageDetails: { weight: 1.2, size: "medium", fragile: false, note: "" },
     serviceLevel: "standard",
@@ -277,8 +292,8 @@ const useOrderStore = create((set, get) => ({
     pickupLocation: { type: "Point", coordinates: [34.5150, 69.1650] },
     dropoffLocation: { type: "Point", coordinates: [34.5200, 69.1700] },
     items: [
-      { id: 107, itemName: "Ashak", quantity: 2, unitPrice: 300 },
-      { id: 108, itemName: "Dogh", quantity: 2, unitPrice: 100 }
+      { id: 107, name: "Ashak", quantity: 2, unitPrice: 300 },
+      { id: 108, name: "Dogh", quantity: 2, unitPrice: 100 }
     ],
     packageDetails: { weight: 2.0, size: "medium", fragile: true, note: "Fragile items inside" },
     serviceLevel: "express",

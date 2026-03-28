@@ -39,9 +39,8 @@ const Header = ({ hideContent }) => {
             {t("Mizban")}{" "}
             <span className="text-orange-600">{t("Delivery")}</span>
           </span>
-        </div>
 
-       {/* Improved Language Dropdown */}
+            {/* Improved Language Dropdown */}
           <div className="relative ml-4">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -90,7 +89,7 @@ const Header = ({ hideContent }) => {
               </>
             )}
           </div>
-
+        </div>
 
         {!hideContent && (
           <>

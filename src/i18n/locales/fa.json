@@ -12,7 +12,7 @@
   "Unit price is not valid!": "قیمت واحد معتبر نیست!",
 
   "Item added successfully!": "!آیتم با موفقیت اضافه شد",
-  "Add Item": "افزودن آیتم",
+  "Add Item": "افزودن کالا",
   "Enter product details": "جزئیات محصول را وارد کنید",
   "Product Name": "نام محصول",
   "Quantity": "تعداد",
@@ -86,12 +86,20 @@
   "Online": "انلاین",
   "COD": "پرداخت در محل",
   "Enter full street address, apartment, or suite": "آدرس کامل خیابان، آپارتمان یا واحد را وارد کنید",
-  "AFN": "افغانی",
+  "AFN": "؋",
   "The order is already cancelled!": "سفارش از قبل لغو شده است!",
   "You cannot cancel a delivered order!": "شما نمی‌توانید سفارش تحویل داده شده را لغو کنید!",
   "Cannot delete paid or delivered order!": "امکان حذف سفارش پرداخت شده یا تحویل داده شده وجود ندارد!",
   "Order deleted successfully!": "سفارش با موفقیت حذف شد!",
   "Delete Order": "حذف سفارش",
   "No results match your filters.": "هیچ نتیجه‌ای با فیلترهای شما مطابقت ندارد.",
-  "Clear all filters": "پاک کردن همه فیلترها"
+  "Clear all filters": "پاک کردن همه فیلترها",
+  "Amount": "مقدار",
+  "Address": "آدرس",
+  "Unpaid": "پرداخت نشده",
+  "Search by order id, customer name, phone number": "جستجو بر اساس شماره سفارش، نام مشتری، شماره تلفن",
+  "Start Date": "تاریخ شروع",
+  "End Date": "تاریخ پایان",
+  "Filter": "فیلتر",
+  "Couriers": "پیک‌ها"
 }

@@ -93,5 +93,11 @@
   "Order deleted successfully!": "Order deleted successfully!",
   "Delete Order": "Delete Order",
   "No results match your filters.": "No results match your filters.",
-  "Clear all filters": "Clear all filters"
+  "Clear all filters": "Clear all filters",
+  "Amount": "Amount",
+  "Search by order id, customer name, phone number": "Search by order id, customer name, phone number",
+  "Start Date": "Start Date",
+  "End Date": "End Date",
+  "Filter": "Filter",
+  "Couriers": "Couriers"
 }

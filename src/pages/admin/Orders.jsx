@@ -120,7 +120,7 @@ export default function Orders() {
         {/*  Search && filter   */}
         <div className="flex justify-center">
           <SearchBar
-            placeholder="Search by order id, customer name, phone number"
+            placeholder={t("Search by order id, customer name, phone number")}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
@@ -130,7 +130,7 @@ export default function Orders() {
               options={couriers}
               onSelect={(val) => setSelectedCourier(val)}
               value={selectedCurier}
-              placeholder="Couriers"
+              placeholder={t("Couriers")}
             />
           </div>
           <div className="flex-1">
@@ -138,7 +138,7 @@ export default function Orders() {
               options={paymentStatus}
               onSelect={(val) => setSelectedPaymentStatus(val)}
               value={selectedPaymentStatus}
-              placeholder="Payment Status"
+              placeholder={t("Payment Status")}
             />
           </div>
           <div className="flex-1">
@@ -146,7 +146,7 @@ export default function Orders() {
               options={orderStatus}
               onSelect={(val) => setSelectedStatus(val)}
               value={selectedStatus}
-              placeholder="Status"
+              placeholder={t("Status")}
             />
           </div>
 
@@ -154,7 +154,7 @@ export default function Orders() {
             <div className="relative flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2 hover:border-orange-300 focus-within:ring-2 focus-within:ring-orange-100 focus-within:border-orange-500 transition-all shadow-sm">
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase font-bold text-gray-400 leading-none mb-1">
-                  Start Date
+                  {t("Start Date")}
                 </span>
                 <input
                   type="date"
@@ -170,7 +170,7 @@ export default function Orders() {
             <div className="relative flex items-center bg-white border border-gray-200 rounded-xl px-4 py-2 hover:border-orange-300 focus-within:ring-2 focus-within:ring-orange-100 focus-within:border-orange-500 transition-all shadow-sm">
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase font-bold text-gray-400 leading-none mb-1">
-                  End Date
+                  {t("End Date")}
                 </span>
                 <input
                   type="date"
@@ -182,7 +182,7 @@ export default function Orders() {
             </div>
           </div>
 
-          <Button text="Filter" variant="primary" onClick={handleFilter} />
+          <Button text={t("Filter")} variant="primary" onClick={handleFilter} />
           {isFiltered && (
             <Button
               text="reset"

@@ -60,10 +60,10 @@ const OrdersTable = ({ orders }) => {
               <td className="py-4 px-6">
                 <div className="flex flex-col text-sm  text-gray-600">
                   <span className="font-bold">
-                    {order.payment.paymentStatus}
+                    {t(order.payment.paymentStatus)}
                   </span>
                   <span className="font-small">
-                    Amount: {order.total.toLocaleString()} AFN
+                    {t("Amount")}: {order.total.toLocaleString()} {t("AFN")}
                   </span>
                 </div>
               </td>

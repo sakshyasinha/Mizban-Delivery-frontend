@@ -31,7 +31,7 @@
   "2026 Mizban. All rights reserved.": "۲۰۲۶ میزبان. ټول حقوق خوندي دي.",
 
   "Edit Details": "جزئیات سمول",
-  "Assign Courier": "کوریر ټاکل",
+  "Assign Courier": "رسونکی ټاکل",
   "Mark Delivered": "سپارښتنه وسپارل شوه",
   "Cancel Order": "سپارښتنه لغوه کړئ",
 
@@ -86,12 +86,19 @@
   "Online": "انلاین",
   "COD": "په تحویلۍ کې نغدې پیسې",
   "Enter full street address, apartment, or suite": "پوره پته، اپارتمان، یا سویټ داخل کړئ",
-  "AFN": "افغانی",
+  "AFN": "؋",
   "The order is already cancelled!": "امر لا دمخه لغوه شوی دی!",
   "You cannot cancel a delivered order!": "تاسو نشئ کولی تحویل شوی امر لغوه کړئ!",
   "Cannot delete paid or delivered order!": "تادیه شوي یا تحویل شوي امر حذف نشي کولی!",
   "Order deleted successfully!": "امر په بریالیتوب سره ړنګ شو!",
   "Delete Order": "امر ړنګ کړئ",
   "No results match your filters.": "هیڅ پایله ستاسو د فلټرونو سره سمون نه خوري.",
-  "Clear all filters": "ټول فلټرونه پاک کړئ"
+  "Clear all filters": "ټول فلټرونه پاک کړئ",
+  "Amount": "مقدار",
+  "Address": "پته",
+  "Search by order id, customer name, phone number": "د ارډر ایډي، پیرودونکي نوم، تلیفون نمبر له لارې لټون وکړئ",
+  "Start Date": "د پیل نیټه",
+  "End Date": "د پای نیټه",
+  "Filter": "فلټر",
+  "Couriers": "کورییرونه"
 }

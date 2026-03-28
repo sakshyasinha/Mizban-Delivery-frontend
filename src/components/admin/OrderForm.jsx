@@ -1,8 +1,6 @@
-import React, { isValidElement, useEffect, useState } from 'react';
+
 import useOrderStore from "../../store/admin/useOrderStore";
 import Button from "../common/order/Button";
-import Map from "../common/order/Map";
-import AddItemModal from '../common/order/AddItemModal';
 import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import OrderStates from "../common/order/OrderStates"
@@ -64,7 +62,7 @@ export default function OrderForm() {
     title = "Create Order"
   }
   return (
-    <div className="bg-gray-50 min-h-screen p-8 font-sans" dir="ltr">
+    <div className="bg-gray-50 min-h-screen p-8 font-sans">
       <div className="max-w-5xl mx-auto">
         {isViewingOrder && (
           <div className="mb-6">

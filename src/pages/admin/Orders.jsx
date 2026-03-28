@@ -18,6 +18,7 @@ export default function Orders() {
   const [selectedCurier, setSelectedCourier] = useState("")
   const [selectedPaymentStatus, setSelectedPaymentStatus] = useState("")
   const [selectedStatus, setSelectedStatus] = useState("")
+  const [selectedBusiness, setSelectedBusiness] = useState("")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   let [filters, setFilters] = useState({
@@ -25,9 +26,10 @@ export default function Orders() {
     paymentStatus: "",
     orderStatus: "",
     startDate: "",
-    endDate: ""
+    endDate: "",
+    senderName: ""
   })
-  const isFiltered = endDate || startDate || selectedCurier !== "" || selectedPaymentStatus !== "" || selectedStatus !== "";
+  const isFiltered = endDate || startDate || selectedCurier !== "" || selectedPaymentStatus !== "" || selectedStatus !== "" || selectedBusiness !== "";
   const displayData = (searchTerm.trim() !== "" || isFiltered) ? filteredList : orders
   const handleFilterReset = () => {
     setSelectedCourier("")
@@ -35,12 +37,14 @@ export default function Orders() {
     setSelectedStatus("")
     setEndDate("")
     setStartDate("")
+    setSelectedBusiness("")
     setFilters({
       courier: "",
       paymentStatus: "",
       orderStatus: "",
       startDate: "",
-      endDate: ""
+      endDate: "",
+      senderName: ""
     });
     resetFilters()
 
@@ -56,7 +60,8 @@ export default function Orders() {
       paymentStatus: selectedPaymentStatus,
       orderStatus: selectedStatus,
       startDate: startDate,
-      endDate: endDate
+      endDate: endDate,
+      senderName: selectedBusiness
     };
     setFilters(newFilters);
     applyFilters(newFilters, searchTerm);
@@ -80,6 +85,11 @@ export default function Orders() {
     { id: 2, name: "Assigned", value: "assigned" },
     { id: 3, name: "Cancelled", value: "cancelled" },
     { id: 4, name: "Pending", value: "pending" },
+  ]
+    const businesses = [
+    { id: 1, name: "Shahmama Restaurant", value: "Shahmama Restaurant" },
+    { id: 2, name: "Shahy Hotel", value: "Shahy Hotel" },
+    { id: 3, name: "Zuhak Restaurant", value: "Zuhak Restaurant" },
   ]
   return (
     <div className="min-h-screen bg-gray-100 p-8 md:p-12">
@@ -116,6 +126,9 @@ export default function Orders() {
           <SearchBar placeholder="Search by order id, customer name, phone number" onChange={(e) => setSearchTerm(e.target.value)} />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap items-center justify-center gap-4 mt-4 mb-8">
+            <div className="flex-1">
+            <Dropdown options={businesses} onSelect={(val) => setSelectedBusiness(val)} value={selectedBusiness} placeholder="Business" />
+          </div>
           <div className="flex-1">
             <Dropdown options={couriers} onSelect={(val) => setSelectedCourier(val)} value={selectedCurier} placeholder="Couriers" />
           </div>

@@ -199,7 +199,7 @@ const useOrderStore = create((set, get) => ({
     type: "food",
     serviceType: "immediate",
     priority: "normal",
-    sender: { name: "Kabul Kitchen", phone: "020123456" },
+    sender: { name: "Shahmama Restaurant", phone: "020123456" },
     receiver: {
       name: "Ahmad Rahmani",
       phone: "0799123456",
@@ -226,7 +226,7 @@ const useOrderStore = create((set, get) => ({
     type: "food",
     serviceType: "immediate",
     priority: "high",
-    sender: { name: "Bolani Hotspot", phone: "020654321" },
+    sender: { name: "Shahy Hotel", phone: "020654321" },
     receiver: {
       name: "Zohra Sadat",
       phone: "0788112233",
@@ -255,7 +255,7 @@ const useOrderStore = create((set, get) => ({
     serviceType: "scheduled",
     scheduledFor: "2026-03-07T20:00:00Z",
     priority: "normal",
-    sender: { name: "Chopan Grill", phone: "020998877" },
+    sender: { name: "Zuhak Resturant", phone: "020998877" },
     receiver: {
       name: "Mustafa Nazari",
       phone: "0700445566",
@@ -283,7 +283,7 @@ const useOrderStore = create((set, get) => ({
     type: "other",
     serviceType: "immediate",
     priority: "critical",
-    sender: { name: "Shahr-e-Naw Mall", phone: "020554433" },
+    sender: { name: "Shahmama Restaurant", phone: "020554433" },
     receiver: {
       name: "Mariam Kohistani",
       phone: "0777998877",
@@ -399,7 +399,7 @@ deleteOrder: (orderId) => {
 filteredList : [],
 applyFilters: (filters, searchTerm)=>{
   let lowerCaseSearchTerm = searchTerm.toLowerCase().trim()
-  const {courier, paymentStatus, orderStatus, startDate, endDate} = filters
+  const {courier, paymentStatus, orderStatus, startDate, endDate, senderName} = filters
   set((state)=> ({
     filteredList: state.orders.filter((order)=>{
       if(lowerCaseSearchTerm){
@@ -412,6 +412,7 @@ applyFilters: (filters, searchTerm)=>{
      if(courier && courier !== order.courier?.toLowerCase()) return false
      if(paymentStatus && paymentStatus !== order.paymentStatus?.toLowerCase()) return false
      if(orderStatus && orderStatus !== order.status?.toLowerCase()) return false
+     if(senderName && senderName.toLowerCase() !== order.sender?.name.toLowerCase()) return false
      
         if (startDate || endDate) {
             const orderDate = new Date(order.createdAt).getTime();

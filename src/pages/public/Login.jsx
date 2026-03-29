@@ -5,11 +5,15 @@ import useAuthStore from '../../store/useAuthStore';
 import {FcGoogle} from 'react-icons/fc';
 import {FiMail, FiLock, FiEye, FiEyeOff} from "react-icons/fi";
 import toast from 'react-hot-toast';
+import {useTranslation} from 'react-i18next';
+
 const Login = () => {
     const {form,errors,loading,setField,setErrors,loginUser}=useAuthStore();
 
     const [showPassword,setShowPassword]=useState(false);
     const navigate= useNavigate();
+
+    const {t,i18n} =useTranslation();
 
     const handleChange=(e)=>{
         const {name,value}=e.target;
@@ -50,23 +54,23 @@ const Login = () => {
         {/* RIGHT SIDE FORM */}
         <div className="max-w-md w-full">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-1">
-            Welcome Back 👋
+            {t('welcomeBack')} 👋
           </h2>
           <p className="text-gray-400 mb-6 text-sm md:text-base">
-            Login to your account
+           {t('loginToAccount')}
           </p>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit} dir={i18n.language==='en' ? 'ltr': "rtl"}>
             
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-gray-700 mb-1 text-sm font-bold">
-                Email
+                {t('email')}
               </label>
 
               <div className="relative">
                 <FiMail
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+                  className={`absolute ${i18n.language==='en' ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-gray-500 `}
                   size={18}
                   strokeWidth={1.5}
                 />
@@ -76,9 +80,9 @@ const Login = () => {
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  autoComplete="email"
-                  placeholder="Enter your email"
-                  className={`w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-1
+                  autoComplete={t('enterEmail')}
+                  placeholder={t('enterEmail')}
+                  className={`w-full py-2 border rounded-md focus:outline-none focus:ring-1 ${i18n.language === 'en' ? 'pl-10 pr-4 text-left' : 'pr-10 pl-4 text-right'}
                   ${
                     errors.email
                       ? "border-red-500 focus:ring-red-400"
@@ -93,23 +97,23 @@ const Login = () => {
             </div>
 
             {/* Password */}
-            <div>
+            <div dir={i18n.language==='en' ? 'ltr': "rtl"}>
              <div className="flex items-center justify-between mb-1">
                 <label className="text-sm font-bold text-gray-700">
-                Password
+                {t('password')}
                 </label>
 
                <button
                 type="button"
                 className="text-sm text-gray-500 hover:text-orange-500 hover:border-orange-500 focus:text-orange-500 focus:border-orange-500 cursor-pointer transition-colors duration-200"
                 >
-                Forgot Password
+               {t('forgotPassword')}
                 </button>
             </div>
 
               <div className="relative">
                 <FiLock
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+                 className={`absolute top-1/2 -translate-y-1/2 text-gray-500 ${ i18n.language === 'en' ? 'left-3' : 'right-3'}`}
                   size={18}
                   strokeWidth={1.5}
                 />
@@ -120,7 +124,7 @@ const Login = () => {
                   value={form.password}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className={`w-full pl-10 pr-10 py-2 border rounded-md focus:outline-none focus:ring-1
+                  className={`w-full py-2 border rounded-md focus:outline-none focus:ring-1 ${i18n.language === 'en' ? 'pl-10 pr-4 text-left' : 'pr-10 pl-4 text-right'}
                   ${
                     errors.password
                       ? "border-red-500 focus:ring-red-400"
@@ -133,7 +137,7 @@ const Login = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   disabled={!form.password}
                   
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer hover:text-gray-700"
+                  className={`absolute top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer ${i18n.language === 'en' ? 'right-3' : 'left-3'}`}
                 >
                   {form.password &&
                     (showPassword ? (
@@ -164,13 +168,13 @@ const Login = () => {
                 <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               )}
 
-              {loading ? "Signing in..." : "Login"}
+              {loading ? t('signingIn') : t('login')}
             </button>
 
             {/* Divider */}
             <div className="flex items-center gap-5">
               <div className="flex-1 h-[1px] bg-gray-200"></div>
-              <span className="text-gray-400 text-sm">OR</span>
+              <span className="text-gray-400 text-sm">{t('or')}</span>
               <div className="flex-1 h-[1px] bg-gray-200"></div>
             </div>
 
@@ -180,13 +184,13 @@ const Login = () => {
               className="w-full py-2 border border-gray-300 rounded-md flex items-center justify-center gap-3 hover:bg-gray-50 cursor-pointer"
             >
               <FcGoogle size={18} />
-              Continue with Google
+             {t('continueWithGoogle')}
             </button>
 
             <p className="text-center text-sm text-gray-400">
-              Don’t have an account?
+             {t('dontHaveAccount')}{"   "}
               <Link to="/signup" className="text-orange-500 ml-2">
-                Sign up
+               {t('signUp')}
               </Link>
             </p>
           </form>

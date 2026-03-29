@@ -1,5 +1,6 @@
 import {create} from 'zustand';
 import {signup, login} from '../services/authService';
+import i18n from '../i18n';
 
 const  useAuthStore=create((set,get) => ({
     // form fields
@@ -58,26 +59,26 @@ const  useAuthStore=create((set,get) => ({
             const { form } = get();
             const newErrors = {};
 
-            if (!form.name.trim()) newErrors.name = "Name is required";
+            if (!form.name.trim()) newErrors.name = i18n.t("nameRequired");
 
-            if (!form.email.trim()) newErrors.email = "Email is required";
+            if (!form.email.trim()) newErrors.email = i18n.t('emailRequired');
             else if (!/\S+@\S+\.\S+/.test(form.email))
-            newErrors.email = "Email is invalid";
+            newErrors.email = i18n.t('emailInvalid');
 
-            if (!form.password) newErrors.password = "Password is required";
+            if (!form.password) newErrors.password =i18n.t('passwordRequired');
            
             if(!form.confirmPassword) 
-                newErrors.confirmPassword ="Confirm password is required";
+                newErrors.confirmPassword =i18n.t('confirmPasswordRequired');
 
             if(form.password && form.confirmPassword && 
                 form.password !== form.confirmPassword){
-                    newErrors.confirmPassword="Passwords do not match";
+                    newErrors.confirmPassword=i18n.t('passwordsDoNotMatch');
                 }
 
-            if (!form.phone) newErrors.phone = "Phone is required";
+            if (!form.phone) newErrors.phone = i18n.t('phoneRequired');
 
-            else if (form.phone.length !== 9) newErrors.phone = "Phone number must be 9 digits";
-            else if (form.phone[0] !== "7") newErrors.phone = "The phone number must start with 7.";
+            else if (form.phone.length !== 9) newErrors.phone =i18n.t('phoneMustBe9Digits');
+            else if (form.phone[0] !== "7") newErrors.phone = i18n.t('phoneMustStartWith7');
 
             return newErrors;
         },
@@ -114,9 +115,9 @@ const  useAuthStore=create((set,get) => ({
 
             if(err.name === "HTTPError"){
                 const errorData = await err.response.json().catch(()=>({message:err.message}));
-                toast.error(errorData.message || "Signup failed. Please try again.");
+                toast.error(errorData.message || i18n.t('signupFailed'));
             }else{
-                toast.error(err.message || "Signup failed. Please try again.");
+                toast.error(err.message || i18n.t('signupFailed'));
              }
             } 
             finally {
@@ -164,11 +165,11 @@ const  useAuthStore=create((set,get) => ({
 
                 toast.dismiss();
                if (data.success) {
-                    toast.success('Welcome Again!');
+                    toast.success(i18n.t('welcomeAgain'));
                     setUser(data.user || {email}, data.token);
                     navigate("/");
                 } else {
-                    toast.error(data.message || 'Login failed');
+                    toast.error(data.message || i18n('loginFailed'));
                 }
                 navigate("/");
             }catch(err){

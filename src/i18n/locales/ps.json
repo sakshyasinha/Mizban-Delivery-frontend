@@ -100,5 +100,32 @@
   "Start Date": "د پیل نیټه",
   "End Date": "د پای نیټه",
   "Filter": "فلټر",
-  "Couriers": "کورییرونه"
+  "Couriers": "کورییرونه",
+
+  "welcomeBack": "بیا ښه راغلاست",
+  "loginToAccount": "خپل حساب ته ننوتل",
+  "email": "برېښنالیک",
+  "enterEmail": "خپل برېښنالیک دننه کړئ",
+  "password": "پټنوم",
+  "forgotPassword": "پټنوم مو هېر شوی؟",
+  "login": "ننوتل",
+  "signingIn": "د ننوتلو په حال کې...",
+  "or": "یا",
+  "continueWithGoogle": "د ګوګل له لارې دوام ورکړئ",
+  "dontHaveAccount": "حساب نه لرئ؟",
+  "signUp": "ثبت نام",
+
+  "nameRequired": "نوم اړین دی",
+  "emailRequired": "برېښنالیک اړین دی",
+  "emailInvalid": "برېښنالیک سم نه دی",
+  "passwordRequired": "پټنوم اړین دی",
+  "confirmPasswordRequired": "د پټنوم تایید اړین دی",
+  "passwordsDoNotMatch": "پټنومونه سره برابر نه دي",
+  "phoneRequired": "د تلیفون شمېره اړینه ده",
+  "phoneMustBe9Digits": "د تلیفون شمېره باید ۹ عدده وي",
+  "phoneMustStartWith7": "د تلیفون شمېره باید په ۷ پیل شي",
+  "signupFailed": "ثبت نام ناکام شو، بیا هڅه وکړئ",
+  "passwordMinLength": "پټنوم باید لږ تر لږه ۸ توري ولري",
+  "welcomeAgain": "بیا ښه راغلاست!",
+  "loginFailed": "ننوتل ناکام شول"
 }

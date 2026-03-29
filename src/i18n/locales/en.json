@@ -99,5 +99,33 @@
   "Start Date": "Start Date",
   "End Date": "End Date",
   "Filter": "Filter",
-  "Couriers": "Couriers"
+  "Couriers": "Couriers",
+
+ 
+  "welcomeBack": "Welcome Back",
+  "loginToAccount": "Login to your account",
+  "email": "Email",
+  "enterEmail": "Enter your email",
+  "password": "Password",
+  "forgotPassword": "Forgot Password",
+  "login": "Login",
+  "signingIn": "Signing in...",
+  "or": "OR",
+  "continueWithGoogle": "Continue with Google",
+  "dontHaveAccount": "Don't have an account?",
+  "signUp": "Sign up",
+
+  "nameRequired": "Name is required",
+  "emailRequired": "Email is required",
+  "emailInvalid": "Email is invalid",
+  "passwordRequired": "Password is required",
+  "confirmPasswordRequired": "Confirm password is required",
+  "passwordsDoNotMatch": "Passwords do not match",
+  "phoneRequired": "Phone is required",
+  "phoneMustBe9Digits": "Phone number must be 9 digits",
+  "phoneMustStartWith7": "The phone number must start with 7.",
+  "signupFailed": "Signup failed. Please try again.",
+  "passwordMinLength": "Password must be at least 8 characters",
+  "welcomeAgain": "Welcome Again!",
+  "loginFailed": "Login failed"
 }

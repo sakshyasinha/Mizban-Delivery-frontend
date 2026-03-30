@@ -4,7 +4,7 @@ import {handleApiError} from './handleApiError';
 export const signup = async(userData) => {
     try{
         console.log('userData',{...userData});
-        const response = await api.post('/auth/register', {json: userData}).json();
+        const response = await api.post('auth/register', {json: userData}).json();
         console.log('response:',response);
         return response;
     }catch(error){
@@ -16,7 +16,7 @@ export const signup = async(userData) => {
 export const login = async (credentials) => {
    
     try{
-        const response = await api.post("/auth/login",{json: credentials}).json();
+        const response = await api.post("auth/login",{json: credentials}).json();
         if(response.token){
             localStorage.setItem('token', response.token); // save token
         }

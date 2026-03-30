@@ -8,12 +8,12 @@ import toast from 'react-hot-toast';
 import {useTranslation} from 'react-i18next';
 
 const Login = () => {
-    const {form} = useAuthStore(state => state.form);
-    const {errors} = useAuthStore ( state => state.errors);
-    const {loading} =useAuthStore ( state => state.loading);
-    const {setField} = useAuthStore (state => state.setField);
-    const {setErrors} = useAuthStore ( state => state.setErrors);
-    const {loginUser} = useAuthStore ( state => state.loginUser);
+    const form = useAuthStore(state => state.form);
+    const errors = useAuthStore ( state => state.errors);
+    const loading =useAuthStore ( state => state.loading);
+    const setField = useAuthStore (state => state.setField);
+    const setErrors = useAuthStore ( state => state.setErrors);
+    const loginUser = useAuthStore ( state => state.loginUser);
 
     const [showPassword,setShowPassword]=useState(false);
     const navigate= useNavigate();

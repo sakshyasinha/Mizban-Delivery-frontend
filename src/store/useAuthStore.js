@@ -102,7 +102,8 @@ const  useAuthStore=create((set,get) => ({
 
             toast.dismiss();
             toast.success(data.message);
-
+            
+            console.log('data token', data.token);
             resetForm();
 
             setUser(data.user || {email} , data.token);

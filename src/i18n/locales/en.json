@@ -99,5 +99,7 @@
   "Start Date": "Start Date",
   "End Date": "End Date",
   "Filter": "Filter",
-  "Couriers": "Couriers"
+  "Couriers": "Couriers",
+  "Address": "Address",
+  "Business": "Business"
 }

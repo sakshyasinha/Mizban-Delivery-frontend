@@ -63,42 +63,50 @@ const errorStyle =  "text-red-500 text-sm"
           />
           {sizeError && <span className={errorStyle}>Select the size</span>}
         </div>
-        {/* Fragile */}
-        <div className="md:col-span-2">
-          <label className="flex items-center gap-3 p-4 bg-orange-50/50 border border-orange-100 rounded-xl cursor-pointer hover:bg-orange-50 transition-colors w-fit">
-            <input 
-              type="checkbox" 
-              id="isFragile" 
-              value={packageDetails.fragile}
-              onChange={(e)=> updateOrderData("packageDetails.fragile", e.target.checked)}
-              className="w-5 h-5 accent-orange-600 cursor-pointer" 
-            />
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-gray-800 flex items-center gap-1">
-                <LuTriangleAlert className="text-orange-500" size={16} /> Fragile Package
-              </span>
-              <span className="text-xs text-gray-500">Handle with extra care during transit</span>
-            </div>
-          </label>
-        </div>
+  
 
-        {/* Notes */}
-        <div className="md:col-span-2 flex flex-col">
-          <label htmlFor="note" className="text-sm font-bold text-gray-700 mb-1 flex items-center gap-1">
-            Notes
-          </label>
-          
-          <div className="relative">
-            <textarea 
+        <div className="flex flex-col md:flex-row gap-6 w-full items-stretch md:col-span-2">
+
+          <div className="flex flex-col flex-1">
+            <label htmlFor="note" className="text-sm font-bold text-gray-700 mb-1.5 flex items-center gap-1">
+              Notes
+            </label>
+            <textarea
               value={packageDetails.note}
-              onChange={(e)=> updateOrderData("packageDetails.note", e.target.value)}
-              id="note" 
+              onChange={(e) => updateOrderData("packageDetails.note", e.target.value)}
+              id="note"
               maxLength={200}
               placeholder="Add any specific delivery instructions here..."
-              className="p-4 pb-8 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full min-h-[120px] resize-none text-sm"
+              className="p-4 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:bg-white transition-all w-full min-h-[120px] resize-none text-sm"
             ></textarea>
           </div>
+
+          <div className="flex flex-col flex-1">
+            <label className="text-sm font-bold mb-1.5 opacity-0 hidden md:block">
+              Spacing
+            </label>
+            <label className="flex items-center gap-3 p-5 bg-orange-50/50 border border-orange-100 rounded-xl cursor-pointer hover:bg-orange-50 transition-colors h-full min-h-[120px]">
+              <input
+                type="checkbox"
+                id="isFragile"
+                checked={packageDetails.fragile}
+                onChange={(e) => updateOrderData("packageDetails.fragile", e.target.checked)}
+                className="w-5 h-5 accent-orange-600 cursor-pointer shadow-sm"
+              />
+              <div className="flex flex-col">
+                <span className="text-sm font-bold text-gray-800 flex items-center gap-1">
+                  <LuTriangleAlert className="text-orange-500" size={18} /> Fragile Package
+                </span>
+                <span className="text-xs text-gray-500 leading-relaxed">
+                  Handle with extra care during transit
+                </span>
+              </div>
+            </label>
+          </div>
         </div>
+
+
+
       </div>
     </div>
   );

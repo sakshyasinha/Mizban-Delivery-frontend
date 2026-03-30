@@ -84,7 +84,7 @@ const  useAuthStore=create((set,get) => ({
 
          // submit signup
         signupUser: async (navigate, toast) => {
-            const { form, validateSignup, setErrors, setLoading, resetForm ,setUser} = get();
+            const { form, validateSignup, setErrors, setLoading, resetForm} = get();
 
             const validationErrors = validateSignup();
 
@@ -102,12 +102,8 @@ const  useAuthStore=create((set,get) => ({
 
             toast.dismiss();
             toast.success(data.message);
-            
-            console.log('data token', data.token);
+
             resetForm();
-
-            setUser(data.user || {email} , data.token);
-
             navigate("/");
 
             } catch (err) {
@@ -138,15 +134,13 @@ const  useAuthStore=create((set,get) => ({
            else if (form.password.length < 8) 
             newErrors.password = i18n.t("passwordTooShort");
         
-
-
            return newErrors;
         },
 
         // Login Submit
         loginUser: async(navigate,toast)=>{
 
-            const {form,validateLogin, setErrors, setLoading,setUser} = get();
+            const {form,validateLogin, setErrors, setLoading,setUser,resetForm} = get();
 
             const validationErrors = validateLogin();
 
@@ -160,16 +154,22 @@ const  useAuthStore=create((set,get) => ({
 
             try{
                 const {email , password} = form;
-                const data = await login({email,password});
+                
+                const response = await login({email,password});
                 
 
                 toast.dismiss();
-               if (data.success) {
+               if (response.success) {
                     toast.success(i18n.t('welcomeAgain'));
-                    setUser(data.user || {email}, data.token);
-                    navigate("/");
+
+                    const user= response.data || {email};
+                    const token=response.data?.token || response.token;
+                    setUser(user, token);
+                
+                     resetForm();
+                     navigate("/");
                 } else {
-                    toast.error(data.message || i18n.t('loginFailed'));
+                    toast.error(response.message || i18n.t('loginFailed'));
                 }
                
             }catch(err){

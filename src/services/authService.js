@@ -16,17 +16,9 @@ export const signup = async(userData) => {
 export const login = async (credentials) => {
    
     try{
-        const response = await api.post("auth/login",{json: credentials}).json();
-        if(response.token){
-            localStorage.setItem('token', response.token); // save token
-        }
+       const response = await api.post("auth/login", { json: credentials }).json();
         return response;
     }catch(error){
        await handleApiError(error);
     }
 };
-
-
-export const logout = () =>{
- localStorage.removeItem('token');
-}

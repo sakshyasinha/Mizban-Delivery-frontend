@@ -1,7 +1,7 @@
 import ky from 'ky';
 
 const api=ky.create({
-    prefixUrl:"https://mizban-delivery-backend.onrender.com/",
+    prefixUrl:"https://mizban-delivery-backend.onrender.com/api",
     headers:{
         'Content-Type':"application/json"
     },

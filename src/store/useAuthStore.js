@@ -131,14 +131,14 @@ const  useAuthStore=create((set,get) => ({
            const {form} = get();
            const newErrors={};
 
-           if(!form.email.trim()) newErrors.email= "Email is required";
+           if(!form.email.trim()) newErrors.email= i18n.t("emailRequired");
            else if(!/\S+@\S+\.\S+/.test(form.email))
-            newErrors.email="Email is invalid";
+            newErrors.email=i18n.t("emailInvalid");
+           if(!form.password) newErrors.password=i18n.t("passwordRequired");
            else if (form.password.length < 8) 
-            newErrors.password = "Password must be at least 8 characters";
+            newErrors.password = i18n.t("passwordTooShort");
         
 
-           if(!form.password) newErrors.password="Password is required";
 
            return newErrors;
         },
@@ -169,17 +169,17 @@ const  useAuthStore=create((set,get) => ({
                     setUser(data.user || {email}, data.token);
                     navigate("/");
                 } else {
-                    toast.error(data.message || i18n('loginFailed'));
+                    toast.error(data.message || i18n.t('loginFailed'));
                 }
-                navigate("/");
+               
             }catch(err){
                 toast.dismiss();
                
                 if(err.name === 'HTTPError'){
                     const errorData = await err.response.json().catch(()=>({message: err.message}));
-                    toast.error(errorData.message || 'Login failed');
+                    toast.error(errorData.message || i18n.t('loginFailed'));
                 }else {
-                    toast.error(err.message || 'Login failed');
+                    toast.error(err.message || i18n.t('loginFailed'));
                 }
             }finally{
                 setLoading(false);

@@ -70,6 +70,7 @@ export default function PaymentAndPrice() {
           </label>
           <div className="relative">
             <input type="number" id="discount" className={inputStyle} min={0} 
+             onWheel={(e) => e.target.blur()} 
             value={deliveryPrice.discount}
             onChange={(e)=> updateOrderData("deliveryPrice.discount", e.target.value)}
             placeholder="0.00" />
@@ -84,6 +85,7 @@ export default function PaymentAndPrice() {
           </label>
           <div className="relative">
             <input type="number" id="total" className={inputStyle} min={0} 
+             onWheel={(e) => e.target.blur()} 
             value={amountToCollect}
             onChange={(e)=> updateOrderData("amountToCollect", e.target.value)}
             placeholder="0.00" />

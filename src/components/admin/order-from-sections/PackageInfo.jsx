@@ -35,7 +35,10 @@ const errorStyle =  "text-red-500 text-sm"
           <input 
             type="number" 
             min={0} 
+            step="any"
+            inputmode="decimal" 
             id="weight" 
+             onWheel={(e) => e.target.blur()} 
             value={packageDetails.weight}
             onChange={(e)=> updateOrderData("packageDetails.weight", e.target.value)}
             placeholder="0.00"

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { LuWallet, LuTag, LuTruck, LuBanknote, LuCalculator, LuCoins } from "react-icons/lu";
 import Dropdown from "../../common/Dropdown";
 import useOrderStore from '../../../store/admin/useOrderStore';
@@ -26,9 +26,24 @@ export default function PaymentAndPrice() {
    }, [totalItemsPrice])  
     
    const paymentTypeError = paymentType === "" && visited["paymentType"]
-   const totalAmountToPay = useMemo(()=>{
-     return Number(amountToCollect) + Number(deliveryPrice.total) - Number(deliveryPrice.discount)
-   }, [amountToCollect, deliveryPrice])
+
+   const [discountError, setDiscountError] = useState(false)
+  const subtotal = Number(deliveryPrice.total) || 0;
+  const discount = Number(deliveryPrice.discount) || 0;
+  const shipping = Number(amountToCollect) || 0;
+  
+    useEffect(() => {
+      if (discount > subtotal || discount > shipping) {
+        setDiscountError(true);
+      } else {
+        setDiscountError(false);
+      }
+    }, [discount, subtotal, shipping])
+
+    const totalAmountToPay = useMemo(() => {
+      const calculated = subtotal + shipping - discount;
+      return Math.max(0, calculated);
+    }, [subtotal, shipping, discount]);
 
    useEffect(()=>{
       updateOrderData("finalPrice", totalAmountToPay)
@@ -76,6 +91,7 @@ export default function PaymentAndPrice() {
             placeholder="0.00" />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-black">AFN</span>
           </div>
+          {discountError && <span className="text-red-500 text-sm">Discount is too much</span>}
         </div>
 
         {/* Delivery Price */}
@@ -102,6 +118,7 @@ export default function PaymentAndPrice() {
             <input 
             value={finalPrice}
               type="number" 
+              min={0}
               id="finalPrice" 
               readOnly 
               className="p-2.5 bg-orange-50 border border-orange-200 rounded-xl outline-none text-lg font-black text-orange-700 w-full pr-12" 

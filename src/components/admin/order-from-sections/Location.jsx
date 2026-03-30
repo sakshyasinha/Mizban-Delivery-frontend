@@ -42,8 +42,9 @@ const pickupLocationError = (pickupLocation[0] === 0 || pickupLocation[1] === 0)
                 <label htmlFor="pick-long" className={labelStyle}>Longitude</label>
                 <input type="text" id="pick-long" value={pickupLocation[1]} readOnly className={inputStyle} />
               </div>
-              {pickupLocationError && <span className="text-red-500 text-sm">Pickup location coordinates are required</span>}
             </div>
+                          {pickupLocationError && <span className="text-red-500 text-[13px] w-full text-center pl-3">Pickup location coordinates are required</span>}
+
           </div>
 
           <hr className="border-gray-50" />
@@ -64,8 +65,9 @@ const pickupLocationError = (pickupLocation[0] === 0 || pickupLocation[1] === 0)
                 <label htmlFor="drop-long" className={labelStyle}>Longitude</label>
                 <input type="text" id="drop-long" value={dropoffLocation[1]} readOnly className={inputStyle} />
               </div>
-                            {dropoffLocationError && <span className="text-red-500 text-sm">Dropoff location coordinates are required</span>}
             </div>
+            {dropoffLocationError && <span className="text-red-500 text-[13px] w-full text-center pl-3">Dropoff location coordinates are required</span>}
+
           </div>
             
 

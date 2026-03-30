@@ -32,18 +32,21 @@ const errorStyle =  "text-red-500 text-sm"
           <label htmlFor="weight" className="text-sm font-bold text-gray-700 mb-1 flex items-center gap-1">
             Package Weight
           </label>
+          <div className="relative">
           <input 
             type="number" 
             min={0} 
             step="any"
             inputmode="decimal" 
             id="weight" 
-             onWheel={(e) => e.target.blur()} 
+            onWheel={(e) => e.target.blur()} 
             value={packageDetails.weight}
             onChange={(e)=> updateOrderData("packageDetails.weight", e.target.value)}
             placeholder="0.00"
-            className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full font-medium" 
+            className="p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:border-orange-500 focus:bg-white transition-all w-full text-sm font-medium pr-12" 
           />
+          <span className="absolute right-4 pl-5 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-black">Kg</span>
+          </div>
           {weightError && <span className={errorStyle}>Weight must be greater than 0</span>}
         </div>
 

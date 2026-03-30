@@ -1,8 +1,9 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useTransition } from "react";
 import { useClickOutside } from "../../hooks/useOutsideClick";
 import { LuX } from "react-icons/lu";
-export default function SearchableDropdown({ onSelect, items, placeholder = "Search..." }) {
-
+import { useTranslation } from "react-i18next";
+export default function SearchableDropdown({ onSelect, items, placeholder }) {
+   const {t} = useTranslation()
   const dropdownRef = useRef(null)
 
   const [isDropdownOpen, setDrowdownOpen] = useState(false);
@@ -39,7 +40,7 @@ export default function SearchableDropdown({ onSelect, items, placeholder = "Sea
             onChange={(e) => handleSearch(e.target.value)}
             onFocus={() => setDrowdownOpen(true)}
             className="w-full h-11 pl-4 pr-10 py-2 bg-white border border-gray-200 rounded-xl shadow-sm outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all text-sm"
-            placeholder={placeholder}
+            placeholder={placeholder || t("Search...")}
           />
           {searchTerm && (
             <button

@@ -103,5 +103,13 @@
   "Filter": "فیلتر",
   "Couriers": "پیک‌ها",
   "Business": "کسب و کار",
-  "Reset filters": "حذف فیلتر"
+  "Reset filters": "حذف فیلتر",
+  "Cancel": "لغو",
+  "Select courier": "برای ارسال سفارش یک پیک انتخاب کنید",
+  "Confirm": "تایید",
+    "Search...": "جستجو ...",
+     "Cancel confirmation text": "آیا از لغو این سفارش اطمینان دارید؟ این عملیات قابل بازگشت نیست. لطفاً دلیل خود را در زیر بنویسید.",
+    "Cancellation Reason": "دلیل لغو",
+    "Cancel textarea placeholder": "مثلاً: مشتری منصرف شد، کالا موجود نیست..."
+
 }

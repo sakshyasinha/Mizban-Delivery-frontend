@@ -4,12 +4,13 @@ import useOrderStore from "../../../store/admin/useOrderStore";
 import toast from "react-hot-toast";
 import { LuX } from "react-icons/lu";
 import { useLockBodyScroll } from "../../../hooks/useLockBodyScroll";
+import { useTranslation } from "react-i18next";
 
 export default function AssignCourier({ onClose, isOpen, orderId }) {
   const selectedCourier = useOrderStore((state) => state.selectedCourier);
   const setCourier = useOrderStore((state) => state.setCourier);
   const clearCourier = useOrderStore((state) => state.clearCourier);
-
+  const {t} = useTranslation()
   if (!isOpen) return null;
 
   const handleCourierConfirm = () => {
@@ -43,8 +44,8 @@ export default function AssignCourier({ onClose, isOpen, orderId }) {
           <button  className="self-end hover:bg-orange-600 hover:text-white p-2 cursor-pointer rounded-[24px] transition ease-out" onClick={onClose}>
           <LuX  />
           </button>
-          <h2 className="text-xl font-bold">Assign Courier</h2>
-          <p className="text-gray-600">Select a courier for this order</p>
+          <h2 className="text-xl font-bold">{t("Assign Courier")}</h2>
+          <p className="text-gray-600">{t("Select courier")}</p>
           
           <SearchableDropdown onSelect={(val) => setCourier(val)} items={items} />
 
@@ -52,12 +53,12 @@ export default function AssignCourier({ onClose, isOpen, orderId }) {
             <Button 
               onClick={handleCancel} 
               variant="secondary" 
-              text="Cancel" 
+              text={t("Cancel")} 
             />
             <Button 
               onClick={handleCourierConfirm} 
               variant="primary" 
-              text="Confirm" 
+              text={t("Confirm")} 
             />
           </div>
         </div>

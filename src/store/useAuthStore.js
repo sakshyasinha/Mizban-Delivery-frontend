@@ -73,12 +73,11 @@ const  useAuthStore=create((set,get) => ({
             if(form.password && form.confirmPassword && 
                 form.password !== form.confirmPassword){
                     newErrors.confirmPassword=i18n.t('passwordsDoNotMatch');
-                }
+            }
 
-            if (!form.phone) newErrors.phone = i18n.t('phoneRequired');
-
-            else if (form.phone.length !== 9) newErrors.phone =i18n.t('phoneMustBe9Digits');
-            else if (form.phone[0] !== "7") newErrors.phone = i18n.t('phoneMustStartWith7');
+            if (!form.phone) newErrors.phone = i18n.t('phoneRequired')
+            else if (!/^7\d{8}$/.test(form.phone))
+               newErrors.phone = i18n.t('phoneInvalid');
 
             return newErrors;
         },

@@ -1,30 +1,22 @@
 import api from './api';
+import {handleApiError} from './handleApiError';
 
 export const signup = async(userData) => {
     try{
-        console.log('userData',userData);
-        const response = await api.post('/api/auth/register',userData);
-        return response.data;
+        const response = await api.post('auth/register', {json: userData}).json();
+        return response;
     }catch(error){
-        console.log('error authServices: ',error);
-        throw error.response?.data || error;
+       await handleApiError(error);
     }
 };
 
 
 export const login = async (credentials) => {
+   
     try{
-        const response = await api.post("api/auth/login",credentials);
-        if(response.data.token){
-            localStorage.setItem('token',response.data.token); // save token
-        }
-        return response.data;
+       const response = await api.post("auth/login", { json: credentials }).json();
+        return response;
     }catch(error){
-        throw error.response?.data || error;
+       await handleApiError(error);
     }
 };
-
-
-export const logout = () =>{
- localStorage.removeItem('token');
-}

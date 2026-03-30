@@ -7,7 +7,8 @@ import Footer from '../components/common/Footer';
 function AppRouter(){
     const allRoutes=[...publicRoutes , ...protectedRoutes];
     const location=useLocation();
-    const hideHeaderContent=location.pathname==='/signup';
+    const hiddenRoutes=["/signup","/login"];
+    const hideHeaderContent=hiddenRoutes.includes(location.pathname);
 
     return (
         <>

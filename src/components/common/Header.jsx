@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import useAuthStore from "../../store/useAuthStore";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Header = ({ hideContent }) => {
+  const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const languages = [
+   const languages = [
     { code: "en", label: "English" },
     { code: "fa", label: "فارسی" },
     { code: "ps", label: "پښتو" },
@@ -16,6 +19,7 @@ const Header = ({ hideContent }) => {
     i18n.changeLanguage(code);
     setIsOpen(false);
   };
+  
 
   const activeStyle = ({ isActive }) =>
     isActive
@@ -25,6 +29,8 @@ const Header = ({ hideContent }) => {
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200 px-6 py-4 shadow-sm">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
+
+        {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
             M
@@ -34,7 +40,7 @@ const Header = ({ hideContent }) => {
             <span className="text-orange-600">{t("Delivery")}</span>
           </span>
 
-          {/* Improved Language Dropdown */}
+            {/* Improved Language Dropdown */}
           <div className="relative ml-4">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -86,21 +92,49 @@ const Header = ({ hideContent }) => {
         </div>
 
         {!hideContent && (
-          <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-            <NavLink to="/" className={activeStyle}>
-              {t("Dashboard")}
-            </NavLink>
-            <NavLink to="orders" className={activeStyle}>
-              {t("Orders")}
-            </NavLink>
-            <NavLink to="/settings" className={activeStyle}>
-              {t("Settings")}
-            </NavLink>
-          </nav>
+          <>
+            {/* If logged in → show nav + logout */}
+            {user ? (
+              <>
+                <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+                  <NavLink to="/" className={activeStyle}>
+                    Dashboard
+                  </NavLink>
+                  <NavLink to="/orders" className={activeStyle}>
+                    Orders
+                  </NavLink>
+                  <NavLink to="/settings" className={activeStyle}>
+                    Settings
+                  </NavLink>
+                </nav>
+
+                <button
+                  onClick={() => logout(navigate)}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              /* If not logged in → show login/signup only */
+              <div className="flex gap-3">
+                <NavLink
+                  to="/login"
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all"
+                >
+                  Login
+                </NavLink>
+
+                <NavLink
+                  to="/signup"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all"
+                >
+                  Signup
+                </NavLink>
+              </div>
+            )}
+          </>
         )}
-        <button className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all">
-          {t("Login")}
-        </button>
       </div>
     </header>
   );

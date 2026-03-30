@@ -5,17 +5,16 @@ import useOrderStore from  "../../../store/admin/useOrderStore"
 import { useEffect } from "react";
 export default function PackageInfo() {
   const sizes = [
-    { id: 1, name: "Select size", value: "select size" },
-    { id: 2, name: "Small ", value: "small" },
-    { id: 3, name: "Medium ", value: "medium" },
-    { id: 4, name: "Large ", value: "large" },
+    { id: 1, name: "Small ", value: "small" },
+    { id: 2, name: "Medium ", value: "medium" },
+    { id: 3, name: "Large ", value: "large" },
   ];
 const packageDetails = useOrderStore((state)=> state.orderData.packageDetails)
 const type = useOrderStore((state)=> state.orderData.type)
 const updateOrderData = useOrderStore((state)=> state.updateOrderData)
 const visited = useOrderStore((state)=> state.visited)
 
-const sizeError = type === "parcel" && packageDetails.size === "select size" && visited["packageDetails.size"]
+const sizeError = type === "parcel" && packageDetails.size === "" && visited["packageDetails.size"]
 const weightError = type === "parcel" && (packageDetails.weight === 0 || packageDetails.weight === "")&& visited["packageDetails.weight"]
 const errorStyle =  "text-red-500 text-sm"
   return (

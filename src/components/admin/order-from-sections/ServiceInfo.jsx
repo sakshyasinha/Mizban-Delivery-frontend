@@ -7,27 +7,23 @@ import useOrderStore from "../../../store/admin/useOrderStore";
 export default function ServiceInfo() {
   
   const categories = [
-    { id: 1, name: "Select category", value: "select category" },
-    { id: 2, name: "Food", value: "food" },
-    { id: 3, name: "Parcel", value: "parcel" },
-    { id: 4, name: "Grocery", value: "grocery" },
-    { id: 5, name: "Other", value: "other" },
+    { id: 1, name: "Food", value: "food" },
+    { id: 2, name: "Parcel", value: "parcel" },
+    { id: 3, name: "Grocery", value: "grocery" },
+    { id: 4, name: "Other", value: "other" },
   ];
 
   const serviceTypes = [
-    { id: 1, name: "Select Type", value: "select type" },
     { id: 1, name: "Immediate", value: "immediate" },
     { id: 2, name: "Scheduled", value: "scheduled" },
   ];
 
   const serviceLevels = [
-    { id: 1, name: "Select Level", value: "select level" },
     { id: 1, name: "Standard", value: "standard" },
     { id: 2, name: "Express", value: "express" },
   ];
 
   const priorities = [
-    { id: 1, name: "Select Priority", value: "select priority" },
     { id: 1, name: "Normal", value: "normal" },
     { id: 2, name: "High", value: "high" },
     { id: 3, name: "Critical", value: "critical" },
@@ -42,10 +38,10 @@ export default function ServiceInfo() {
   const deliveryDeadline = useOrderStore((state)=> state.orderData.deliveryDeadline)
   const visited = useOrderStore((state)=> state.visited)
 
-  const typeError = type === "select category" && visited["type"]
-  const serviceTypeError = serviceType === "select type" && visited["serviceType"]
-  const serviceLevelError = serviceLevel === "select level" && visited["serviceLevel"]
-  const priorityError = priority === "select priority" && visited["priority"]
+  const typeError = type === "" && visited["type"]
+  const serviceTypeError = serviceType === "" && visited["serviceType"]
+  const serviceLevelError = serviceLevel === "" && visited["serviceLevel"]
+  const priorityError = priority === "" && visited["priority"]
   const scheduledForError = serviceType === "scheduled" && scheduledFor === "" && visited["scheduledFor"]
 
   useEffect(()=>{
@@ -75,6 +71,7 @@ export default function ServiceInfo() {
           <Dropdown 
             options={categories} 
             value={type}
+            placeholder="Select Category"
             onSelect={(val) => {updateOrderData("type", val);  
             }} 
           />
@@ -89,6 +86,7 @@ export default function ServiceInfo() {
           <Dropdown 
             options={serviceTypes} 
             value={serviceType}
+            placeholder="Select Type"
             onSelect={(val) => {updateOrderData("serviceType", val);
              }} 
           />
@@ -103,6 +101,7 @@ export default function ServiceInfo() {
           <Dropdown 
             options={serviceLevels} 
             value={serviceLevel}
+            placeholder="Select Level"
             onSelect={(val) => updateOrderData("serviceLevel", val)} 
           />
           {serviceLevelError && <span className={errorStyle}>Please select service level</span>}
@@ -126,6 +125,7 @@ export default function ServiceInfo() {
           <Dropdown 
             options={priorities} 
             value={priority}
+            placeholder="Select Priority"
             onSelect={(val) => updateOrderData("priority", val)} 
           />
           {priorityError && <span className={errorStyle}>Please select priority</span>}

@@ -3,11 +3,11 @@ import { create } from "zustand";
 
 const useOrderStore = create((set, get) => ({
     orderData: {
-    type: "select category", 
-    serviceType: "select type", 
+    type: "", 
+    serviceType: "", 
     scheduledFor: null, 
     deliveryDeadline: null, 
-    priority: "select priority", 
+    priority: "", 
     sender: {
         name: "", 
         phone: "" 
@@ -28,12 +28,12 @@ const useOrderStore = create((set, get) => ({
     items: [], 
     packageDetails: {
         weight: 0.00,
-        size: "select size",
+        size: "",
         fragile: false, 
         note: "" 
     },
-    serviceLevel: "select level", 
-    paymentType: "select payment type", 
+    serviceLevel: "", 
+    paymentType: "", 
     amountToCollect: 0, 
     deliveryPrice: {
         discount: 0,
@@ -87,14 +87,14 @@ const useOrderStore = create((set, get) => ({
     return regex.test(phone);
   };
       const isBaseInfoValid =
-      data.type !== "select category" &&
-      data.serviceType !== "select type" &&
+      data.type !== "" &&
+      data.serviceType !== "" &&
       data.sender.name.trim() !== "" &&
       isPhoneValid(data.sender.phone) &&
       data.receiver.name.trim() !== "" &&
       isPhoneValid(data.receiver.phone) &&
       data.receiver.address.trim() !== "" &&
-      data.paymentType !== "select payment type";
+      data.paymentType !== "";
 
     const areItemsValid = data.type === "parcel" ? true : data.items.length > 0;
     const isScheduleValid = data.serviceType === "scheduled" ? !!data.scheduledFor : true;
@@ -188,11 +188,11 @@ const useOrderStore = create((set, get) => ({
     isViewingOrder: false,
 
    initailOrderDataObject : {
-      type: "select category",
-      serviceType: "select type",
+      type: "",
+      serviceType: "",
       scheduledFor: null,
       deliveryDeadline: null,
-      priority: "select priority",
+      priority: "",
 
       sender: {
         name: "",
@@ -224,7 +224,7 @@ const useOrderStore = create((set, get) => ({
         note: ""
       },
 
-      serviceLevel: "select level",
+      serviceLevel: "",
       paymentType: "",
       amountToCollect: 0,
 

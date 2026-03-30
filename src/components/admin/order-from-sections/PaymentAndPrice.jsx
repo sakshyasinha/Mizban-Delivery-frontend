@@ -5,9 +5,8 @@ import useOrderStore from '../../../store/admin/useOrderStore';
 
 export default function PaymentAndPrice() {
   const paymentMethods = [
-    { id: 1, name: "Select Payment Type", value: "select payment type" },
-    { id: 2, name: "Cash on Delivery (COD)", value: "COD" },
-    { id: 3, name: "Online Payment", value: "online" },
+    { id: 1, name: "Cash on Delivery (COD)", value: "COD" },
+    { id: 2, name: "Online Payment", value: "online" },
   ];
   const paymentType = useOrderStore((state)=> state.orderData.paymentType)
   const amountToCollect  = useOrderStore((state)=> state.orderData.amountToCollect)
@@ -26,7 +25,7 @@ export default function PaymentAndPrice() {
     updateOrderData("deliveryPrice.total", totalItemsPrice)
    }, [totalItemsPrice])  
     
-   const paymentTypeError = paymentType === "select payment type" && visited["paymentType"]
+   const paymentTypeError = paymentType === "" && visited["paymentType"]
    const totalAmountToPay = useMemo(()=>{
      return Number(amountToCollect) + Number(deliveryPrice.total) - Number(deliveryPrice.discount)
    }, [amountToCollect, deliveryPrice])

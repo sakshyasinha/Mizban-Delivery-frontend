@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {signup, login} from '../services/authService';
 import i18n from '../i18n';
+import {getServerMessage} from '../utils/i18nHelper';
 
 const  useAuthStore=create((set,get) => ({
     // form fields
@@ -101,7 +102,7 @@ const  useAuthStore=create((set,get) => ({
             const data = await signup({name, email,password,phone});
 
             toast.dismiss();
-            toast.success(data.message);
+            toast.success(getServerMessage(data));
 
             resetForm();
             navigate("/");
@@ -109,13 +110,15 @@ const  useAuthStore=create((set,get) => ({
             } catch (err) {
             toast.dismiss();
 
+            let errorMessage;
             if(err.name === "HTTPError"){
                 const errorData = await err.response.json().catch(()=>({message:err.message}));
-                toast.error(errorData.message || i18n.t('signupFailed'));
+                errorMessage= getServerMessage(errorData);
             }else{
-                toast.error(err.message || i18n.t('signupFailed'));
-             }
-            } 
+                errorMessage=err.message;
+            }
+            toast.error(errorMessage || i18n.t('signupFailed'));
+        } 
             finally {
             setLoading(false);
             }
@@ -169,18 +172,22 @@ const  useAuthStore=create((set,get) => ({
                      resetForm();
                      navigate("/");
                 } else {
-                    toast.error(response.message || i18n.t('loginFailed'));
+                    toast.error(getServerMessage(response) || i18n.t('loginFailed'));
                 }
                
-            }catch(err){
+            }catch(err) {
                 toast.dismiss();
-               
-                if(err.name === 'HTTPError'){
-                    const errorData = await err.response.json().catch(()=>({message: err.message}));
-                    toast.error(errorData.message || i18n.t('loginFailed'));
-                }else {
-                    toast.error(err.message || i18n.t('loginFailed'));
+
+                let errorMessage;
+
+                if (err.name === 'HTTPError') {
+                    const errorData = await err.response.json().catch(() => ({ message: err.message }));
+                    errorMessage = getServerMessage(errorData);
+                } else {
+                    errorMessage = getServerMessage({ message: err.message });
                 }
+
+                toast.error(errorMessage || i18n.t('loginFailed')); 
             }finally{
                 setLoading(false);
             }

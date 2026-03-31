@@ -6,12 +6,17 @@ import avatar from "../../assets/avatar.png"
 import { FiMenu } from "react-icons/fi";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import useAuthStore from "../../store/useAuthStore";
+import { NavLink, useNavigate } from "react-router-dom";
 
-export default function Header({ onMenuClick }) {
+export default function Header({ onMenuClick, hideContent }) {
   const { t, i18n } = useTranslation()
   const [langOpen, setLangOpen] = useState(false)
+  const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
-  const languages = [
+   const languages = [
     { code: "en", label: "English" },
     { code: "fa", label: "فارسی" },
     { code: "ps", label: "پښتو" },
@@ -21,6 +26,7 @@ export default function Header({ onMenuClick }) {
     i18n.changeLanguage(code);
     setLangOpen(false);
   };
+  
 
   return (
     <header className="w-full sticky top-0 z-50 bg-white border-b border-gray-200 py-4 shadow-sm">
@@ -130,6 +136,50 @@ export default function Header({ onMenuClick }) {
             </div>
           </div>
         </div>
+        {!hideContent && (
+          <>
+            {/* If logged in → show nav + logout */}
+            {user ? (
+              <>
+                <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+                  <NavLink to="/" className={activeStyle}>
+                    Dashboard
+                  </NavLink>
+                  <NavLink to="/orders" className={activeStyle}>
+                    Orders
+                  </NavLink>
+                  <NavLink to="/settings" className={activeStyle}>
+                    Settings
+                  </NavLink>
+                </nav>
+
+                <button
+                  onClick={() => logout(navigate)}
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              /* If not logged in → show login/signup only */
+              <div className="flex gap-3">
+                <NavLink
+                  to="/login"
+                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all"
+                >
+                  Login
+                </NavLink>
+
+                <NavLink
+                  to="/signup"
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all"
+                >
+                  Signup
+                </NavLink>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </header>
   );

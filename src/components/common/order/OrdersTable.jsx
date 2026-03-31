@@ -1,7 +1,7 @@
-import { MoreVertical } from "lucide-react";
+
 import OrderStatusBadge from "./OrderStatusBadge";
 import OrderActions from "./OrderActions";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useOrderStore from "../../../store/admin/useOrderStore";
 import { useTranslation } from "react-i18next";
 import { toLocaleDigits } from "../../../utils/numberConverter";
@@ -49,10 +49,10 @@ const OrdersTable = ({ orders }) => {
               <td className="py-4 px-6">
                 <div className="flex flex-col">
                   <span className=" text-gray-900">
-                    {order.customer.customerName}
+                    {order.receiver.name}
                   </span>
                   <span className="text-[11px] text-gray-400">
-                    {toLocaleDigits(order.customer.phoneNumber, currentLng)}
+                    {toLocaleDigits(order.receiver.phone, currentLng)}
                   </span>
                 </div>
               </td>
@@ -60,10 +60,10 @@ const OrdersTable = ({ orders }) => {
               <td className="py-4 px-6">
                 <div className="flex flex-col text-sm  text-gray-600">
                   <span className="font-bold">
-                    {t(order.payment.paymentStatus)}
+                    {t(order.paymentStatus)}
                   </span>
                   <span className="font-small">
-                    {t("Amount")}: {order.total.toLocaleString()} {t("AFN")}
+                    {t("Amount")}: {order.finalPrice.toLocaleString()} {t("AFN")}
                   </span>
                 </div>
               </td>
@@ -73,7 +73,7 @@ const OrdersTable = ({ orders }) => {
               </td>
 
               <td className="py-4 px-6 text-right text-gray-900">
-                {order.customer.deliveryAddress}
+                {order.receiver.address}
               </td>
 
               <td className="py-4 px-6 text-right">

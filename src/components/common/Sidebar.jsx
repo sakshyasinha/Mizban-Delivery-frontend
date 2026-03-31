@@ -18,7 +18,7 @@ export default function Sidebar({isOpen, setIsOpen}) {
     { key: "dashboard", path: "/", icon: <MdDashboard size={20} />, label: t("Dashboard") },
     { key: "orders", path: "/orders", icon: <FaBox size={18} />, label: t("Orders") },
     { key: "deliveries", path: "/deliveries", icon: <FaTruckMoving size={20} />, label: t("Deliveries") },
-    { key: "couriers", path: "/couriers", icon: <IoPeopleSharp size={20} />, label: t("Couriers") },
+    { key: "couriers", path: "/drivers", icon: <IoPeopleSharp size={20} />, label: t("Couriers") },
     { key: "analytics", path: "/analytics", icon: <GrAnalytics size={20} />, label: t("Analytics") },
     { key: "menu-manager", path: "/menu-manager", icon: <GiKnifeFork size={20} />, label: t("Menu Manager") },
     { key: "settings", path: "/settings", icon: <IoMdSettings size={20} />, label: t("Settings")},

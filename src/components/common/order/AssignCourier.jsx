@@ -15,12 +15,12 @@ export default function AssignCourier({ onClose, isOpen, orderId }) {
 
   const handleCourierConfirm = () => {
     if (!selectedCourier) {
-      toast.error("Select a courier!");
+      toast.error(t("Select a courier"));
       return;
     } 
     setCourier(selectedCourier, orderId)
 
-    toast.success("Courier added successfully, status updated!");
+    toast.success(t("Courier Added Successfully"));
     onClose();
   };
 
@@ -37,7 +37,7 @@ export default function AssignCourier({ onClose, isOpen, orderId }) {
     ];
     useLockBodyScroll(isOpen)
   return (
-    <div className="fixed  overflow-hidden inset-0 z-[9999] flex items-center justify-center p-4">
+    <div className="fixed  overflow-hidden inset-0 z-[50] flex items-center justify-center p-4">
       <div className="absolute  inset-0 bg-gray-900/40 backdrop-blur-sm" onClick={handleCancel} />
       <div className="bg-white w-full max-w-md rounded-[24px] shadow-xl z-10">
         <div className="p-6 flex w-full flex-col items-start gap-4">

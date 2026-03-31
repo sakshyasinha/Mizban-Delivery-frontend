@@ -7,24 +7,24 @@ import { useTranslation } from "react-i18next";
 
 export default function CancelOrder({orderId, isOpen, onClose }) {
   if (!isOpen) return null;
+    const {t, i18n} = useTranslation()
     const [reason, setReason] = useState(null)
     const [text, setText] = useState("")
     const cancelOrder = useOrderStore((state)=> state.cancelOrder)
   const confirmCancel = ()=>{
     if(!reason || reason.trim() === ""){
-       toast.error("Please enter the reason to cancel order!")
+       toast.error(t("Please enter the reason to cancel order"))
        return;
     }
     cancelOrder(orderId, reason)
-    toast.success("Order cancelled successfully!")
+    toast.success(t("Order Cancelled Successfully"))
     onClose()
   }
-  const {t, i18n} = useTranslation()
   const isLength200 = text.length === 200 ? "absolute bottom-4 right-4 text-xs md:text-sm text-red-400" : "absolute bottom-4 right-4 text-xs md:text-sm text-gray-400"
   const isLTR = i18n.dir() === "lrt"
   const ltrStyle =  "text-left"
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[50] flex items-center justify-center p-4">
       <div 
         className="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity" 
         onClick={onClose} 

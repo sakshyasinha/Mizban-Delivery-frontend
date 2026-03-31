@@ -11,6 +11,7 @@ import Items from "./order-from-sections/Items"
 import PaymentAndPrice from "./order-from-sections/PaymentAndPrice"
 import PackageInfo from "./order-from-sections/PackageInfo"
 import { LuArrowLeft } from 'react-icons/lu';
+import { useTranslation } from "react-i18next";
 
 
 export default function OrderForm() {
@@ -25,6 +26,7 @@ export default function OrderForm() {
   const visitAll = useOrderStore((state)=> state.visitAll)
   const navigate = useNavigate()
 
+const {t} = useTranslation()
 
  const handleSubmit = (e)=>{
      e.preventDefault()
@@ -44,10 +46,10 @@ export default function OrderForm() {
     }
     if(isEditingOrder){
      editExitingOrder(updateOrder)
-     toast.success("Order Updated")
+     toast.success(t("Order Updated Successfully"))
     }else{
     addNewOrder(newOrder)
-     toast.success("Order Added Successfullly!")
+     toast.success(t("Order Added Successfully"))
     }
 
      navigate("/orders")

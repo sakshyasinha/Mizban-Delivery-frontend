@@ -100,6 +100,18 @@
   "End Date": "End Date",
   "Filter": "Filter",
   "Couriers": "Couriers",
+  "Address": "Address",
+  "Business": "Business",
+  "Cancel": "Cancel",
+  "Select courier": "Select a courier for this order",
+  "Confirm": "Confirm",
+    "Search...": "Search...",
+    "Cancel confirmation text" : "Are you sure you want to cancel this order? This action cannot be undone. Please provide a reason below.",
+  "Cancellation Reason": "Cancellation Reason",
+  "Cancel textarea placeholder": "e.g., Customer changed their mind, Out of stock...",
+ "Courier Added Successfully": "Courier Added Successfully!",
+    "Order Cancelled Successfully": "Order Cancelled Successfully!",
+    "Select a courier": "Select a courier!",
 
  
   "welcomeBack": "Welcome Back",

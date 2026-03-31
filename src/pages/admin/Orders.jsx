@@ -2,7 +2,7 @@ import Button from "../../components/common/order/Button";
 import { Link } from "react-router-dom";
 import OrdersTable from "../../components/common/order/OrdersTable";
 import useOrderStore from "../../store/admin/useOrderStore";
-import { Plus, ShoppingBag } from "lucide-react";
+import { LuPlus, LuShoppingBag } from "react-icons/lu";
 import SearchBar from "../../components/common/SearchBar";
 import Dropdown from "../../components/common/Dropdown";
 import { useEffect, useState } from "react";
@@ -10,44 +10,42 @@ import { useDebounce } from "../../hooks/useDebounce";
 import { useTranslation } from "react-i18next";
 
 export default function Orders() {
-  const createNewOrder = useOrderStore((state) => state.createNewOrder);
-  const orders = useOrderStore((state) => state.orders);
-  const filteredList = useOrderStore((state) => state.filteredList);
-  const applyFilters = useOrderStore((state) => state.applyFilters);
-  const resetFilters = useOrderStore((state) => state.resetFilters);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCurier, setSelectedCourier] = useState("");
-  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const createNewOrder = useOrderStore((state) => state.createNewOrder)
+  const orders = useOrderStore((state) => state.orders)
+  const filteredList = useOrderStore((state) => state.filteredList)
+  const applyFilters = useOrderStore((state) => state.applyFilters)
+  const resetFilters = useOrderStore((state) => state.resetFilters)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedCurier, setSelectedCourier] = useState("")
+  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState("")
+  const [selectedStatus, setSelectedStatus] = useState("")
+  const [selectedBusiness, setSelectedBusiness] = useState("")
+  const [startDate, setStartDate] = useState("")
+  const [endDate, setEndDate] = useState("")
   let [filters, setFilters] = useState({
     courier: "",
     paymentStatus: "",
     orderStatus: "",
     startDate: "",
     endDate: "",
-  });
-  const isFiltered =
-    endDate ||
-    startDate ||
-    selectedCurier !== "" ||
-    selectedPaymentStatus !== "" ||
-    selectedStatus !== "";
-  const displayData =
-    searchTerm.trim() !== "" || isFiltered ? filteredList : orders;
+    senderName: ""
+  })
+  const isFiltered = endDate || startDate || selectedCurier !== "" || selectedPaymentStatus !== "" || selectedStatus !== "" || selectedBusiness !== "";
+  const displayData = (searchTerm.trim() !== "" || isFiltered) ? filteredList : orders
   const handleFilterReset = () => {
-    setSelectedCourier("");
-    setSelectedPaymentStatus("");
-    setSelectedStatus("");
-    setEndDate("");
-    setStartDate("");
+    setSelectedCourier("")
+    setSelectedPaymentStatus("")
+    setSelectedStatus("")
+    setEndDate("")
+    setStartDate("")
+    setSelectedBusiness("")
     setFilters({
       courier: "",
       paymentStatus: "",
       orderStatus: "",
       startDate: "",
       endDate: "",
+      senderName: ""
     });
     resetFilters();
   };
@@ -63,6 +61,7 @@ export default function Orders() {
       orderStatus: selectedStatus,
       startDate: startDate,
       endDate: endDate,
+      senderName: selectedBusiness
     };
     setFilters(newFilters);
     applyFilters(newFilters, searchTerm);
@@ -87,7 +86,12 @@ export default function Orders() {
     { id: 2, name: "Assigned", value: "assigned" },
     { id: 3, name: "Cancelled", value: "cancelled" },
     { id: 4, name: "Pending", value: "pending" },
-  ];
+  ]
+    const businesses = [
+    { id: 1, name: "Shahmama Restaurant", value: "Shahmama Restaurant" },
+    { id: 2, name: "Shahy Hotel", value: "Shahy Hotel" },
+    { id: 3, name: "Zuhak Restaurant", value: "Zuhak Restaurant" },
+  ]
   return (
     <div className="min-h-screen bg-gray-100 p-8 md:p-12">
       <div className="max-w-7xl mx-auto">
@@ -95,7 +99,7 @@ export default function Orders() {
         <div className="flex items-center flex-wrap gap-4 justify-center items-center md:justify-between mb-10">
           <div className="flex items-center gap-3">
             <div className="bg-orange-600 p-2 rounded-lg shadow-orange-100 shadow-lg">
-              <ShoppingBag className="text-white" size={24} />
+              <LuShoppingBag className="text-white" size={24} />
             </div>
             <div>
               <h1 className="text-2xl font-black text-gray-900 leading-none">
@@ -112,7 +116,7 @@ export default function Orders() {
               text={t("Create Order")}
               onClick={() => createNewOrder()}
               variant="primary"
-              icon={<Plus size={18} className="inline" />}
+              icon={<LuPlus size={18} className="inline" />}
               className="px-6 rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
             />
           </Link>
@@ -125,6 +129,9 @@ export default function Orders() {
           />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-nowrap items-center justify-center gap-4 mt-4 mb-8">
+            <div className="flex-1">
+            <Dropdown options={businesses} onSelect={(val) => setSelectedBusiness(val)} value={selectedBusiness} placeholder={t("Business")} />
+          </div>
           <div className="flex-1">
             <Dropdown
               options={couriers}
@@ -185,7 +192,7 @@ export default function Orders() {
           <Button text={t("Filter")} variant="primary" onClick={handleFilter} />
           {isFiltered && (
             <Button
-              text="reset"
+              text={t("Reset")}
               variant="secondary"
               onClick={handleFilterReset}
             />
@@ -204,7 +211,7 @@ export default function Orders() {
                   <Button
                     onClick={handleFilterReset}
                     variant="primary"
-                    text="Reset filters"
+                    text={t("Reset filters")}
                     className="mt-4"
                   >
                     {t("Clear all filters")}

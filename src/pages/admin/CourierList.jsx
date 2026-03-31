@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { MoreVertical } from "lucide-react";
+import { MdMoreVert } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useCourierStore } from "../../store/useCourierStore";
 
@@ -133,7 +133,7 @@ export default function CourierList() {
                         }
                         className="p-2 rounded-full hover:bg-gray-100"
                       >
-                        <MoreVertical size={18} />
+                        <MdMoreVert size={18} />
                       </button>
 
                       {openMenuId === courier.id && (

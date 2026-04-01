@@ -12,6 +12,8 @@ import PaymentAndPrice from "./order-from-sections/PaymentAndPrice"
 import PackageInfo from "./order-from-sections/PackageInfo"
 import { LuArrowLeft } from 'react-icons/lu';
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { getAllOrders } from "../../services/orderService";
 
 
 export default function OrderForm() {
@@ -28,32 +30,24 @@ export default function OrderForm() {
 
 const {t} = useTranslation()
 
- const handleSubmit = (e)=>{
+ const handleSubmit = async(e)=>{
      e.preventDefault()
      visitAll()
-     const newOrder = {
+     const payload = {
           ...orderData,
-      id: Date.now(),
-      status: "pending",
-      paymentStatus: orderData.paymentType === "COD" ? "paid" : "unpaid",
-      createdAt: new Date().toISOString()
     }
-    const updateOrder  = {
-      ...orderData
-    }
-    if(!isOrderValid()){
-      return
-    }
-    if(isEditingOrder){
-     editExitingOrder(updateOrder)
+    // if(!isOrderValid()){
+    //   return
+    // }
+   if (isEditingOrder) {
+     editExitingOrder(payload)
      toast.success(t("Order Updated Successfully"))
-    }else{
-    addNewOrder(newOrder)
-     toast.success(t("Order Added Successfully"))
-    }
-
-     navigate("/orders")
-     console.log(orders)
+   } else {
+     const success = await addNewOrder(payload)
+     if (success) {
+       navigate("/orders")
+     }
+   }
  }
   let title = ""
   if (isViewingOrder) {

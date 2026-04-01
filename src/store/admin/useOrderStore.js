@@ -104,6 +104,7 @@ const useOrderStore = create((set, get) => ({
 
     return isBaseInfoValid && areItemsValid && isScheduleValid && isPackageValid;
   },
+
  visitAll: () => {
   set({
     visited: {
@@ -126,6 +127,7 @@ const useOrderStore = create((set, get) => ({
       }
   });
 },
+
     updateOrderData : (path, value) =>{
         let separatedPath = path.split(".");
          const updateNested = (currentState, separatedPath, value)=>{
@@ -248,7 +250,7 @@ const useOrderStore = create((set, get) => ({
      orderData: get().initailOrderDataObject
   })
 },
-  getOrderDetailsToShow: (order, isViewing) => {
+  getOrderDetailsToShow: (order, isViewing, isEditingOrder) => {
     const orderDetails = {
           ...order,
         sender: {...order.sender},
@@ -273,7 +275,7 @@ const useOrderStore = create((set, get) => ({
         paymentStatus: order.paymentStatus
     }
     set({
-      isEditingOrder: true,
+      isEditingOrder: isEditingOrder,
       isViewingOrder: isViewing,
       orderData: orderDetails,
       originalData: orderDetails
@@ -395,11 +397,9 @@ const useOrderStore = create((set, get) => ({
   }
 ],
 
-isAddingOrder: false,
-isAddingOrderError: null,
 addNewOrder: async(newOrder) => {
         try{
-          set({isAddingOrder: true})
+          toast.loading("Adding order....")
           const response = await createNewOrder(newOrder)
           const createdOrder = response.data
           set((state) => {
@@ -409,34 +409,46 @@ addNewOrder: async(newOrder) => {
                 filteredList: updatedOrders
             };
         });
+          toast.dismiss()
           toast.success("Order Added Successfully!")
-        console.log("response", response)
-        console.log("createdorder", createdOrder)
           return true
         }catch(error){
-          console.log(getServerMessage(error))
-          set({isAddingOrderError:error.message})
-          toast.error(error.message || "Something went wrong please try again!")
+          toast.dismiss()
+          const errorMessage  = getServerMessage(error)
+          toast.error( errorMessage || "Something went wrong please try again!")
           return false
-        }finally{
-          set({isAddingOrder:false})
         }
-
     },
   editOrder: async (orderId, orderData) => {
     try {
+      toast.loading("Updating order...")
       const response = await updatedOrder(orderId, orderData)
-      set({
-        orderData: response.data,
-        originalData: orderData
-      })
+      const responseData = response.data
+       set((state)=> {
+        const updatedOrders = state.orders.map((order)=>{
+            return order._id === orderId ? responseData : order 
+        })
+        const updatedFilteredList = state.filteredList.map((order)=>{
+          return order._id === orderId ? responseData : order
+        })
+        return{
+          orderData: responseData,
+          orders: updatedOrders,
+          filteredList: updatedFilteredList
+        }
+       })
+      toast.dismiss()
       toast.success("Order Updated Successfully")
       return true
     } catch (error) {
       console.log(error)
+      toast.dismiss()
+      const errorMessage = getServerMessage(error)
+      toast.error(errorMessage|| "Something went wrong please try again")
       return false
     }
   },
+
 
     selectedCourier: null,
   

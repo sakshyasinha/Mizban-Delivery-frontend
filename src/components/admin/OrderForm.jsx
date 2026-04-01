@@ -33,9 +33,15 @@ const {id} = useParams()
  const handleSubmit = async(e)=>{
      e.preventDefault()
      visitAll()
-     const payload = {
-          ...orderData,
-    }
+   const payload = {
+     ...orderData,
+     scheduledFor: orderData.scheduledFor
+       ? new Date(orderData.scheduledFor).toISOString()
+       : null,
+     deliveryDeadline: orderData.deliveryDeadline
+       ? new Date(orderData.deliveryDeadline).toISOString()
+       : null
+   }
     // if(!isOrderValid()){
     //   return
     // }

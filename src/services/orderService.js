@@ -7,7 +7,7 @@ export const createNewOrder = async (orderData) => {
     return response
 }
 export const updatedOrder = async (orderId, updatedOrderData) => {
-    const response = await api.put(`orders/${orderId}`, { json: updatedOrderData })
+    const response = await api.put(`orders/${orderId}`, { json: updatedOrderData }).json()
     return response
 }
 export const cancelOrder = async (orderId, cancelReason) => {

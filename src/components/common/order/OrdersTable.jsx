@@ -8,9 +8,10 @@ import { toLocaleDigits } from "../../../utils/numberConverter";
 
 const OrdersTable = ({ orders }) => {
   const editOrder = useOrderStore((state) => state.editOrder);
+  const getOrderDetailsToShow = useOrderStore((state)=> state.getOrderDetailsToShow)
   const openOrderDetails = (order) => {
     navigate(`/orders/view-order/${order.id}`);
-    editOrder(order, true);
+    getOrderDetailsToShow(order,true, false);
   };
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();

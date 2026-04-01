@@ -69,7 +69,7 @@ const OrderActions = ({ order }) => {
           <button
             onClick={() => {
               navigate(`/orders/edit-order/${order.id || order._id}`);
-              getOrderDetailsToShow(order, false);
+              getOrderDetailsToShow(order, false, true);
               setIsOpen(false);
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"

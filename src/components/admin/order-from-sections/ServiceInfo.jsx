@@ -30,12 +30,12 @@ export default function ServiceInfo() {
   ];
   const [showScheduledFor, setShowScheduledFor] = useState(false)
   const updateOrderData = useOrderStore((state)=> state.updateOrderData)
-  const serviceType = useOrderStore((state)=> state.orderData.serviceType)
-  const type = useOrderStore((state)=> state.orderData.type)
-  const serviceLevel = useOrderStore((state)=> state.orderData.serviceLevel)
-  const priority = useOrderStore((state)=> state.orderData.priority)
-  const scheduledFor = useOrderStore((state)=>state.orderData.scheduledFor)
-  const deliveryDeadline = useOrderStore((state)=> state.orderData.deliveryDeadline)
+  const serviceType = useOrderStore((state)=> state.orderData?.serviceType)
+  const type = useOrderStore((state)=> state.orderData?.type)
+  const serviceLevel = useOrderStore((state)=> state.orderData?.serviceLevel)
+  const priority = useOrderStore((state)=> state.orderData?.priority)
+  const scheduledFor = useOrderStore((state)=>state.orderData?.scheduledFor)
+  const deliveryDeadline = useOrderStore((state)=> state.orderData?.deliveryDeadline)
   const visited = useOrderStore((state)=> state.visited)
 
   const typeError = type === "" && visited["type"]
@@ -51,6 +51,11 @@ export default function ServiceInfo() {
       setShowScheduledFor(false)
     }
   },[serviceType])
+
+  const formatDateForInput = (dateString) => {
+  if (!dateString) return "";
+  return dateString.split("T")[0]; 
+};
 
  const errorStyle = "text-sm text-red-500 pl-2"
   return (
@@ -110,7 +115,7 @@ export default function ServiceInfo() {
           <div>
             <label htmlFor="scheduledFor" className="text-sm font-bold text-gray-700 mb-1">Scheduled For</label>
             <input type="date" id="scheduledFor" 
-            value={scheduledFor}
+            value={formatDateForInput(scheduledFor)}
             onChange={(e)=> updateOrderData("scheduledFor", e.target.value)}
             className="p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-orange-500 focus:bg-white transition-all w-full" />
            {scheduledForError && <span className={errorStyle}>Please select the date</span>}

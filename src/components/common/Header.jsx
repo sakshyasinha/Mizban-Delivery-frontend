@@ -1,13 +1,14 @@
-import { MdDeliveryDining } from "react-icons/md";
 import { IoSearchSharp } from "react-icons/io5";
-import { AiFillBell } from "react-icons/ai";
-import { IoMdSettings } from "react-icons/io";
 import avatar from "../../assets/avatar.png"
-import { FiMenu } from "react-icons/fi";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import useAuthStore from "../../store/useAuthStore";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { PiBellRingingThin } from "react-icons/pi";
+import { PiChatTeardropDotsThin } from "react-icons/pi";
+import { PiLineVerticalThin } from "react-icons/pi";
+import logo from "../../../public/png/logo.png"
+import { VscMenu } from "react-icons/vsc";
 
 export default function Header({ onMenuClick, hideContent }) {
   const { t, i18n } = useTranslation()
@@ -26,48 +27,56 @@ export default function Header({ onMenuClick, hideContent }) {
     i18n.changeLanguage(code);
     setLangOpen(false);
   };
-  
+
+  const activeStyle = ({ isActive }) =>
+    isActive
+      ? "text-orange-600 font-bold border-b-2 border-orange-600 pb-1"
+      : "hover:text-orange-600 transition-colors";
 
   return (
     <header className="w-full sticky top-0 z-50 bg-white border-b border-gray-200 py-4 shadow-sm">
-      <div className="max-w-7xl mx-auto flex justify-between items-center md:w-auto gap-y-3">
+      <div className="max-w-7xl mx-auto flex justify-between items-center md:w-auto ">
         <div className="flex items-center justify-center gap-4 md:gap-2 sm:gap-1">
+          {/* hamburger menu */}
+          <button
+            onClick={onMenuClick}
+            className="lg:hidden md:hidden p-2 rounded hover:bg-gray-100 mx-2 text-md"
+          >
+            <VscMenu size={22} />
+          </button>
+
           {/* Mizban */}
-          <div className="flex items-center gap-2 md:gap-1 mx-4 ">
-            <button
-              className="md:hidden mr-4 p-2 rounded bg-gray-100 transition-all ease-in-out duration-150 hover:bg-gray-200"
-              onClick={onMenuClick}
-            >
-              <FiMenu size={18} />
-            </button>
-
-            <div className="w-8 h-8 bg-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
-              <MdDeliveryDining size={20} />
-            </div>
-            <span className="text-xl font-bold text-gray-800 tracking-tight truncate">
-              {t("Mizban")} <span className="text-orange-600">{t("Delivery")}</span>
-            </span>
-          </div>
-
-          {/* Search box */}
-          <div className="bg-gray-100 px-3 rounded-md shadow-sm flex items-center gap-2 w-32 sm:w-48 md:w-72 lg:w-96 transition-all duration-300">
-            <button className="hover:cursor-pointer">
-              <IoSearchSharp size={18} className="text-gray-400" />
-            </button>
-            <input
-              className="bg-gray-100 w-full outline-none placeholder:text-gray-400 placeholder:text-sm py-1 text-gray-500"
-              placeholder={t("Search deliveries, drivers ...")}
-              type="text"
+          <div className="flex items-center gap-2 px-2 sm:px-4">
+  
+            {/* Logo */}
+            <img
+              src={logo}
+              alt="logo"
+              className="h-8 sm:h-10 md:h-10 lg:h-10 xl:h-10 w-auto object-contain"
             />
-          </div>
+
+            {/* description */}
+            <div className="hidden lg:flex  flex-col leading-tight">
+              <h3 className="text-xs md:text-sm text-slate-600 font-semibold">
+                {t("Your Dashboard")}
+              </h3>
+              <p className="text-[9px] md:text-xs text-slate-500">
+                {t("All of your activity analytics will be here!")}
+              </p>
+            </div>
+
+          </div>          
+        </div>
+
+        <div className="flex items-center justify-center gap-0 mx-2">
 
           {/* Language Dropdown */}
-          <div className="relative ml-4">
+          <div className="relative mx-2">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center justify-between min-w-[110px] bg-white border 
-                border-gray-300 rounded-lg px-4 py-2 text-sm font-medium text-gray-700 
-                shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition
+              className="flex items-center justify-between min-w-1/2 border 
+                border-slate-400 rounded-sm px-2 py-1.5 text-sm font-medium text-slate-400 
+                hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500 transition
               "
             >
               <span>
@@ -92,10 +101,10 @@ export default function Header({ onMenuClick, hideContent }) {
                     <button
                       key={lang.code}
                       onClick={() => handleLanguageChange(lang.code)}
-                      className={`block w-full text-left px-4 py-2 text-sm transition-colors ${
+                      className={`block w-full text-left px-4 py-1.5 text-sm transition-colors ${
                         i18n.language.split("-")[0] === lang.code
-                          ? "bg-orange-50 text-orange-600 font-semibold"
-                          : "text-gray-700 hover:bg-gray-100"
+                          ? "bg-orange-50 text-orange-400 font-semibold"
+                          : "text-slate-400 hover:bg-gray-100"
                       }`}
                     >
                       {lang.label}
@@ -105,81 +114,52 @@ export default function Header({ onMenuClick, hideContent }) {
               </>
             )}
           </div>
-        </div>
 
-        <div className="hidden lg:flex md:flex sm:flex items-center justify-center ">
+          {/* Search box */}
+          <div className="px-2 rounded-sm flex items-center gap-2 w-32 sm:w-48 md:w-52 lg:w-62 transition-all duration-300 border border-slate-400">
+          
+            <input
+              className="w-full outline-none placeholder:text-slate-400 placeholder:text-sm py-1 text-gray-500"
+              placeholder={t("Search deliveries, drivers ...")}
+              type="text"
+            />
+            <button className="hover:cursor-pointer">
+              <IoSearchSharp size={18} className="text-slate-500" />
+            </button>
+          </div>
+
           {/* notifs, and settings */}
-          <div className="flex items-center justify-center gap-2 border-r border-gray-300 px-2 ">
-            <div className="bg-gray-100 rounded-xl p-1.5 text-gray-500">
-              <button className="hover:cursor-pointer flex justify-center">
-                <AiFillBell size={24} />
-              </button>
-            </div>
+          <div className="hidden sm:flex items-center justify-center gap-0">
+            <div className="flex items-center justify-center gap-1 px-2 ">
+              <div className="rounded-sm p-1.5 text-slate-500">
+                <button className="hover:cursor-pointer flex justify-center border rounded-sm p-1 border-slate-300">
+                  <PiBellRingingThin size={24} />
+                </button>
+              </div>
 
-            <div className="bg-gray-100 rounded-xl p-1.5 text-gray-500">
-              <button className="hover:cursor-pointer flex justify-center">
-                <IoMdSettings size={24} />
-              </button>
+              <div className=" rounded-sm p-1.5 text-slate-500 flex justify-center items-center gap-4">
+                <button className="hover:cursor-pointer flex justify-center border p-1 rounded-sm border-slate-300">
+                  <PiChatTeardropDotsThin size={24} />
+                </button>
+              </div>
             </div>
           </div>
 
           {/* admin part */}
-          <div className="ml-4 hidden lg:flex md:flex xl:flex gap-4 items-center justify-center px-4">
-            <div className="text-right">
-              <h3 className="text-gray-600 text-xs font-semibold ">{t("Mizban Central")}</h3>
-              <h6 className="text-gray-400 text-[10px]">{t("Admin Account")}</h6>
-            </div>
-            <div>
+          <div className="hidden lg:flex xl:flex gap-2 items-center justify-center mx-2">
+            <div className="flex items-center justify-center gap-0">
+              <PiLineVerticalThin size={40} className="text-slate-400" />
               <div className="rounded-full">
                 <img src={avatar} className="w-10 h-10 bg-green-200 rounded-full p-1 border border-slate-200" alt="admin" />
               </div>
             </div>
+            <div className="">
+              <h3 className="text-gray-600 text-xs font-semibold ">{t("Mizban Central")}</h3>
+              <h6 className="text-gray-400 text-[10px]">{t("phoneNum")}</h6>
+            </div>
           </div>
         </div>
-        {!hideContent && (
-          <>
-            {/* If logged in → show nav + logout */}
-            {user ? (
-              <>
-                <nav className="hidden md:flex gap-8 text-sm font-medium text-gray-600">
-                  <NavLink to="/" className={activeStyle}>
-                    Dashboard
-                  </NavLink>
-                  <NavLink to="/orders" className={activeStyle}>
-                    Orders
-                  </NavLink>
-                  <NavLink to="/settings" className={activeStyle}>
-                    Settings
-                  </NavLink>
-                </nav>
 
-                <button
-                  onClick={() => logout(navigate)}
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer"
-                >
-                  Logout
-                </button>
-              </>
-            ) : (
-              /* If not logged in → show login/signup only */
-              <div className="flex gap-3">
-                <NavLink
-                  to="/login"
-                  className="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-full text-sm font-semibold transition-all"
-                >
-                  Login
-                </NavLink>
-
-                <NavLink
-                  to="/signup"
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all"
-                >
-                  Signup
-                </NavLink>
-              </div>
-            )}
-          </>
-        )}
       </div>
     </header>
   );

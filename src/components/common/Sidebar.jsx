@@ -1,13 +1,26 @@
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
+
 import { FaBox } from "react-icons/fa";
 import { FaTruckMoving } from "react-icons/fa6";
+import { MdOutlineDeliveryDining } from "react-icons/md";
+import { RxPeople } from "react-icons/rx";
+import { IoSettingsOutline } from "react-icons/io5";
+
+
+
 import { IoPeopleSharp } from "react-icons/io5";
 import { GrAnalytics } from "react-icons/gr";
 import { GiKnifeFork } from "react-icons/gi";
 import { IoMdSettings } from "react-icons/io";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
+import { BsQuestionCircle } from "react-icons/bs";
+import { RiLogoutCircleLine } from "react-icons/ri"; // logout en
+import { RiLogoutCircleRLine } from "react-icons/ri"; // logout fa
+import useAuthStore from "../../store/useAuthStore";
+import courier from "../../../public/png/courier 1.png"
 
 export default function Sidebar({isOpen, setIsOpen}) {
 
@@ -15,19 +28,21 @@ export default function Sidebar({isOpen, setIsOpen}) {
   const {t} = useTranslation()
 
   const navItems = [
-    { key: "dashboard", path: "/", icon: <MdDashboard size={20} />, label: t("Dashboard") },
-    { key: "orders", path: "/orders", icon: <FaBox size={18} />, label: t("Orders") },
-    { key: "deliveries", path: "/deliveries", icon: <FaTruckMoving size={20} />, label: t("Deliveries") },
-    { key: "couriers", path: "/drivers", icon: <IoPeopleSharp size={20} />, label: t("Couriers") },
+    { key: "dashboard", path: "/", icon: <RxDashboard size={20} />, label: t("Dashboard") },
+    { key: "orders", path: "/orders", icon: <MdOutlineDeliveryDining size={18} />, label: t("Orders") },
+    { key: "couriers", path: "/drivers", icon: <RxPeople size={20} />, label: t("Couriers") },
     { key: "analytics", path: "/analytics", icon: <GrAnalytics size={20} />, label: t("Analytics") },
     { key: "menu-manager", path: "/menu-manager", icon: <GiKnifeFork size={20} />, label: t("Menu Manager") },
-    { key: "settings", path: "/settings", icon: <IoMdSettings size={20} />, label: t("Settings")},
+    { key: "settings", path: "/settings", icon: <IoSettingsOutline size={20} />, label: t("Settings")},
   ];
 
   const activeStyle = ({ isActive }) =>
     isActive
-      ? "bg-orange-600 text-white rounded-lg shadow-orange-100"
+      ? "text-[#ff4b1e]"
       : "text-gray-700 hover:bg-gray-200 hover:rounded-lg";
+
+
+  const { user } = useAuthStore();
 
   return (
     <>
@@ -39,7 +54,7 @@ export default function Sidebar({isOpen, setIsOpen}) {
           ${isRTL ? "right-0" : "left-0"}
         `}
       >
-        <nav className="flex flex-col gap-2">
+        <nav className="flex flex-col gap-2 overflow-y-auto flex-1">
           {navItems.map((item) => (
             <NavLink key={item.key} to={item.path} className={activeStyle}>
               <div className="flex items-center gap-3 p-2 rounded-md">
@@ -47,6 +62,32 @@ export default function Sidebar({isOpen, setIsOpen}) {
               </div>
             </NavLink>
           ))}
+          <div className="absolute bottom-4 items-baseline flex flex-col gap-4 w-full px-2">
+            <NavLink
+              className="text-gray-800 py-2 text-sm font-semibold transition-all w-full"
+            >
+              <span className="flex items-center gap-3 justify-start w-full">
+                <BsQuestionCircle size={20} />
+                {t("Help and Support")}
+              </span>
+            </NavLink>
+            <NavLink
+              to="/login"
+              className="text-gray-800 py-2 text-sm font-semibold transition-all w-full"
+            >
+              <span className="flex items-center gap-3 justify-start w-full">
+                {isRTL ? <RiLogoutCircleRLine size={20} /> :  <RiLogoutCircleLine size={20} />}
+                {user ? t("Logout") : t("Login")}
+              </span>
+            </NavLink>
+            <div className="px-2">
+              <img src={courier} alt="courier-image" 
+                    className={`w-full object-contain h-40 
+                      ${isRTL ? "pl-8" : "pr-8"}
+                    `}
+              />
+            </div>
+          </div>
         </nav>
       </aside>
 
@@ -55,7 +96,7 @@ export default function Sidebar({isOpen, setIsOpen}) {
         className={`
           md:hidden fixed top-0 left-0 z-40
           w-64 h-screen bg-white border-r border-gray-200 p-4
-          transform transition-transform duration-300 mt-12
+          transform transition-transform duration-300 
           ${isOpen ? "translate-x-0" : isRTL ? "translate-x-full" : "-translate-x-full"}
           ${isRTL ? "right-0" : "left-0"}
         `}
@@ -73,6 +114,32 @@ export default function Sidebar({isOpen, setIsOpen}) {
               </div>
             </NavLink>
           ))}
+          <div className="absolute bottom-4 items-baseline flex flex-col gap-4 w-full px-2">
+            <NavLink
+              className="text-gray-800 py-2 text-sm font-semibold transition-all w-full"
+            >
+              <span className="flex items-center gap-3 justify-start w-full">
+                <BsQuestionCircle size={20} />
+                {t("Help and Support")}
+              </span>
+            </NavLink>
+            <NavLink
+              to="/login"
+              className="text-gray-800 py-2 text-sm font-semibold transition-all w-full"
+            >
+              <span className="flex items-center gap-3 justify-start w-full">
+                {isRTL ? <RiLogoutCircleRLine size={20} /> :  <RiLogoutCircleLine size={20} />}
+                {user ? t("Logout") : t("Login")}
+              </span>
+            </NavLink>
+            <div className="px-2">
+              <img src={courier} alt="courier-image" 
+                    className={`w-full object-contain h-40 
+                      ${isRTL ? "pl-8" : "pr-8"}
+                    `}
+              />
+            </div>
+          </div>
         </nav>
       </aside>
     </>

@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import { createNewOrder, updatedOrder } from "../../services/orderService";
+import { createNewOrder, markOrderDelivered, updatedOrder } from "../../services/orderService";
 import { getServerMessage } from "../../utils/i18nHelper";
 
 const useOrderStore = create((set, get) => ({
@@ -469,26 +469,25 @@ setCourier: (courier, orderId) => {
   clearCourier: () => {
     set({ selectedCourier: null });
   },
-markOrderDelivered: (orderId) => {
+markOrderDelivered: async(orderId) => {
+  try{
+    toast.loading("Updating the order state to delivered")
+    const response = await markOrderDelivered(orderId)
+    const responseData = response.data
+
   set((state) => {
     const updatedOrders = state.orders.map((order) =>
-      order.id === orderId
-        ? {
-            ...order,
-            status: "delivered",
-            deliveredAt: new Date().toLocaleString(),
-            payment: {
-              ...order.payment,
-              paymentStatus: order.paymentType === "COD" ? "paid" : order.paymentType,
-            },
-          }
-        : order
+       order._id === orderId ? responseData : order
     );
     return {
       orders: updatedOrders,
       filteredList: updatedOrders 
     };
-  });
+  });} catch(error){
+    console.log(error.message)
+    toast.dismiss()
+    toast.error(error.message)
+  }
 },
 cancelationReason: null,
 

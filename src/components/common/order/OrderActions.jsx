@@ -90,7 +90,7 @@ const OrderActions = ({ order }) => {
 
           <button
             onClick={() => {
-              markOrderDelivered(order.id);
+              markOrderDelivered(order._id);
               setIsOpen(false);
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-emerald-600 hover:bg-emerald-50 transition-colors"

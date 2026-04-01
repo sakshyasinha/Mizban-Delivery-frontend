@@ -1,7 +1,7 @@
 
 import useOrderStore from "../../store/admin/useOrderStore";
 import Button from "../common/order/Button";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import OrderStates from "../common/order/OrderStates"
 import ServiceInfo from "./order-from-sections/ServiceInfo"
@@ -12,8 +12,7 @@ import PaymentAndPrice from "./order-from-sections/PaymentAndPrice"
 import PackageInfo from "./order-from-sections/PackageInfo"
 import { LuArrowLeft } from 'react-icons/lu';
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
-import { getAllOrders } from "../../services/orderService";
+
 
 
 export default function OrderForm() {
@@ -23,12 +22,13 @@ export default function OrderForm() {
   const resetOrderForm = useOrderStore((state)=> state.resetOrderForm)
   const addNewOrder = useOrderStore((state)=> state.addNewOrder)
   const orders  = useOrderStore((state)=> state.orders)
-  const editExitingOrder = useOrderStore((state)=> state.editExitingOrder)
+  const editOrder = useOrderStore((state)=> state.editOrder)
   const isOrderValid = useOrderStore((state)=> state.isOrderValid)
   const visitAll = useOrderStore((state)=> state.visitAll)
   const navigate = useNavigate()
 
 const {t} = useTranslation()
+const {id} = useParams()
 
  const handleSubmit = async(e)=>{
      e.preventDefault()
@@ -40,12 +40,15 @@ const {t} = useTranslation()
     //   return
     // }
    if (isEditingOrder) {
-     editExitingOrder(payload)
-     toast.success(t("Order Updated Successfully"))
+    const success  = await editOrder(id, payload)
+    if(success){
+             navigate("/orders")
+    }
    } else {
      const success = await addNewOrder(payload)
      if (success) {
-       navigate("/orders")
+                   navigate("/orders")
+
      }
    }
  }

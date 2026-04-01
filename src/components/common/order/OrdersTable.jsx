@@ -37,12 +37,12 @@ const OrdersTable = ({ orders }) => {
         <tbody className="divide-y divide-gray-50">
           {orders.map((order) => (
             <tr
-              key={order._id}
+              key={order._id || order.id}
               className="group hover:bg-orange-50/30 transition-all duration-200 cursor-pointer"
             >
               <td className="py-4 px-6" onClick={() => openOrderDetails(order)}>
                 <span className="font-mono text-xs font-bold text-orange-600 hover:underline transition bg-orange-50 px-2 py-1 rounded">
-                  {order._id}
+                  {order._id ||order.id}
                 </span>
               </td>
 

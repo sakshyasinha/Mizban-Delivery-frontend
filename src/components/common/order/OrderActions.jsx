@@ -20,7 +20,7 @@ const OrderActions = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAssignCourierModalOPen, setAssignCourierModalOpen] = useState(false)
   const [isCancelOrderModalOpen, setCancelOrderModalOpen] = useState(false)
-  const editOrder = useOrderStore((state)=> state.editOrder)
+  const getOrderDetailsToShow = useOrderStore((state)=> state.getOrderDetailsToShow)
   const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
   const deleteOrder = useOrderStore((state)=> state.deleteOrder)
   const isEditingOrder = useOrderStore((state)=> state.isEditingOrder)
@@ -68,10 +68,9 @@ const OrderActions = ({ order }) => {
         >
           <button
             onClick={() => {
-              navigate(`/orders/edit-order/${order.id}`);
-              editOrder(order, false);
+              navigate(`/orders/edit-order/${order.id || order._id}`);
+              getOrderDetailsToShow(order, false);
               setIsOpen(false);
-              console.log(isEditingOrder)
             }}
             className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
           >

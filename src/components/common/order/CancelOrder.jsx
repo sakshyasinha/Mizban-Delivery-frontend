@@ -17,7 +17,6 @@ export default function CancelOrder({orderId, isOpen, onClose }) {
        return;
     }
     cancelOrder(orderId, reason)
-    toast.success(t("Order Cancelled Successfully"))
     onClose()
   }
   const isLength200 = text.length === 200 ? "absolute bottom-4 right-4 text-xs md:text-sm text-red-400" : "absolute bottom-4 right-4 text-xs md:text-sm text-gray-400"

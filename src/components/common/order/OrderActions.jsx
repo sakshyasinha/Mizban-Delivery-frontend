@@ -128,7 +128,7 @@ const OrderActions = ({ order }) => {
       {isCancelOrderModalOpen && (
         <CancelOrder
           isOpen={isCancelOrderModalOpen}
-          orderId={order.id}
+          orderId={order._id}
           onClose={() => setCancelOrderModalOpen(false)}
         />
       )}

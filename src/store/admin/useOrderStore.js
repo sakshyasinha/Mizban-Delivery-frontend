@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import { createNewOrder, markOrderDelivered, updatedOrder } from "../../services/orderService";
+import { cancelOrder, createNewOrder, markOrderDelivered, updatedOrder } from "../../services/orderService";
 import { getServerMessage } from "../../utils/i18nHelper";
 
 const useOrderStore = create((set, get) => ({
@@ -193,10 +193,10 @@ const useOrderStore = create((set, get) => ({
 
    initailOrderDataObject : {
       type: "",
-      serviceType: "",
+      serviceType: "immediate",
       scheduledFor: null,
       deliveryDeadline: null,
-      priority: "",
+      priority: "normal",
 
       sender: {
         name: "",
@@ -228,7 +228,7 @@ const useOrderStore = create((set, get) => ({
         note: ""
       },
 
-      serviceLevel: "",
+      serviceLevel: "standard",
       paymentType: "",
       amountToCollect: 0,
 
@@ -491,19 +491,27 @@ markOrderDelivered: async(orderId) => {
 },
 cancelationReason: null,
 
-cancelOrder: (orderId, reason) => {
-  set((state) => {
+cancelOrder: async(orderId, reason) => {
+  try{
+    toast.dismiss()
+    toast.loading("Cancelling reason...")
+    const response = await cancelOrder(orderId, reason)
+    const updatedOrder = response.data
+    set((state) => {
     const updatedOrders = state.orders.map((order) => {
-      if (order.id === orderId && order.status !== "delivered") {
-        return { ...order, status: "cancelled", cancellationReason: reason };
-      }
-      return order;
+       return order._id === orderId ? updatedOrder : order
     });
     return {
       orders: updatedOrders,
       filteredList: updatedOrders 
     };
   });
+  toast.dismiss()
+  toast.success("Ordered cancelled successfully!")
+  }catch(error){
+    toast.error(error.message)
+  }
+
 },
 deleteOrder: (orderId) => {
   if (!window.confirm("Are you sure that you want to delete this order?")) return;

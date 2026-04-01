@@ -11,7 +11,7 @@ export const updatedOrder = async (orderId, updatedOrderData) => {
     return response
 }
 export const cancelOrder = async (orderId, cancelReason) => {
-    const response = await api.patch(`orders/${orderId}/cancel`, { json: cancelReason })
+    const response = await api.patch(`orders/${orderId}/cancel`, { json:{"cancelReason": cancelReason} }).json()
     return response
 }
 export const markOrderDelivered = async (orderId) => {

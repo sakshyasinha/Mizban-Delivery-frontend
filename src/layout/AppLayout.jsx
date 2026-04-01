@@ -16,7 +16,7 @@ export default function AppLayout() {
       <div className="flex flex-1">
         <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-        <main className={`flex-1 p-6 ${isRTL ? "md:mr-64" : "md:ml-64"}`}>
+        <main className={`flex-1 p-6 min-h-screen overflow-x-hidden ${isRTL ? "md:mr-64" : "md:ml-64"}`}>
           <Outlet />
         </main>
       </div>

@@ -1,19 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { MdDashboard } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
-
-import { FaBox } from "react-icons/fa";
-import { FaTruckMoving } from "react-icons/fa6";
 import { MdOutlineDeliveryDining } from "react-icons/md";
 import { RxPeople } from "react-icons/rx";
 import { IoSettingsOutline } from "react-icons/io5";
-
-
-
-import { IoPeopleSharp } from "react-icons/io5";
 import { GrAnalytics } from "react-icons/gr";
 import { GiKnifeFork } from "react-icons/gi";
-import { IoMdSettings } from "react-icons/io";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import { BsQuestionCircle } from "react-icons/bs";

@@ -145,5 +145,11 @@
   "signupFailed": "ثبت نام ناکام شو، بیا هڅه وکړئ",
   "passwordMinLength": "پټنوم باید لږ تر لږه ۸ توري ولري",
   "welcomeAgain": "بیا ښه راغلاست!",
-  "loginFailed": "ننوتل ناکام شول"
+  "loginFailed": "ننوتل ناکام شول",
+
+  "Your Dashboard": "ستاسو ډشبورډ",
+  "All of your activity analytics will be here!": "ستاسو د ټولو فعالیتونو تحلیلونه به دلته وي!",
+  "phoneNum": "۰۷۹۸۰۰۰۰۰۰",
+  "Help and Support": "مرسته او ملاتړ",
+  "Logout": "وتل"
 }

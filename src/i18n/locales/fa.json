@@ -147,5 +147,11 @@
   "signupFailed": "ثبت نام ناموفق بود، دوباره تلاش کنید",
   "passwordMinLength": "رمز عبور باید حداقل ۸ کاراکتر باشد",
   "welcomeAgain": "دوباره خوش آمدید!",
-  "loginFailed": "ورود ناموفق بود"
+  "loginFailed": "ورود ناموفق بود",
+
+  "Your Dashboard": "پنل مدیریت شما",
+  "All of your activity analytics will be here!": "تجزیه و تحلیل همه فعالیت های شما اینجا خواهد بود",
+  "phoneNum": "۰۷۹۸۰۰۰۰۰۰",
+  "Help and Support": "کمک و حمایت",
+  "Logout": "خروج"
 }

@@ -6,8 +6,8 @@ import EditCourier from '../pages/admin/EditCourier';
 
 const protectedRoutes=[
     {
-        path: "/orders",
-        element: <Orders/>
+      path: "/orders",
+      element: <Orders/>
     },
     {
     path: "/order/create-order",
@@ -22,19 +22,17 @@ const protectedRoutes=[
     element: <OrderForm readOnly={true} />,
   },
   {
-    path:"/drivers",
+    path:"/couriers",
     element:<CourierList/>
   },
   {
-    path:"/drivers/add",
+    path:"/couriers/add",
     element:<AddCourier/>
   }, 
   {
-    path:"/drivers/edit/:id",
+    path:"/couriers/edit/:id",
     element:<EditCourier/>
   }
 ]
-
-
 
 export default protectedRoutes;

@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { MdMoreVert } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useCourierStore } from "../../store/useCourierStore";
+import { IoAddOutline } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 export default function CourierList() {
   const navigate = useNavigate();
   const [openMenuId, setOpenMenuId] = useState(null);
+  const {t} = useTranslation();
 
   const { couriers, fetchCouriers, deleteCourier } = useCourierStore();
 
   useEffect(() => {
     fetchCouriers();
   }, [fetchCouriers]);
+
+  const handleNavigation = (e) => {
+    e.preventDefault();
+    navigate("/couriers/add")
+  }
 
   const getStatusStyle = (status) => {
     switch (status) {
@@ -47,13 +55,16 @@ export default function CourierList() {
       <div className="max-w-6xl mx-auto py-10 px-4 md:px-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
-          <h1 className="text-3xl font-bold text-gray-800">Couriers</h1>
+          <h1 className="text-3xl font-bold text-gray-800">{t("Couriers")}</h1>
 
           <button
-            onClick={() => navigate("/couriers/add")}
-            className="bg-orange-500 hover:bg-orange-600 text-white px-5 py-2 rounded-xl shadow-md w-full sm:w-auto"
+            onClick={handleNavigation}
+            className="bg-orange-500 hover:bg-orange-600
+             text-white px-5 py-2 rounded-xl shadow-md w-full sm:w-auto
+              flex items-center justify-center gap-2
+            "
           >
-            + Add Courier
+            <IoAddOutline />{t("Add Courier")}
           </button>
         </div>
 
@@ -63,17 +74,17 @@ export default function CourierList() {
             {/* Header */}
             <thead className="bg-orange-50 text-gray-700 text-sm uppercase">
               <tr>
-                <th className="px-4 md:px-6 py-4">Profile</th>
-                <th className="px-4 md:px-6 py-4">Name</th>
+                <th className="px-4 md:px-6 py-4">{t("Profile")}</th>
+                <th className="px-4 md:px-6 py-4">{t("Name")}</th>
 
                 {/* Hidden on mobile */}
-                <th className="hidden md:table-cell px-6 py-4">Contact No</th>
+                <th className="hidden md:table-cell px-6 py-4">{t("Contact No.")}</th>
 
-                <th className="px-4 md:px-6 py-4">Status</th>
+                <th className="px-4 md:px-6 py-4">{t("Status")}</th>
 
                 {/* Hidden on small screens */}
                 <th className="hidden lg:table-cell px-6 py-4">
-                  Shift Availability
+                  {("Shift Availability")}
                 </th>
 
                 <th className="px-4 md:px-6 py-4"></th>
@@ -144,7 +155,7 @@ export default function CourierList() {
                             }
                             className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                           >
-                            Edit
+                            {t("Edit")}
                           </button>
                           <button
                             onClick={() => {
@@ -153,7 +164,7 @@ export default function CourierList() {
                             }}
                             className="block w-full text-left px-4 py-2 hover:bg-red-50 text-red-600"
                           >
-                            Delete
+                            {t("Delete")}
                           </button>
                         </div>
                       )}

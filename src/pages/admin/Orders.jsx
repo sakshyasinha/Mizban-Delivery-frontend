@@ -96,7 +96,7 @@ export default function Orders() {
     <div className="min-h-screen bg-gray-100 p-8 md:p-12">
       <div className="max-w-7xl mx-auto">
         {/* Header  */}
-        <div className="flex items-center flex-wrap gap-4 justify-center items-center md:justify-between mb-10">
+        <div className="flex flex-wrap gap-4 justify-center items-center md:justify-between mb-10">
           <div className="flex items-center gap-3">
             <div className="bg-orange-600 p-2 rounded-lg shadow-orange-100 shadow-lg">
               <LuShoppingBag className="text-white" size={24} />

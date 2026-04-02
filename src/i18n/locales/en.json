@@ -138,5 +138,8 @@
   "signupFailed": "Signup failed. Please try again.",
   "passwordMinLength": "Password must be at least 8 characters",
   "welcomeAgain": "Welcome Again!",
-  "loginFailed": "Login failed"
+  "loginFailed": "Login failed",
+  "access_denied_title": "Access Denied",
+  "access_denied_message": "You do not have permission to view this page.",
+  "go_back": "Go Back"
 }

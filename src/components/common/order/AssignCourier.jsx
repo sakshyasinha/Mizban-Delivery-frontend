@@ -19,11 +19,11 @@ export default function AssignCourier({ onClose, isOpen, orderId }) {
   if (!isOpen) return null;
 
   const handleCourierConfirm = () => {
-    // if (!selectedCourier) {
-    //   toast.error(t("Select a courier"));
-    //   return;
-    // } 
-    assignDriverToOrder(orderId, driverDetails._id, driverDetails.user.name)
+    if (!courier) {
+      toast.error(t("Select a courier"));
+      return;
+    } 
+    assignDriverToOrder(orderId, driverDetails._id)
     onClose();
   };
 

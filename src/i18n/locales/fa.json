@@ -139,5 +139,8 @@
   "signupFailed": "ثبت نام ناموفق بود، دوباره تلاش کنید",
   "passwordMinLength": "رمز عبور باید حداقل ۸ کاراکتر باشد",
   "welcomeAgain": "دوباره خوش آمدید!",
-  "loginFailed": "ورود ناموفق بود"
+  "loginFailed": "ورود ناموفق بود",
+  "access_denied_title": "دسترسی غیرمجاز",
+  "access_denied_message": "شما اجازه مشاهده این صفحه را ندارید.",
+  "go_back": "بازگشت به عقب"
 }

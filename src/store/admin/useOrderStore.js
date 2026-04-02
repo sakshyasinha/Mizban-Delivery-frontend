@@ -248,6 +248,7 @@ const useOrderStore = create((set, get) => ({
   createNewOrder: () => {
   set({
      isEditingOrder: false,
+     isViewing: false,
      orderData: get().initailOrderDataObject
   })
 },
@@ -451,10 +452,7 @@ const useOrderStore = create((set, get) => ({
     }
   },
 
-
-    driver: null,
-  
-assignDriverToOrder: async(orderId, driverId, driverName) => {
+assignDriverToOrder: async(orderId, driverId) => {
   try{
     toast.dismiss()
     toast.loading("Assigning driver....")
@@ -465,7 +463,6 @@ assignDriverToOrder: async(orderId, driverId, driverName) => {
       order._id === orderId ? responseData : order
     );
     return {
-      driver: driverName,
       orders: updatedOrders,
       filteredList: updatedOrders
     };

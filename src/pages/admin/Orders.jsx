@@ -8,6 +8,7 @@ import Dropdown from "../../components/common/Dropdown";
 import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useTranslation } from "react-i18next";
+import { useCourierStore } from "../../store/useCourierStore";
 
 export default function Orders() {
   const createNewOrder = useOrderStore((state) => state.createNewOrder)
@@ -15,11 +16,15 @@ export default function Orders() {
   const filteredList = useOrderStore((state) => state.filteredList)
   const applyFilters = useOrderStore((state) => state.applyFilters)
   const resetFilters = useOrderStore((state) => state.resetFilters)
+  const fetchCouriers = useCourierStore((state)=> state.fetchCouriers)
+  const couriers = useCourierStore((state)=> state.couriers)
+
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedCurier, setSelectedCourier] = useState("")
   const [selectedPaymentStatus, setSelectedPaymentStatus] = useState("")
   const [selectedStatus, setSelectedStatus] = useState("")
   const [selectedBusiness, setSelectedBusiness] = useState("")
+  
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
   let [filters, setFilters] = useState({
@@ -68,14 +73,13 @@ export default function Orders() {
   };
 
   const { t } = useTranslation();
-
-  const couriers = [
-    { id: 1, name: "Ali", value: "ali" },
-    { id: 2, name: "Ahmad", value: "ahmad" },
-    { id: 3, name: "Hamed", value: "hamed" },
-    { id: 4, name: "Hassan", value: "hassan" },
-    { id: 5, name: "Hussain", value: "hussain" },
-  ];
+   
+  useEffect(() => {
+    const getCouriers = async () => {
+      await fetchCouriers()
+    }
+    getCouriers()
+  }, [fetchCouriers])
   const paymentStatus = [
     { id: 1, name: "Paid", value: "paid" },
     { id: 2, name: "Unpaid", value: "unpaid" },

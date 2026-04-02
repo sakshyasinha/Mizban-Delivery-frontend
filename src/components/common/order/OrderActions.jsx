@@ -4,7 +4,8 @@ import {
   LuBan, 
   LuCheck,   
   LuUserPlus,
-  LuTrash 
+  LuTrash,
+  LuPackageCheck
 } from "react-icons/lu";
 import { MdMoreVert } from 'react-icons/md';
 
@@ -23,7 +24,7 @@ const OrderActions = ({ order }) => {
   const getOrderDetailsToShow = useOrderStore((state)=> state.getOrderDetailsToShow)
   const markOrderDelivered = useOrderStore((state)=> state.markOrderDelivered)
   const deleteOrder = useOrderStore((state)=> state.deleteOrder)
-  const isEditingOrder = useOrderStore((state)=> state.isEditingOrder)
+  const pickupOrder = useOrderStore((state)=>state.pickupOrder)
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -87,7 +88,15 @@ const OrderActions = ({ order }) => {
           >
             <LuUserPlus size={16} /> {t("Assign Courier")}
           </button>
-
+          <button
+          onClick={()=>{
+             setIsOpen(false)
+             pickupOrder(order._id)
+          }}
+          className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer hover:text-orange-600 text-sm text-gray-600 hover:bg-orange-50 transition-colors"
+          >
+            <LuPackageCheck size={16}/> {t("Pick Up")}
+          </button>
           <button
             onClick={() => {
               markOrderDelivered(order._id);

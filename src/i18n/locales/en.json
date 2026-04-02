@@ -141,5 +141,6 @@
   "loginFailed": "Login failed",
   "access_denied_title": "Access Denied",
   "access_denied_message": "You do not have permission to view this page.",
-  "go_back": "Go Back"
+  "go_back": "Go Back",
+  "Pick Up": "Pick Up"
 }

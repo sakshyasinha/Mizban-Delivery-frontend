@@ -140,5 +140,6 @@
   "loginFailed": "ننوتل ناکام شول",
   "access_denied_title": "لاسرسی رد شو",
   "access_denied_message": "تاسو د دې پاڼې لیدلو اجازه نه لرئ.",
-  "go_back": "بېرته شاته تلل"
+  "go_back": "بېرته شاته تلل",
+    "Pick Up": "د فرمایش اخیستل"
 }

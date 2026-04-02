@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import { assignDriver, cancelOrder, createNewOrder, markOrderDelivered, updatedOrder } from "../../services/orderService";
+import { assignDriver, cancelOrder, createNewOrder, markOrderDelivered, pickUpOrder, updatedOrder } from "../../services/orderService";
 import { getServerMessage } from "../../utils/i18nHelper";
 import i18n from "../../i18n";
 
@@ -480,6 +480,7 @@ assignDriverToOrder: async(orderId, driverId) => {
 
 markOrderDelivered: async(orderId) => {
   try{
+    dismiss.toast()
     toast.loading("Updating the order state to delivered")
     const response = await markOrderDelivered(orderId)
     const responseData = response.data
@@ -492,7 +493,10 @@ markOrderDelivered: async(orderId) => {
       orders: updatedOrders,
       filteredList: updatedOrders 
     };
-  });} catch(error){
+  });
+  toast.dismiss()
+  toast.success("Order marked as delivered successfully!")
+} catch(error){
     const err = await error.response.json()
     const errorMessage = getServerMessage(err)
     toast.dismiss()
@@ -524,6 +528,30 @@ cancelOrder: async(orderId, reason) => {
     toast.error(errorMessage || i18n.t("Something went wrong please try again"))
   }
 
+},
+pickupOrder: async(orderId)=>{
+  try{
+    toast.dismiss()
+    toast.loading("Picking up order....")
+    const response = await pickUpOrder(orderId)
+    const responseData = response.data
+    set((state) => {
+    const updatedOrders = state.orders.map((order) => {
+       return order._id === orderId ? responseData : order
+    });
+    return {
+      orders: updatedOrders,
+      filteredList: updatedOrders 
+    };
+  });
+   toast.dismiss()
+   toast.success("Picked up order successfully!")
+  }catch(error){
+    const err = await error.response.json()
+    const errorMessage = getServerMessage(err)
+    toast.dismiss()
+    toast.error(errorMessage || i18n.t("Something went wrong please try again"))
+  }
 },
 deleteOrder: (orderId) => {
   if (!window.confirm("Are you sure that you want to delete this order?")) return;

@@ -142,5 +142,7 @@
   "loginFailed": "ورود ناموفق بود",
   "access_denied_title": "دسترسی غیرمجاز",
   "access_denied_message": "شما اجازه مشاهده این صفحه را ندارید.",
-  "go_back": "بازگشت به عقب"
+  "go_back": "بازگشت به عقب",
+  "Pick Up": "برداشت سفارش"
+
 }

@@ -9,9 +9,7 @@ import { useCourierStore } from "../../../store/useCourierStore";
 import { useEffect } from "react";
 
 const OrdersTable = ({ orders }) => {
-  const editOrder = useOrderStore((state) => state.editOrder);
   const getOrderDetailsToShow = useOrderStore((state)=> state.getOrderDetailsToShow)
-  const fetchCouriers = useCourierStore((state)=> state.fetchCouriers)
   const openOrderDetails = (order) => {
     navigate(`/orders/view-order/${order.id}`);
     getOrderDetailsToShow(order,true, false);
@@ -20,12 +18,6 @@ const OrdersTable = ({ orders }) => {
   const { t, i18n } = useTranslation();
   const currentLng = i18n.language;
 
-  useEffect(() => {
-    const getCouriers = async () => {
-      await fetchCouriers()
-    }
-    getCouriers()
-  }, [fetchCouriers])
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-100 bg-white shadow-sm">
       <table className="w-full text-left border-collapse">

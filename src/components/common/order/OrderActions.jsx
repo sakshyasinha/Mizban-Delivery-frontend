@@ -121,7 +121,7 @@ const OrderActions = ({ order }) => {
       {isAssignCourierModalOPen && (
         <AssignCourier
           isOpen={isAssignCourierModalOPen}
-          orderId={order.id}
+          orderId={order._id}
           onClose={() => setAssignCourierModalOpen(false)}
         />
       )}

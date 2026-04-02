@@ -4,8 +4,8 @@ import {handleApiError} from './handleApiError';
 // Get Courier
 export const getCouriers = async () => {
     try {
-        const response = await api.get('/couriers').json();
-        return response;
+        const response = await api.get('drivers').json();
+        return response.data;
     } catch (error) {
         await handleApiError(error);
     }
@@ -14,7 +14,7 @@ export const getCouriers = async () => {
 // Create Courier
 export const createCourier = async (data) => {
     try {
-        const response = await api.post('/couriers', {
+        const response = await api.post('drivers', {
             json: data,
         }).json();
         return response;

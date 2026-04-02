@@ -1,7 +1,8 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import { cancelOrder, createNewOrder, markOrderDelivered, updatedOrder } from "../../services/orderService";
+import { assignDriver, cancelOrder, createNewOrder, markOrderDelivered, updatedOrder } from "../../services/orderService";
 import { getServerMessage } from "../../utils/i18nHelper";
+import i18n from "../../i18n";
 
 const useOrderStore = create((set, get) => ({
     orderData: {
@@ -392,33 +393,34 @@ const useOrderStore = create((set, get) => ({
     deliveryPrice: { discount: 0, total: 150 },
     finalPrice: 150,
     status: "cancelled",
-    cancellationReason: "Address was unreachable",
+    cancelReason: "Address was unreachable",
     createdAt: "2026-02-15T11:00:00Z"
   }
 ],
 
-addNewOrder: async(newOrder) => {
-        try{
-          toast.loading("Adding order....")
-          const response = await createNewOrder(newOrder)
-          const createdOrder = response.data
-          set((state) => {
-            const updatedOrders = [createdOrder, ...state.orders];
-            return {
-                orders: updatedOrders,
-                filteredList: updatedOrders
-            };
-        });
-          toast.dismiss()
-          toast.success("Order Added Successfully!")
-          return true
-        }catch(error){
-          toast.dismiss()
-          const errorMessage  = getServerMessage(error)
-          toast.error( errorMessage || "Something went wrong please try again!")
-          return false
-        }
-    },
+  addNewOrder: async (newOrder) => {
+    try {
+      toast.loading("Adding order....")
+      const response = await createNewOrder(newOrder)
+      const createdOrder = response.data
+      set((state) => {
+        const updatedOrders = [createdOrder, ...state.orders];
+        return {
+          orders: updatedOrders,
+          filteredList: updatedOrders
+        };
+      });
+      toast.dismiss()
+      toast.success("Order Added Successfully!")
+      return true
+    } catch (error) {
+      const err = await error.response.json()
+      const errorMessage = getServerMessage(err)
+      toast.dismiss()
+      toast.error(errorMessage || i18n.t("Something went wrong please try again"))
+      return false
+    }
+  },
   editOrder: async (orderId, orderData) => {
     try {
       toast.loading("Updating order...")
@@ -441,34 +443,44 @@ addNewOrder: async(newOrder) => {
       toast.success("Order Updated Successfully")
       return true
     } catch (error) {
-      console.log(error)
-      toast.dismiss()
-      const errorMessage = getServerMessage(error)
-      toast.error(errorMessage|| "Something went wrong please try again")
+    const err = await error.response.json()
+    const errorMessage = getServerMessage(err)
+    toast.dismiss()
+    toast.error(errorMessage || i18n.t("Something went wrong please try again"))
       return false
     }
   },
 
 
-    selectedCourier: null,
+    driver: null,
   
-setCourier: (courier, orderId) => {
-  set((state) => {
+assignDriverToOrder: async(orderId, driverId, driverName) => {
+  try{
+    toast.dismiss()
+    toast.loading("Assigning driver....")
+    const response = await assignDriver(orderId, driverId)
+    const responseData = response.data
+    set((state) => {
     const updatedOrders = state.orders.map((order) =>
-      order.id === orderId 
-        ? { ...order, status: "assigned", courier: courier } 
-        : order
+      order._id === orderId ? responseData : order
     );
     return {
-      selectedCourier: courier,
+      driver: driverName,
       orders: updatedOrders,
       filteredList: updatedOrders
     };
   });
+  toast.dismiss()
+  toast.success("Driver assigned successfully!")
+  }catch(error){
+    const err = await error.response.json()
+    const errorMessage = getServerMessage(err)
+    toast.dismiss()
+    toast.error(errorMessage || i18n.t("Something went wrong please try again"))
+  }
+
 },
-  clearCourier: () => {
-    set({ selectedCourier: null });
-  },
+
 markOrderDelivered: async(orderId) => {
   try{
     toast.loading("Updating the order state to delivered")
@@ -484,12 +496,12 @@ markOrderDelivered: async(orderId) => {
       filteredList: updatedOrders 
     };
   });} catch(error){
-    console.log(error.message)
+    const err = await error.response.json()
+    const errorMessage = getServerMessage(err)
     toast.dismiss()
-    toast.error(error.message)
+    toast.error(errorMessage || i18n.t("Something went wrong please try again"))
   }
 },
-cancelationReason: null,
 
 cancelOrder: async(orderId, reason) => {
   try{
@@ -509,7 +521,10 @@ cancelOrder: async(orderId, reason) => {
   toast.dismiss()
   toast.success("Ordered cancelled successfully!")
   }catch(error){
-    toast.error(error.message)
+    const err = await error.response.json()
+    const errorMessage = getServerMessage(err)
+    toast.dismiss()
+    toast.error(errorMessage || i18n.t("Something went wrong please try again"))
   }
 
 },

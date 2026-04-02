@@ -18,3 +18,7 @@ export const markOrderDelivered = async (orderId) => {
     const response = await api.patch(`orders/${orderId}/deliver`)
     return response
 }
+export const assignDriver  = async(orderId, driverId)=>{
+    const response = await api.patch(`orders/${orderId}/assign`, {json: {"driverId": driverId}}).json()
+    return response
+}

@@ -91,7 +91,6 @@ const useOrderStore = create((set, get) => ({
   };
       const isBaseInfoValid =
       data.type !== "" &&
-      data.serviceType !== "" &&
       data.sender.name.trim() !== "" &&
       isPhoneValid(data.sender.phone) &&
       data.receiver.name.trim() !== "" &&
@@ -120,9 +119,6 @@ const useOrderStore = create((set, get) => ({
       "packageDetails.weight": true,
       "packageDetails.size": true,
       "scheduledFor": true,
-      "serviceLevel": true,
-      "serviceType": true,
-      "priority": true,
       "pickupLocation.coordinates": true,
       "dropoffLocation.coordinates": true,
       }

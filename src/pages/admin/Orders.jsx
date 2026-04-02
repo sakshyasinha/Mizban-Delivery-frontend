@@ -5,7 +5,7 @@ import useOrderStore from "../../store/admin/useOrderStore";
 import { LuPlus, LuShoppingBag } from "react-icons/lu";
 import SearchBar from "../../components/common/SearchBar";
 import Dropdown from "../../components/common/Dropdown";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useTranslation } from "react-i18next";
 import { useCourierStore } from "../../store/useCourierStore";
@@ -73,6 +73,7 @@ export default function Orders() {
     setFilters(newFilters);
     applyFilters(newFilters, searchTerm);
   };
+  const [drivers, setDrivers] = useState("")
 
   const { t } = useTranslation();
    
@@ -81,6 +82,10 @@ export default function Orders() {
       await fetchCouriers()
     }
     getCouriers()
+    const drivers = couriers.map((courier)=>{
+        courier.user
+      })
+      setDrivers(drivers)
   }, [fetchCouriers])
   const paymentStatus = [
     { id: 1, name: "Paid", value: "paid" },
@@ -98,6 +103,8 @@ export default function Orders() {
     { id: 2, name: "Shahy Hotel", value: "Shahy Hotel" },
     { id: 3, name: "Zuhak Restaurant", value: "Zuhak Restaurant" },
   ]
+
+  console.log(drivers)
   return (
     <div className="min-h-screen bg-gray-100 p-8 md:p-12">
       <div className="max-w-7xl mx-auto">
@@ -141,7 +148,7 @@ export default function Orders() {
           </div>
           <div className="flex-1">
             <Dropdown
-              options={couriers}
+              options={drivers}
               onSelect={(val) => setSelectedCourier(val)}
               value={selectedCurier}
               placeholder={t("Couriers")}

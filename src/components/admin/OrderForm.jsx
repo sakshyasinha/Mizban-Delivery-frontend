@@ -42,9 +42,10 @@ const {id} = useParams()
        ? new Date(orderData.deliveryDeadline).toISOString()
        : null
    }
-    // if(!isOrderValid()){
-    //   return
-    // }
+    if(!isOrderValid()){
+      toast.error("Fill all the required blanks!")
+      return
+    }
    if (isEditingOrder) {
     const success  = await editOrder(id, payload)
     if(success){

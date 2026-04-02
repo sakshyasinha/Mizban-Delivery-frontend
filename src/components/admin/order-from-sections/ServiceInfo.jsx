@@ -39,9 +39,6 @@ export default function ServiceInfo() {
   const visited = useOrderStore((state)=> state.visited)
 
   const typeError = type === "" && visited["type"]
-  const serviceTypeError = serviceType === "" && visited["serviceType"]
-  const serviceLevelError = serviceLevel === "" && visited["serviceLevel"]
-  const priorityError = priority === "" && visited["priority"]
   const scheduledForError = serviceType === "scheduled" && scheduledFor === "" && visited["scheduledFor"]
 
   useEffect(()=>{
@@ -95,7 +92,6 @@ export default function ServiceInfo() {
             onSelect={(val) => {updateOrderData("serviceType", val);
              }} 
           />
-          {serviceTypeError && <span className={errorStyle}>Please select service type</span>}
         </div>
 
         {/* Service Level */}
@@ -109,7 +105,6 @@ export default function ServiceInfo() {
             placeholder="Select Level"
             onSelect={(val) => updateOrderData("serviceLevel", val)} 
           />
-          {serviceLevelError && <span className={errorStyle}>Please select service level</span>}
         </div>
         {showScheduledFor && (
           <div>
@@ -133,7 +128,6 @@ export default function ServiceInfo() {
             placeholder="Select Priority"
             onSelect={(val) => updateOrderData("priority", val)} 
           />
-          {priorityError && <span className={errorStyle}>Please select priority</span>}
         </div>
 
         {/* Delivery Deadline */}

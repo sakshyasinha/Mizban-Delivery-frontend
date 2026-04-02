@@ -16,6 +16,8 @@ import CancelOrder from './CancelOrder';
 import toast from 'react-hot-toast';
 import { useClickOutside } from '../../../hooks/useOutsideClick';
 import { useTranslation } from 'react-i18next';
+import { hasAccess } from '../../../utils/hasAccess';
+import { ALL_PERMISSIONS } from '../../../constants/permissions';
 
 const OrderActions = ({ order }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,17 +69,19 @@ const OrderActions = ({ order }) => {
         <div
           className={`absolute ltr:right-0 rtl:left-0 mt-2 z-100 w-56 bg-white cursor-pointer rounded-xl shadow-xl border border-gray-100 py-2 animate-in fade-in zoom-in duration-150 origin-top-right `}
         >
-          <button
-            onClick={() => {
-              navigate(`/orders/edit-order/${order.id || order._id}`);
-              getOrderDetailsToShow(order, false, true);
-              setIsOpen(false);
-            }}
-            className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
-          >
-            <LuPencil size={16} /> {t("Edit Details")}
-          </button>
-
+          {hasAccess(ALL_PERMISSIONS.EDIT_ORDER) && (
+            <button
+              onClick={() => {
+                navigate(`/orders/edit-order/${order.id || order._id}`);
+                getOrderDetailsToShow(order, false, true);
+                setIsOpen(false);
+              }}
+              className="flex items-center gap-3 w-full px-4 py-2.5 cursor-pointer text-sm text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+            >
+              <LuPencil size={16} /> {t("Edit Details")}
+            </button>
+          )}
+          {hasAccess(ALL_PERMISSIONS.ASSIGN_ORDER) && (
           <button
             onClick={() => {
               setAssignCourierModalOpen(true);
@@ -88,6 +92,8 @@ const OrderActions = ({ order }) => {
           >
             <LuUserPlus size={16} /> {t("Assign Courier")}
           </button>
+          )}
+          {hasAccess(ALL_PERMISSIONS.PICKUP_ORDER) && (
           <button
           onClick={()=>{
              setIsOpen(false)
@@ -97,6 +103,8 @@ const OrderActions = ({ order }) => {
           >
             <LuPackageCheck size={16}/> {t("Pick Up")}
           </button>
+          )}
+          {hasAccess(ALL_PERMISSIONS.MARK_DELIVERED)&&(
           <button
             onClick={() => {
               markOrderDelivered(order._id);
@@ -106,7 +114,8 @@ const OrderActions = ({ order }) => {
           >
             <LuCheck size={16} /> {t("Mark Delivered")}
           </button>
-
+          )}
+          {hasAccess(ALL_PERMISSIONS.CANCEL_ORDER) &&(
           <button
             onClick={() => {
               handleCancelOrder();
@@ -116,6 +125,8 @@ const OrderActions = ({ order }) => {
           >
             <LuBan size={16} /> {t("Cancel Order")}
           </button>
+          )}
+          {hasAccess(ALL_PERMISSIONS.DELETE_ORDER)&& (
           <button
             onClick={() => {
               handleDeleteOrder();
@@ -125,6 +136,7 @@ const OrderActions = ({ order }) => {
           >
             <LuTrash size={16} /> {t("Delete Order")}
           </button>
+          )}
         </div>
       )}
       {isAssignCourierModalOPen && (

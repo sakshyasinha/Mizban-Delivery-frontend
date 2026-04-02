@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import { useDebounce } from "../../hooks/useDebounce";
 import { useTranslation } from "react-i18next";
 import { useCourierStore } from "../../store/useCourierStore";
+import { hasAccess } from "../../utils/hasAccess";
+import { ALL_PERMISSIONS } from "../../constants/permissions";
 
 export default function Orders() {
   const createNewOrder = useOrderStore((state) => state.createNewOrder)
@@ -114,7 +116,7 @@ export default function Orders() {
               </p>
             </div>
           </div>
-
+        {hasAccess(ALL_PERMISSIONS.CREATE_ORDER) &&(
           <Link to="/order/create-order">
             <Button
               text={t("Create Order")}
@@ -124,6 +126,7 @@ export default function Orders() {
               className="px-6 rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
             />
           </Link>
+          )}
         </div>
         {/*  Search && filter   */}
         <div className="flex justify-center">

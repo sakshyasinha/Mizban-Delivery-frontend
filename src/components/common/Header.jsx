@@ -10,12 +10,9 @@ import { PiLineVerticalThin } from "react-icons/pi";
 import logo from "../../assets/png/logo.png"
 import { VscMenu } from "react-icons/vsc";
 
-export default function Header({ onMenuClick, hideContent }) {
+export default function Header({ onMenuClick }) {
   const { t, i18n } = useTranslation()
   const [langOpen, setLangOpen] = useState(false)
-  const { user, logout } = useAuthStore();
-  const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
 
    const languages = [
     { code: "en", label: "English" },
@@ -27,11 +24,6 @@ export default function Header({ onMenuClick, hideContent }) {
     i18n.changeLanguage(code);
     setLangOpen(false);
   };
-
-  const activeStyle = ({ isActive }) =>
-    isActive
-      ? "text-orange-600 font-bold border-b-2 border-orange-600 pb-1"
-      : "hover:text-orange-600 transition-colors";
 
   return (
     <header className="w-full sticky top-0 z-50 bg-white border-b border-gray-200 py-4 shadow-sm">

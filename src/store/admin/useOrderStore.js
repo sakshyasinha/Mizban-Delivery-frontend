@@ -3,8 +3,11 @@ import { create } from "zustand";
 import { assignDriver, cancelOrder, createNewOrder, markOrderDelivered, pickUpOrder, updatedOrder } from "../../services/orderService";
 import { getServerMessage } from "../../utils/i18nHelper";
 import i18n from "../../i18n";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-const useOrderStore = create((set, get) => ({
+const useOrderStore = create(
+  persist(
+  (set, get) => ({
     orderData: {
     type: "", 
     serviceType: "immediate", 
@@ -476,7 +479,7 @@ assignDriverToOrder: async(orderId, driverId) => {
 
 markOrderDelivered: async(orderId) => {
   try{
-    dismiss.toast()
+    toast.dismiss()
     toast.loading(i18n.t("updating_order_loading"))
     const response = await markOrderDelivered(orderId)
     const responseData = response.data
@@ -605,5 +608,11 @@ resetFilters: ()=>{
         filteredList:state.orders
     }))
 }
-}))
+}),{
+    name: "order-storage",
+    storage: createJSONStorage(()=> localStorage),
+    partialize: (state)=> ({orders: state.orders})
+}
+
+))
 export default useOrderStore

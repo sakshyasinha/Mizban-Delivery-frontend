@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { PiBellRingingThin } from "react-icons/pi";
 import { PiChatTeardropDotsThin } from "react-icons/pi";
 import { PiLineVerticalThin } from "react-icons/pi";
-import logo from "../../../public/png/logo.png"
+import logo from "../../assets/png/logo.png"
 import { VscMenu } from "react-icons/vsc";
 
 export default function Header({ onMenuClick, hideContent }) {

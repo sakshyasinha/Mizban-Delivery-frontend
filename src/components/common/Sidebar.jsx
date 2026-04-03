@@ -40,8 +40,8 @@ export default function Sidebar({isOpen, setIsOpen}) {
       {/* desktop lg */}
       <aside
         className={`
-          hidden md:flex flex-col p-4
-          w-64 fixed top-16 left-0 h-[calc(100vh-64px)] bg-white border-r border-gray-200 overflow-y-auto mt-1
+          hidden md:flex flex-col px-4 py-4 overflow-x-hidden
+          w-64 fixed top-16 left-0 right-0 h-[calc(100vh-64px)] bg-white border-r border-gray-200 overflow-y-auto mt-1
           ${isRTL ? "right-0" : "left-0"}
         `}
       >
@@ -53,7 +53,7 @@ export default function Sidebar({isOpen, setIsOpen}) {
               </div>
             </NavLink>
           ))}
-          <div className="absolute bottom-4 items-baseline flex flex-col gap-4 w-full px-2">
+          <div className="mt-auto flex flex-col gap-4 w-full px-2">
             <NavLink
               className="text-gray-800 py-2 text-sm font-semibold transition-all w-full"
             >
@@ -71,10 +71,10 @@ export default function Sidebar({isOpen, setIsOpen}) {
                 {user ? t("Logout") : t("Login")}
               </span>
             </NavLink>
-            <div className="px-2">
+            <div className="mt-auto flex flex-col gap-4 w-full px-2">
               <img src={courier} alt="courier-image" 
-                    className={`w-full object-contain h-40 
-                      ${isRTL ? "pl-8" : "pr-8"}
+                    className={`object-contain h-40 w-40
+                       max-w-full
                     `}
               />
             </div>

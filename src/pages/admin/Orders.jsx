@@ -78,15 +78,15 @@ export default function Orders() {
   const { t } = useTranslation();
    
   useEffect(() => {
-    const getCouriers = async () => {
-      await fetchCouriers()
-    }
-    getCouriers()
-    const drivers = couriers.map((courier)=>{
-        courier.user
-      })
-      setDrivers(drivers)
-  }, [fetchCouriers])
+     fetchCouriers()
+  }, [])
+
+  useEffect(()=>{
+    let drivers = couriers.map((courier)=> {
+      return courier.user
+    })
+    setDrivers(drivers)
+  },[couriers])
   const paymentStatus = [
     { id: 1, name: "Paid", value: "paid" },
     { id: 2, name: "Unpaid", value: "unpaid" },
@@ -104,7 +104,6 @@ export default function Orders() {
     { id: 3, name: "Zuhak Restaurant", value: "Zuhak Restaurant" },
   ]
 
-  console.log(drivers)
   return (
     <div className="min-h-screen bg-gray-100 p-8 md:p-12">
       <div className="max-w-7xl mx-auto">

@@ -2,8 +2,6 @@ import { IoSearchSharp } from "react-icons/io5";
 import avatar from "../../assets/avatar.png"
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import useAuthStore from "../../store/useAuthStore";
-import { useNavigate } from "react-router-dom";
 import { PiBellRingingThin } from "react-icons/pi";
 import { PiChatTeardropDotsThin } from "react-icons/pi";
 import { PiLineVerticalThin } from "react-icons/pi";
@@ -32,7 +30,7 @@ export default function Header({ onMenuClick }) {
           {/* hamburger menu */}
           <button
             onClick={onMenuClick}
-            className="lg:hidden md:hidden p-2 rounded hover:bg-gray-100 mx-2 text-md"
+            className="p-2 rounded hover:bg-gray-100 mx-2 text-md"
           >
             <VscMenu size={22} />
           </button>

@@ -12,6 +12,7 @@ import { RiLogoutCircleLine } from "react-icons/ri"; // logout en
 import { RiLogoutCircleRLine } from "react-icons/ri"; // logout fa
 import useAuthStore from "../../store/useAuthStore";
 import courier from "../../assets/png/courier 1.png"
+import { useEffect } from "react";
 
 export default function Sidebar({isOpen, setIsOpen}) {
 
@@ -35,25 +36,45 @@ export default function Sidebar({isOpen, setIsOpen}) {
 
   const { user } = useAuthStore();
 
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1024) { // for mobile
+        setIsOpen(false)
+      } else { // for desktop
+        setIsOpen(true)
+      }
+    };
+
+    handleResize()
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       {/* desktop lg */}
       <aside
         className={`
           hidden md:flex flex-col px-4 py-4 overflow-x-hidden
-          w-64 fixed top-16 left-0 right-0 h-[calc(100vh-64px)] bg-white border-r border-gray-200 overflow-y-auto mt-1
+          fixed top-16 h-[calc(100vh-64px)] bg-white border-r border-gray-200
+          transition-all duration-300
+          ${isOpen ? "w-64" : "w-20"}
           ${isRTL ? "right-0" : "left-0"}
         `}
       >
-        <nav className="flex flex-col gap-2 overflow-y-auto flex-1">
+        <nav className="flex flex-col gap-2 overflow-y-auto flex-1 transition-all duration-200 ease-in-out">
           {navItems.map((item) => (
             <NavLink key={item.key} to={item.path} className={activeStyle}>
               <div className="flex items-center gap-3 p-2 rounded-md">
-                {item.icon} {item.label}
+                {item.icon}
+                <span className={`whitespace-nowrap transition-all duration-200 ${isOpen ? "opacity-100 ml-1" : "opacity-0 w-0 overflow-hidden"}`}>
+                  {item.label}
+                </span>
               </div>
             </NavLink>
           ))}
-          <div className="mt-auto flex flex-col gap-4 w-full px-2">
+          <div className={`mt-auto flex-col gap-4 w-full px-2 ${isOpen ? "flex" : "hidden"}`}>
             <NavLink
               className="text-gray-800 py-2 text-sm font-semibold transition-all w-full"
             >
@@ -73,10 +94,18 @@ export default function Sidebar({isOpen, setIsOpen}) {
             </NavLink>
             <div className="mt-auto flex flex-col gap-4 w-full px-2">
               <img src={courier} alt="courier-image" 
-                    className={`object-contain h-40 w-40
-                       max-w-full
-                    `}
+                  className={`object-contain ${isOpen ? "w-42 h-42" : "hidden"}
+                    max-w-full
+                  `}
               />
+              {/* <img
+                src={courier}
+                alt="courier-image"
+                className={`
+                  object-contain mx-auto transition-all duration-300
+                  ${isOpen ? "w-32 h-32" : "w-10 h-10"}
+                `}
+              /> */}
             </div>
           </div>
         </nav>

@@ -506,7 +506,7 @@ markOrderDelivered: async(orderId) => {
 cancelOrder: async(orderId, reason) => {
   try{
     toast.dismiss()
-    toast.loading(i18n.t("ancelling_order_loading"))
+    toast.loading(i18n.t("cancelling_order_loading"))
     const response = await cancelOrder(orderId, reason)
     const updatedOrder = response.data
     set((state) => {
@@ -576,9 +576,9 @@ applyFilters: (filters, searchTerm)=>{
     filteredList: state.orders.filter((order)=>{
       if(lowerCaseSearchTerm){
         const matchSearchTerm = 
-        order.id.toLowerCase().includes(lowerCaseSearchTerm)||
-        order.receiver.name.toLowerCase().includes(lowerCaseSearchTerm)||
-        order.receiver.phone.includes(lowerCaseSearchTerm);
+        order._id?.toLowerCase().includes(lowerCaseSearchTerm)||
+        order.receiver?.name.toLowerCase().includes(lowerCaseSearchTerm)||
+        order.receiver?.phone.includes(lowerCaseSearchTerm);
         if(!matchSearchTerm) return false
       }
      if(courier && courier !== order.courier?.toLowerCase()) return false

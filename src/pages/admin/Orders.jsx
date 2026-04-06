@@ -224,10 +224,9 @@ export default function Orders() {
                   <Button
                     onClick={handleFilterReset}
                     variant="primary"
-                    text={t("Reset filters")}
+                    text={t("Clear all filters")}
                     className="mt-4"
                   >
-                    {t("Clear all filters")}
                   </Button>
                 </>
               ) : (

@@ -40,7 +40,7 @@ export default function CourierList() {
 
   const dropdownRef = useRef(null);
   useClickOutside(dropdownRef, () => {
-      if (openMenuId !== null) {
+    if (openMenuId !== null) {
       setOpenMenuId(null);
     }
   });
@@ -149,7 +149,7 @@ export default function CourierList() {
                         <div className="absolute right-0 mt-2 w-32 bg-white border rounded-xl shadow-lg z-10">
                           <button
                             onClick={() =>
-                              navigate(`/couriers/edit/${courier.id}`)
+                              navigate(`/drivers/edit/${courier.id}`)
                             }
                             className="block w-full text-left px-4 py-2 hover:bg-gray-100"
                           >

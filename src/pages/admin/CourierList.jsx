@@ -18,7 +18,7 @@ export default function CourierList() {
 
   const handleNavigation = (e) => {
     e.preventDefault();
-    navigate("/couriers/add")
+    navigate("/drivers/add")
   }
 
   const getStatusStyle = (status) => {

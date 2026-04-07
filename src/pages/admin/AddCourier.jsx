@@ -26,7 +26,7 @@ export default function AddCourier() {
 
   const handleSubmit = async (data) => {
     await addCourier(data);
-    navigate("/couriers");
+    navigate("/drivers");
   };
 
   return (

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useCourierStore } from "../../store/useCourierStore";
 import { IoAddOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
+import { useRef } from "react";
+import { useClickOutside } from "../../hooks/useOutsideClick";
 
 export default function CourierList() {
   const navigate = useNavigate();
@@ -36,19 +38,12 @@ export default function CourierList() {
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest(".action-menu-container")) {
-        setOpenMenuId(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const dropdownRef = useRef(null);
+  useClickOutside(dropdownRef, () => {
+      if (openMenuId !== null) {
+      setOpenMenuId(null);
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -135,7 +130,10 @@ export default function CourierList() {
 
                   {/* Menu */}
                   <td className="px-4 md:px-6 py-4 relative">
-                    <div className="inline-block relative action-menu-container">
+                    <div 
+                      ref={openMenuId === courier.id ? dropdownRef : null}
+                      className="inline-block relative action-menu-container"
+                    >
                       <button
                         onClick={() =>
                           setOpenMenuId(

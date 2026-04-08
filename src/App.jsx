@@ -1,6 +1,6 @@
-import "./index.css"
-import AppRouter from "./routes/appRouter";
 import { Toaster } from "react-hot-toast";
+import AppRoutes from "./routes/AppRoutes";
+
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 
@@ -16,15 +16,15 @@ function App() {
   }, [i18n.language]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <>
       <Toaster
         position="top-center"
         reverseOrder={false}
-        containerStyle={{ zIndex: 9999 }}
+        containerStyle={{ zIndex: 10000 }}
       />
-      <AppRouter />
-    </div>
-  );
+      <AppRoutes />
+    </>
+  )
 }
 
-export default App;
+export default App; 

@@ -101,6 +101,14 @@
   "End Date": "د پای نیټه",
   "Filter": "فلټر",
   "Couriers": "کورییرونه",
+
+  "Search deliveries, drivers ...": "د سپارښتنو او موټرچلوونکو لټون ...",
+  "Mizban Central": "میزبان مرکزي",
+  "Admin Account": "د مدیر حساب",
+  "Deliveries": "سپارښتنې",
+  "Analytics": "شننه او تحلیل",
+  "Menu Manager": "د مینو مدیریت",
+
   "Business": "تجارت",
  "Cancel": "لغو" ,
 "Select courier": "د دې امر لپاره یو استونکی (کوریر) وټاکئ",
@@ -167,6 +175,12 @@
   "Assigned": "ټاکل شوی",
   "Delivering": "د رسولو په حال کې",
   "Update Courier": "د پیک معلومات تازه کول",
-  "Save Courier": "د پیک ذخیره کول"
+  "Save Courier": "د پیک ذخیره کول",
+  
+  "Your Dashboard": "ستاسو ډشبورډ",
+  "All of your activity analytics will be here!": "ستاسو د ټولو فعالیتونو تحلیلونه به دلته وي!",
+  "phoneNum": "۰۷۹۸۰۰۰۰۰۰",
+  "Help and Support": "مرسته او ملاتړ",
+  "Logout": "وتل"
 }
 

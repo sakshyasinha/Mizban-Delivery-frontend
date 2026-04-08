@@ -1,12 +1,8 @@
 import Signup from '../pages/public/Signup';
-import Home from '../pages/public/Home';
+// import Home from '../pages/public/Home';
 import Login from '../pages/public/Login';
 import AccessDenied from '../pages/public/AccessDenied';
 const publicRoutes=[
-    {
-        path:"/",
-        element:<Home/>
-    },
     {
         path:"/signup",
         element:<Signup/>

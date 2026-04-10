@@ -167,8 +167,7 @@
   "error_already_cancelled": "Order is already cancelled!",
   "error_cannot_cancel_delivered": "You cannot cancel a delivered order!",
   "error_cannot_delete_paid": "Cannot delete paid or delivered order!",
-  "error_general": "Something went wrong, please try again."
-
+  "error_general": "Something went wrong, please try again.",
 
   "Your Dashboard": "Your Dashboard",
   "All of your activity analytics will be here!": "All of your activity analytics will be here!",

@@ -167,7 +167,7 @@
   "error_already_cancelled": "این سفارش قبلاً لغوه شده است!",
   "error_cannot_cancel_delivered": "سفارش تسلیم شده لغوه نمی‌شود!",
   "error_cannot_delete_paid": "سفارش پرداخت شده یا تسلیم شده حذف نمی‌شود!",
-  "error_general": "مشکلی پیش آمد، لطفاً دوباره تلاش کنید."
+  "error_general": "مشکلی پیش آمد، لطفاً دوباره تلاش کنید.",
 
 
   "Your Dashboard": "پنل مدیریت شما",

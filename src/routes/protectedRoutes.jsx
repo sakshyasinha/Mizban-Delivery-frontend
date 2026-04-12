@@ -7,8 +7,8 @@ import Dashboard from "../pages/admin/Dashboard.jsx"
 
 const protectedRoutes=[
     {
-        path: "/orders",
-        element: <Orders/>
+      path: "/orders",
+      element: <Orders/>
     },
     {
     path: "/order/create-order",
@@ -57,7 +57,5 @@ const protectedRoutes=[
   
   
 ]
-
-
 
 export default protectedRoutes;

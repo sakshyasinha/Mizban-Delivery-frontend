@@ -4,6 +4,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Orders from './pages/admin/Orders';
 import OrderForm from "./components/admin/OrderForm"
 import { Toaster } from 'react-hot-toast';
+import NotificationBox from './components/notificationSystem/NotificationBox';
+import DriverDashboard from './pages/driver/DriverDashboard';
+
 function App() {
   return (
     <div className='min-h-screen flex flex-col'>
@@ -17,6 +20,7 @@ function App() {
         <Route path='/order/create-order' element={<OrderForm />}></Route>
         <Route path='/orders/edit-order/:id' element={<OrderForm />}></Route>
         <Route path='/orders/view-order/:id' element={<OrderForm readOnly={true}/>}></Route>
+        <Route path='/notifications' element={<DriverDashboard />}></Route>
        </Routes>
        <Footer />
       </BrowserRouter>

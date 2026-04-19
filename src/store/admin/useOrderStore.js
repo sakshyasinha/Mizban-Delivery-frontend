@@ -535,8 +535,14 @@ const useOrderStore = create(
           };
         });
       },
-      filteredList: [],
-      applyFilters: (filters, searchTerm) => {
+      resetFilters: () => {
+  set((state) => ({
+    filteredList: state.orders,
+  }));
+},
+
+filteredList: [],
+applyFilters: (filters, searchTerm) => {
         let lowerCaseSearchTerm = searchTerm.toLowerCase().trim()
         const { courier, paymentStatus, orderStatus, startDate, endDate, senderName } = filters
         set((state) => ({
